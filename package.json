@@ -6,7 +6,8 @@
     "start": "npm run build-client && node ./bin/www",
     "start-backup": "node ./bin/www",
     "start-local": "npm run build-client && PORT=8080 node server",
-    "build-client": "cd client && npm run build && cd .."
+    "build-client": "cd client && && npm install && npm run build && cd ..",
+    "build-client-backup": "cd client && npm run build && cd .."
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
