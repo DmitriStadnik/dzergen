@@ -3,11 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cd client && npm install && npm run build && cd .. && node ./bin/www",
-    "start-backup": "node ./bin/www",
-    "start-local": "npm run build-client && PORT=8080 node server",
-    "build-client": "cd client && npm install && npm run build && cd ..",
-    "build-client-backup": "cd client && npm run build && cd .."
+    "start": "node ./bin/www",
+    "build": "cd client && npm install && npm run build && cd .. && node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
