@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run build-client && node ./bin/www",
+    "start": "cd client && npm install && npm run build && cd .. && node ./bin/www",
     "start-backup": "node ./bin/www",
     "start-local": "npm run build-client && PORT=8080 node server",
     "build-client": "cd client && npm install && npm run build && cd ..",
