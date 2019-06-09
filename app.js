@@ -8,12 +8,16 @@ var indexRouter = require('./routes/index');
 var generatorRouter = require('./routes/generator');
 
 const mongodb = require('mongodb');
-const env = require('node-env-file'); // щтоб вытащить URI из файла
-env(__dirname + '/env/.env');
 
+if (process.env.NODE_ENV !== 'production') {
+  const env = require('node-env-file'); // щтоб вытащить URI из файла
+  env(__dirname + '/env/.env');
+}
 const uri = process.env.URI;
 
 var app = express();
+
+app.use(require("cors")());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
