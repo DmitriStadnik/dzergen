@@ -5,7 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var generatorRouter = require('./routes/generator');
+
+const mongodb = require('mongodb');
+const env = require('node-env-file'); // щтоб вытащить URI из файла
+env(__dirname + '/env/.env');
+
+const uri = process.env.URI;
 
 var app = express();
 
@@ -17,11 +23,19 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/generator', generatorRouter);
+
+mongodb.MongoClient.connect(uri, function (err, db) {
+  if(err){
+    return console.log(err);
+  }
+  else console.log('mongo connect success');
+  // const dzerdanCollection = db.collection('generated-items');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
