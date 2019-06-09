@@ -4,7 +4,8 @@ const wordsArrays = require('../arrays/words');
 
 const generate = (createdBy) => {
   const ObjectID = require('mongodb').ObjectID;
-  return {
+  console.log('generate')
+  let result = {
     name: generateName(),
     image: generateImage(),
     words: generateWords(),
@@ -16,6 +17,8 @@ const generate = (createdBy) => {
     alive: true,
     id: new ObjectID(),
   }
+  console.log(result)
+  return result
 }
 
 const setRarity = (obj) => {

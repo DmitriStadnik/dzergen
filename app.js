@@ -38,7 +38,6 @@ mongodb.MongoClient.connect(uri, function (err, db) {
     return console.log(err);
   }
   else console.log('mongo connect success');
-  // const dzerdanCollection = db.collection('generated-items');
 });
 
 // catch 404 and forward to error handler
