@@ -17,25 +17,25 @@ const generate = (createdBy) => {
     alive: true,
     id: new ObjectID(),
   }
-  console.log(result)
   return result
 }
-// СКОРЕЕ ВСЕГО ПРОБЛЕМА ТУТ
+
 const setRarity = (obj) => {
   if (nameArrays.legendaryNames.includes(obj.name[0] + obj.name[1])) {
     obj.rarity = 4; // эпический
-    return;
+  } else {
+    const stats = obj.stats;
+    let statSum = 0;
+
+    Object.keys(stats).forEach(e => statSum += stats[e]);
+
+    if (statSum >= 0 && statSum < 10) obj.rarity = 0; // рядовой
+    else if (statSum >= 10 && statSum < 20) obj.rarity = 1; // бывалый
+    else if (statSum >= 20 && statSum < 30) obj.rarity = 2; // закаленный в бою
+    else if (statSum >= 30 && statSum < 40) obj.rarity = 3; // легендарный
+    else obj.rarity = 4; // эпический
   }
-  const stats = obj.stats;
-  let statSum = 0;
-
-  Object.keys(stats).forEach(e => statSum += stats[e]);
-
-  if (statSum >= 0 && statSum < 10) obj.rarity = 0; // рядовой
-  if (statSum >= 10 && statSum < 20) obj.rarity = 1; // бывалый
-  if (statSum >= 20 && statSum < 30) obj.rarity = 2; // закаленный в бою
-  if (statSum >= 30 && statSum < 40) obj.rarity = 3; // легендарный
-  if (statSum == 40) obj.rarity = 4; // эпический
+  console.log(obj)
 }
 
 const setOwner = (obj, owner) => {
