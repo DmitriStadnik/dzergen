@@ -2,7 +2,7 @@ var express = require('express');
 var generator = require('../src/modules/Generator');
 var router = express.Router();
 
-const generatedItem = {};
+let generatedItem = {};
 
 router.get('/generate', function(req, res, next) {
   const creatorId = '1';
