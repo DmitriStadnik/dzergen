@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var generatorRouter = require('./routes/generator');
@@ -30,6 +31,11 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use('/', indexRouter);
 app.use('/api/generator', generatorRouter);
+
+mongoose.connect(uri, function (err) {
+  if (err) throw err;
+  console.log('Successfully connected');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

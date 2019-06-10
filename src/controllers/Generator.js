@@ -3,13 +3,13 @@ const nameArrays = require('../arrays/name');
 const wordsArrays = require('../arrays/words');
 
 const generate = (createdBy) => {
-  const ObjectID = require('mongodb').ObjectID;
+  var Dzerdan = require("../models/Dzerdan").Dzerdan;
 
   let name = generateName();
   let stats = generateStats();  
   let rarity = setRarity(name, stats);
 
-  return {
+  return new Dzerdan({
     name,
     image: generateImage(),
     words: generateWords(),
@@ -19,8 +19,8 @@ const generate = (createdBy) => {
     createdBy,
     rarity,
     alive: true,
-    id: new ObjectID(),
-  }
+    id: 1,
+  });
 }
 
 const setRarity = (name, stats) => {
