@@ -4,10 +4,12 @@ const wordsArrays = require('../arrays/words');
 
 const generate = (createdBy) => {
   const ObjectID = require('mongodb').ObjectID;
+
   let name = generateName();
-  let stats = generateStats();
+  let stats = generateStats();  
   let rarity = setRarity(name, stats);
-  let result = {
+
+  return {
     name,
     image: generateImage(),
     words: generateWords(),
@@ -19,18 +21,14 @@ const generate = (createdBy) => {
     alive: true,
     id: new ObjectID(),
   }
-  console.log(result);
-  return result
 }
 
 const setRarity = (name, stats) => {
   let rarity = 0;
-  if (nameArrays.legendaryNames.includes(name[0] + name[1])) {
+  if (nameArrays.legendaryNames.includes(`${name[0]}${name[1]}`)) {
     rarity = 4; // эпический
   } else {
-    const stats = stats;
     let statSum = 0;
-
     Object.keys(stats).forEach(e => statSum += stats[e]);
 
     if (statSum >= 0 && statSum < 10) rarity = 0; // рядовой
@@ -118,7 +116,6 @@ const die = (obj) => {
 
 module.exports = {
   generate,
-  setRarity,
   setOwner,
   die,
 };
