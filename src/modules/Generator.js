@@ -20,7 +20,7 @@ const generate = (createdBy) => {
   console.log(result)
   return result
 }
-
+// СКОРЕЕ ВСЕГО ПРОБЛЕМА ТУТ
 const setRarity = (obj) => {
   if (nameArrays.legendaryNames.includes(obj.name[0] + obj.name[1])) {
     obj.rarity = 4; // эпический
