@@ -7,8 +7,6 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var generatorRouter = require('./routes/generator');
 
-const mongodb = require('mongodb');
-
 if (process.env.NODE_ENV !== 'production') {
   const env = require('node-env-file'); // щтоб вытащить URI из файла
   env(__dirname + '/env/.env');
@@ -32,13 +30,6 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use('/', indexRouter);
 app.use('/api/generator', generatorRouter);
-
-mongodb.MongoClient.connect(uri, function (err, db) {
-  if(err){
-    return console.log(err);
-  }
-  else console.log('mongo connect success');
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
