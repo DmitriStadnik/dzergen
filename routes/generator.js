@@ -7,7 +7,7 @@ let generatedItem = {};
 router.get('/generate', function(req, res, next) {
   const creatorId = '1';
   generatedItem = generator.generate(creatorId);
-  generatedItem.rarity = generator.setRarity(generatedItem.name, generatedItem.stats);
+  
   console.log('generate')
   console.log(generatedItem);
   res.json(generatedItem);
