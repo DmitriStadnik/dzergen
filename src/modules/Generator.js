@@ -4,7 +4,6 @@ const wordsArrays = require('../arrays/words');
 
 const generate = (createdBy) => {
   const ObjectID = require('mongodb').ObjectID;
-  console.log('generate')
   let result = {
     name: generateName(),
     image: generateImage(),
@@ -20,22 +19,23 @@ const generate = (createdBy) => {
   return result
 }
 
-const setRarity = (obj) => {
-  if (nameArrays.legendaryNames.includes(obj.name[0] + obj.name[1])) {
-    obj.rarity = 4; // эпический
+const setRarity = (name, stats) => {
+  let rarity = 0;
+  if (nameArrays.legendaryNames.includes(name[0] + name[1])) {
+    rarity = 4; // эпический
   } else {
-    const stats = obj.stats;
+    const stats = stats;
     let statSum = 0;
 
     Object.keys(stats).forEach(e => statSum += stats[e]);
 
-    if (statSum >= 0 && statSum < 10) obj.rarity = 0; // рядовой
-    else if (statSum >= 10 && statSum < 20) obj.rarity = 1; // бывалый
-    else if (statSum >= 20 && statSum < 30) obj.rarity = 2; // закаленный в бою
-    else if (statSum >= 30 && statSum < 40) obj.rarity = 3; // легендарный
-    else obj.rarity = 4; // эпический
+    if (statSum >= 0 && statSum < 10) rarity = 0; // рядовой
+    else if (statSum >= 10 && statSum < 20) rarity = 1; // бывалый
+    else if (statSum >= 20 && statSum < 30) rarity = 2; // закаленный в бою
+    else if (statSum >= 30 && statSum < 40) rarity = 3; // легендарный
+    else rarity = 4; // эпический
   }
-  console.log(obj)
+  return rarity
 }
 
 const setOwner = (obj, owner) => {
