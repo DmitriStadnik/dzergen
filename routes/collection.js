@@ -6,12 +6,12 @@ router.get('/', function(req, res, next) {
   const page = parseInt(req.query.page) || 0;
   const count = parseInt(req.query.count) || 20;
   const rarity = parseInt(req.query.rarity) || null;
-  const nameParam = req.query.name.toLowerCase() || null;
+  const nameParam = req.query.name || null;
 
   const query = Dzerdan.find()
     
   if (rarity) query.where('rarity').gte(rarity);
-  if (nameParam) query.$where("(this.name[0] + this.name[1]).toLowerCase().indexOf('" + nameParam + "') !== -1");
+  if (nameParam) query.$where("(this.name[0] + this.name[1]).toLowerCase().indexOf('" + nameParam.toLowerCase() + "') !== -1");
 
   query
     .sort('-dateCreated')
