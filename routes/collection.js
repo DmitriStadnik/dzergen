@@ -11,9 +11,10 @@ router.get('/', function(req, res, next) {
   const query = Dzerdan.find()
     
   if (rarity) query.where('rarity').gte(rarity);
-  // if (name) query.where('name').in(name.split(''));
   if (nameParam) query.$where(function () {
-    return this.name[0].includes(nameParam) || this.name[1].includes(nameParam)
+    let fullName = this.name[0] + this.name[1];
+    console.log(fullName);
+    return fullName.indexOf(nameParam) !== -1;
   });
 
   query
