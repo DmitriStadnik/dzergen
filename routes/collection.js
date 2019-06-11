@@ -3,8 +3,8 @@ var Dzerdan = require("../src/models/Dzerdan").Dzerdan;
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  const page = parseInt(request.query.page) || 0;
-  const count = parseInt(request.query.count) || 20;
+  const page = parseInt(req.query.page) || 0;
+  const count = parseInt(req.query.count) || 20;
   Dzerdan.find()
     .sort('-dateCreated')
     .skip(page * count)
