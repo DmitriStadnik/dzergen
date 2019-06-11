@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var generatorRouter = require('./routes/generator');
-var generatorRouter = require('./routes/collection');
+var collectionRouter = require('./routes/collection');
 
 if (process.env.NODE_ENV !== 'production') {
   const env = require('node-env-file'); // щтоб вытащить URI из файла
