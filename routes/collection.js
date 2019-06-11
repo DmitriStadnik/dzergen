@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   const page = parseInt(request.query.page) || 0;
   const count = parseInt(request.query.count) || 20;
   Dzerdan.find()
-    .sort('-occupation')
+    .sort('-dateCreated')
     .skip(page * count)
     .limit(count)
     .exec((err, items) => {

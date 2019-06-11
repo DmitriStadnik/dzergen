@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var generatorRouter = require('./routes/generator');
+var generatorRouter = require('./routes/collection');
 
 if (process.env.NODE_ENV !== 'production') {
   const env = require('node-env-file'); // щтоб вытащить URI из файла
@@ -31,7 +32,7 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use('/', indexRouter);
 app.use('/api/generator', generatorRouter);
-app.use('/api/collection', generatorRouter);
+app.use('/api/collection', collectionRouter);
 
 mongoose.connect(uri, function (err) {
   if (err) throw err;
