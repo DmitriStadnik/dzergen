@@ -2,16 +2,33 @@ var express = require('express');
 var Dzerdan = require("../src/models/Dzerdan").Dzerdan;
 var router = express.Router();
 
+function countItems(query, callback) {
+  if (callback) {
+    query
+      .countDocuments()
+      .exec((err, count) => {
+        if (err) return console.error(err);
+        callback(count)
+      });
+  } 
+}
+
 router.get('/', function(req, res, next) {
   const page = parseInt(req.query.page) || 0;
   const count = parseInt(req.query.count) || 20;
-  const rarity = parseInt(req.query.rarity) || null;
+  const rarityParam = parseInt(req.query.rarity) || null;
   const nameParam = req.query.name || null;
+  const aliveParam = req.query.alive || null;
+  // const created = req.query.created || null;
 
   const query = Dzerdan.find()
     
-  if (rarity) query.where('rarity').gte(rarity);
+  if (rarityParam) query.where('rarity').gte(rarityParam);
+  if (aliveParam) query.where('alive').eq(aliveParam);
   if (nameParam) query.$where("(this.name[0] + this.name[1]).toLowerCase().indexOf('" + nameParam.toLowerCase() + "') !== -1");
+  // if (created) {
+  //   query.$where("(this.name[0] + this.name[1]).toLowerCase().indexOf('" + nameParam.toLowerCase() + "') !== -1");
+  // }
 
   query
     .sort('-dateCreated')
@@ -19,7 +36,13 @@ router.get('/', function(req, res, next) {
     .limit(count)
     .exec((err, items) => {
       if (err) return console.error(err);
-      res.json(items);
+      countItems(query, (itemsCount) => {
+        res.json({
+          count: itemsCount,
+          data: items
+        });
+      });
+      
     });
 });
 

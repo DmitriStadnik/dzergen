@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 
-var indexRouter = require('./routes/index');
 var generatorRouter = require('./routes/generator');
 var collectionRouter = require('./routes/collection');
 
@@ -30,13 +29,18 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.use('/', indexRouter);
 app.use('/api/generator', generatorRouter);
 app.use('/api/collection', collectionRouter);
 
 mongoose.connect(uri, function (err) {
   if (err) throw err;
   console.log('Successfully connected');
+});
+
+app.get('*', (req, res) => {
+  res
+    .header('Content-Type', 'text/html')
+    .sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 // catch 404 and forward to error handler
