@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   const query = Dzerdan.find()
     
   if (rarity) query.where('rarity').gte(rarity);
-  if (nameParam) query.$where("(this.name[0] + this.name[1]).toLowerCase().indexOf(${nameParam}) !== -1");
+  if (nameParam) query.$where("(this.name[0] + this.name[1]).toLowerCase().indexOf('" + nameParam + "') !== -1");
 
   query
     .sort('-dateCreated')
