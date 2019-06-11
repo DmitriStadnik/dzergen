@@ -13,7 +13,6 @@ router.get('/', function(req, res, next) {
   if (rarity) query.where('rarity').gte(rarity);
   if (nameParam) query.$where(function () {
     let fullName = this.name[0] + this.name[1];
-    console.log('query where', fullName);
     return fullName.toLowerCase().indexOf(nameParam) !== -1;
   });
 
