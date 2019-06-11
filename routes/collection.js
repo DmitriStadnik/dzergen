@@ -6,15 +6,15 @@ router.get('/', function(req, res, next) {
   const page = parseInt(req.query.page) || 0;
   const count = parseInt(req.query.count) || 20;
   const rarity = parseInt(req.query.rarity) || null;
-  const nameParam = parseInt(req.query.name) || null;
+  const nameParam = req.query.name.toLowerCase() || null;
 
   const query = Dzerdan.find()
     
   if (rarity) query.where('rarity').gte(rarity);
   if (nameParam) query.$where(function () {
     let fullName = this.name[0] + this.name[1];
-    console.log(fullName);
-    return fullName.indexOf(nameParam) !== -1;
+    console.log('query where', fullName);
+    return fullName.toLowerCase().indexOf(nameParam) !== -1;
   });
 
   query
