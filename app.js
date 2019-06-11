@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use('/', indexRouter);
 app.use('/api/generator', generatorRouter);
+app.use('/api/collection', generatorRouter);
 
 mongoose.connect(uri, function (err) {
   if (err) throw err;
