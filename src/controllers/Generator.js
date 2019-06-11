@@ -19,7 +19,6 @@ const generate = (createdBy) => {
     createdBy,
     rarity,
     alive: true,
-    id: 1,
   });
 }
 
