@@ -1,59 +1,74 @@
-import React from 'react';
+import React, { Component } from 'react'
 import styled from 'styled-components';
-import logo from './logo.svg';
+import axios from 'axios';
+import { Container, Row, Col } from 'react-bootstrap'
+import Dzerdan from '../Dzerdan'
 
-const Wrapper = styled.div`
+const Header = styled.div`
   text-align: center;
+  text-transform: uppercase;
+  font-size: 18px;
+  margin: 30px 0px;
 `;
 
-const Header = styled.header`
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-`;
-
-const Logo = styled.img`
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
+export default class Generator extends Component {
+  constructor() {
+    super();
+  
+    this.state = {
+      dzerdan: {}
     }
   }
-`;
 
-const Link = styled.a`
-  color: #61dafb;
-`;
+  componentDidMount() {
+    this.getDzerdan();
+  }
 
-const Text = styled.div`
-  color: #61dafb;
-`;
+  getDzerdan() {
+    let that = this;
+    axios.get('/api/generator/generate')
+      .then(response => {
+        let item = response.data;
+        item.rarityStr = that.parseRarity(item.rarity)
+        that.setState({
+          dzerdan: item
+        });
+        console.log(that.state)
+      })
+      .catch(error => console.log(error))
+  }
 
-export default () => (
-  <Wrapper>
-    <Header>
-      <Logo src={logo} alt="logo" />
-      <Text>
-        generator page
-      </Text>
-      <Link
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </Link>
-    </Header>
-  </Wrapper>
-)
+  parseRarity(rarity) {
+    switch (rarity) {
+      case 0:
+        return 'рядовой';
+      case 1:
+        return 'бывалый';
+      case 2:
+        return 'закаленный в бою';
+      case 3:
+        return 'легендарный';
+      case 4:
+        return 'эпический';
+      default:
+        return 'что это за';
+    }
+  }
+
+  render () {
+    const {dzerdan} = this.state;
+    return (
+      <Container fluid> 
+        <Row>
+          <Col xs={6}>
+            <Header>Генератор</Header>
+            <Dzerdan item={dzerdan} />
+          </Col>
+          <Col xs={6}>
+            <Header>Коллекция</Header>
+          </Col>
+        </Row>
+      </Container>
+    )
+  }
+}
