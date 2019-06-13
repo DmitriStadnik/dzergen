@@ -1,14 +1,23 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
-import { Container, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dzerdan from '../Dzerdan'
+import List from './List'
 
 const Header = styled.div`
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
   margin: 30px 0px;
+`;
+
+const Buttons = styled.div`
+  text-align: center;
+  margin: auto;
+  margin-top: 10px;
+  width: 340px;
+  margin-bottom: 50px;
 `;
 
 const Button = styled.button`
@@ -18,6 +27,22 @@ const Button = styled.button`
   padding: 10px;
   color: white;
   background-color: #26a65b;
+  width: 50%;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  &:hover {
+    background-color: #87d37c; 
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: #a2ded0; 
+    &:hover {
+      background-color: #a2ded0;
+    }
+  }
 `;
 
 export default class Generator extends Component {
@@ -25,72 +50,77 @@ export default class Generator extends Component {
     super();
   
     this.state = {
-      dzerdan: null
+      dzerdan: null,
+      savePossible: true,
+      recent: null,
     }
   }
 
   componentDidMount() {
     this.getDzerdan();
+    this.getRecent();
   }
 
   getDzerdan() {
     let that = this;
     axios.get('/api/generator/generate')
       .then(response => {
-        let item = response.data;
-        item.rarityStr = that.parseRarity(item.rarity)
         that.setState({
-          dzerdan: item
+          dzerdan: response.data,
+          savePossible: true
+        });
+      })
+      .catch(error => console.log(error))
+  }
+
+  getRecent() {
+    let that = this;
+    axios.get('/api/collection', {
+      params: {
+        count: 9,
+      }
+    })
+      .then(response => {
+        that.setState({
+          recent: response.data.data,
         });
       })
       .catch(error => console.log(error))
   }
 
   saveDzerdan() {
+    this.setState({savePossible: false});
     axios.post('/api/generator/save')
-      .then(response => {
-        console.log('nice')
-      })
       .catch(error => console.log(error))
   }
 
-  parseRarity(rarity) {
-    switch (rarity) {
-      case 0:
-        return 'рядовой';
-      case 1:
-        return 'бывалый';
-      case 2:
-        return 'закаленный в бою';
-      case 3:
-        return 'легендарный';
-      case 4:
-        return 'эпический';
-      default:
-        return 'что это за';
-    }
-  }
-
   render () {
-    const {dzerdan} = this.state;
+    const {dzerdan, savePossible, recent} = this.state;
     return (
-      <Container fluid> 
+      <Grid> 
         <Row>
-          <Col xs={6}>
-            <Button onClick={() => this.getDzerdan()}>Генерировать</Button>
-            <Button onClick={() => this.saveDzerdan()}>Сохранить</Button>
-            <Header>Генератор</Header>
+          <Col md={6} sm={12}>
+            <Header>Генератор 2.0</Header>
             {
               dzerdan ? 
                 <Dzerdan item={dzerdan} />
               : null
             }
+            <Buttons>
+              <Button onClick={() => this.getDzerdan()}>Генерировать</Button>
+              <Button onClick={() => this.saveDzerdan()} disabled={!savePossible}> {savePossible ? 'Сохранить' : 'Сохранено' }</Button>
+            </Buttons>
           </Col>
-          <Col xs={6}>
-            <Header>Коллекция</Header>
+          <Col md={6} sm={12}>
+            <Header>Последние</Header>
+            {
+              recent ? 
+                <List items={recent} />
+              : null
+            }
           </Col>
         </Row>
-      </Container>
+      </Grid>
     )
   }
 }

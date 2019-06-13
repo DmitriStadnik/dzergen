@@ -1,59 +1,99 @@
-import React from 'react';
+import React, { Component } from 'react'
 import styled from 'styled-components';
-import logo from './logo.svg';
+import axios from 'axios';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import Dzerdan from '../Dzerdan'
 
-const Wrapper = styled.div`
+const Header = styled.div`
   text-align: center;
+  text-transform: uppercase;
+  font-size: 18px;
+  margin: 30px 0px;
 `;
 
-const Header = styled.header`
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+const Wrapper = styled(Col)`
+  margin-bottom: 30px;
+`;
+
+const Buttons = styled.div`
+  text-align: center;
+  margin: auto;
+  margin-top: 10px;
+  width: 340px;
+  margin-bottom: 50px;
+`;
+
+const Button = styled.button`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  padding: 10px;
   color: white;
-`;
-
-const Logo = styled.img`
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
+  background-color: #26a65b;
+  width: 50%;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  &:hover {
+    background-color: #87d37c; 
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: #a2ded0; 
+    &:hover {
+      background-color: #a2ded0;
     }
   }
 `;
 
-const Link = styled.a`
-  color: #61dafb;
-`;
+export default class Generator extends Component {
+  constructor() {
+    super();
+  
+    this.state = {
+      items: null,
+    }
+  }
 
-const Text = styled.div`
-  color: #61dafb;
-`;
+  componentDidMount() {
+    this.getItems();
+  }
 
-export default () => (
-  <Wrapper>
-    <Header>
-      <Logo src={logo} alt="logo" />
-      <Text>
-        collection page
-      </Text>
-      <Link
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </Link>
-    </Header>
-  </Wrapper>
-)
+  getItems() {
+    let that = this;
+    axios.get('/api/collection', {
+      params: {
+        count: 20,
+        page: 0,
+      }
+    })
+      .then(response => {
+        that.setState({
+          items: response.data.data,
+        });
+      })
+      .catch(error => console.log(error))
+  }
+
+  render () {
+    const {items} = this.state;
+    return (
+      <Grid> 
+        <Header>Коллекция</Header>
+        <Row>   
+          { items && items.map(item =>(
+            <Wrapper xl={4} md={6} sm={12} key={item.name.join('')}>
+              <Dzerdan item={item} />  
+            </Wrapper>
+          ))}
+            {/* <Buttons>
+              <Button onClick={() => this.getDzerdan()}>Генерировать</Button>
+              <Button onClick={() => this.saveDzerdan()} disabled={!savePossible}> {savePossible ? 'Сохранить' : 'Сохранено' }</Button>
+            </Buttons> */}
+        </Row>
+      </Grid>
+    )
+  }
+}

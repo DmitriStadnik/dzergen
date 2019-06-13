@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -8,7 +9,6 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  text-transform: uppercase;
   font-size: 20px;
   color: white;
   padding: 10px 20px;
@@ -30,24 +30,26 @@ const ListItem = styled.li`
     transition: 0.2s;
     &:hover {
       text-decoration: none;
-      color: #00e640;
+      color: #87d37c;
     }
   }
 `;
 
+const version = '2.0';
+
 export default () => (
   <Wrapper> 
-    <Header>DG</Header>
+    <Header>{`DG v${version}`}</Header>
     <List>
       <ListItem>
-        <a href="/">
+        <Link to="/">
           Генератор
-        </a>
+        </Link>
       </ListItem>
       <ListItem>
-        <a href="/">
+        <Link to="/collection">
           Коллекция
-        </a>
+        </Link>
       </ListItem>
     </List>
   </Wrapper>

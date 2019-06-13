@@ -30,10 +30,10 @@ const setRarity = (name, stats) => {
     let statSum = 0;
     Object.keys(stats).forEach(e => statSum += stats[e]);
 
-    if (statSum >= 0 && statSum < 10) rarity = 0; // рядовой
-    else if (statSum >= 10 && statSum < 20) rarity = 1; // бывалый
-    else if (statSum >= 20 && statSum < 30) rarity = 2; // закаленный в бою
-    else if (statSum >= 30 && statSum < 40) rarity = 3; // легендарный
+    if (statSum >= 0 && statSum < 20) rarity = 0; // рядовой
+    else if (statSum >= 20 && statSum < 30) rarity = 1; // бывалый
+    else if (statSum >= 30 && statSum < 36) rarity = 2; // закаленный в бою
+    else if (statSum >= 36 && statSum < 40) rarity = 3; // легендарный
     else rarity = 4; // эпический
   }
   return rarity

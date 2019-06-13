@@ -29,6 +29,8 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.use('/images', express.static(path.join(__dirname, "/public/img/dzerdan")));
+
 app.use('/api/generator', generatorRouter);
 app.use('/api/collection', collectionRouter);
 
