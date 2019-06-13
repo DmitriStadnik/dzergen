@@ -11,6 +11,15 @@ const Header = styled.div`
   margin: 30px 0px;
 `;
 
+const Button = styled.button`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  padding: 10px;
+  color: white;
+  background-color: #26a65b;
+`;
+
 export default class Generator extends Component {
   constructor() {
     super();
@@ -61,6 +70,7 @@ export default class Generator extends Component {
       <Container fluid> 
         <Row>
           <Col xs={6}>
+            <Button onClick={() => this.getDzerdan()}>Генерировать</Button>
             <Header>Генератор</Header>
             {
               dzerdan ? 
