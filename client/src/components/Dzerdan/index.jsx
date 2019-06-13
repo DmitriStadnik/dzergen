@@ -39,19 +39,19 @@ export default class Dzerdan extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log('e')
-  //   if(!equal(this.props.item, prevProps.item))
-  //   {
-  //     this.update();
-  //   }
-  // } 
+  componentDidUpdate(prevProps) {
+    console.log('e')
+    if(!equal(this.props.item, prevProps.item))
+    {
+      this.update();
+    }
+  } 
 
-  // update() {
-  //   this.setState({
-  //     item: this.props.item
-  //   })
-  // }
+  update() {
+    this.setState({
+      item: this.props.item
+    })
+  }
 
   render () {
     console.log(this.state)
