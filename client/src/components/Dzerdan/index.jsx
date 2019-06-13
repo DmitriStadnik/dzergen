@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import equal from 'fast-deep-equal';
 
 const Wrapper = styled.div`
   border: 1px solid black;
@@ -34,19 +35,31 @@ export default class Dzerdan extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.item.name !== nextProps.item.name;
+  componentDidUpdate(prevProps) {
+    console.log('e')
+    if(!equal(this.props.item, prevProps.item))
+    {
+      this.update();
+    }
+  } 
+
+  update() {
+    this.setState({
+      item: this.props.item
+    })
   }
 
   render () {
     console.log(this.props)
     const {
-      name,
-      rarityStr,
-      stats,
-      image,
-      words
-    } = this.props;
+      item: {
+        name,
+        rarityStr,
+        stats,
+        image,
+        words
+      } 
+    } = this.state;
 
     return (
       <Wrapper> 
