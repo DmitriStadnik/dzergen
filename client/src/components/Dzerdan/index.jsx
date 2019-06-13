@@ -40,9 +40,7 @@ export default class Dzerdan extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('e')
-    if(!equal(this.props.item, prevProps.item))
-    {
+    if(!equal(this.props.item, prevProps.item)) {
       this.update();
     }
   } 
@@ -53,8 +51,11 @@ export default class Dzerdan extends Component {
     })
   }
 
+  imagePath(img) {
+    return `/public/img/dzerdan/${img}`
+  }
+
   render () {
-    console.log(this.state)
     const {
       item: {
         name,
@@ -69,7 +70,7 @@ export default class Dzerdan extends Component {
       <Wrapper> 
         <Image src={image} />
         <Name>
-          {name ? name.join() : ''}
+          {name ? name.join('') : ''}
         </Name>
         <Rarity>
           {`${rarityStr} дзердан`}

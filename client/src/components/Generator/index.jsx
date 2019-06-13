@@ -42,7 +42,14 @@ export default class Generator extends Component {
         that.setState({
           dzerdan: item
         });
-        console.log(that.state)
+      })
+      .catch(error => console.log(error))
+  }
+
+  saveDzerdan() {
+    axios.post('/api/generator/save')
+      .then(response => {
+        console.log('nice')
       })
       .catch(error => console.log(error))
   }
@@ -71,6 +78,7 @@ export default class Generator extends Component {
         <Row>
           <Col xs={6}>
             <Button onClick={() => this.getDzerdan()}>Генерировать</Button>
+            <Button onClick={() => this.saveDzerdan()}>Сохранить</Button>
             <Header>Генератор</Header>
             {
               dzerdan ? 
