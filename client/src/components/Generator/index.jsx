@@ -16,7 +16,7 @@ export default class Generator extends Component {
     super();
   
     this.state = {
-      dzerdan: {}
+      dzerdan: null
     }
   }
 
@@ -62,7 +62,11 @@ export default class Generator extends Component {
         <Row>
           <Col xs={6}>
             <Header>Генератор</Header>
-            <Dzerdan item={dzerdan} />
+            {
+              dzerdan ? 
+                <Dzerdan item={dzerdan} />
+              : null
+            }
           </Col>
           <Col xs={6}>
             <Header>Коллекция</Header>

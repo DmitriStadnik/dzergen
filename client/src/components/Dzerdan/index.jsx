@@ -26,31 +26,35 @@ const Stats = styled.div`
   
 `;
 
+const Stat = styled.div`
+  
+`;
+
 export default class Dzerdan extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      item: {}
+      ...this.props
     }
   }
 
-  componentDidUpdate(prevProps) {
-    console.log('e')
-    if(!equal(this.props.item, prevProps.item))
-    {
-      this.update();
-    }
-  } 
+  // componentDidUpdate(prevProps) {
+  //   console.log('e')
+  //   if(!equal(this.props.item, prevProps.item))
+  //   {
+  //     this.update();
+  //   }
+  // } 
 
-  update() {
-    this.setState({
-      item: this.props.item
-    })
-  }
+  // update() {
+  //   this.setState({
+  //     item: this.props.item
+  //   })
+  // }
 
   render () {
-    console.log(this.props)
+    console.log(this.state)
     const {
       item: {
         name,
@@ -74,7 +78,18 @@ export default class Dzerdan extends Component {
           {words ? words.join(' ') : ''}
         </Text>
         <Stats>
-          {stats}
+          <Stat>
+            {stats.vitality}
+          </Stat>
+          <Stat>
+            {stats.strength}
+          </Stat>
+          <Stat>
+            {stats.arse}
+          </Stat>
+          <Stat>
+            {stats.intellect}
+          </Stat>
         </Stats>
       </Wrapper>
     )
