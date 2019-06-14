@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dzerdan from '../Dzerdan'
+import Pagination from './Pagination'
 
 const Header = styled.div`
   text-align: center;
@@ -15,38 +16,6 @@ const Wrapper = styled(Col)`
   margin-bottom: 30px;
 `;
 
-const Buttons = styled.div`
-  text-align: center;
-  margin: auto;
-  margin-top: 10px;
-  width: 340px;
-  margin-bottom: 50px;
-`;
-
-const Button = styled.button`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 16px;
-  padding: 10px;
-  color: white;
-  background-color: #26a65b;
-  width: 50%;
-  border: none;
-  outline: none;
-  transition: 0.2s;
-  &:hover {
-    background-color: #87d37c; 
-  }
-  &:focus {
-    outline: none;
-  }
-  &:disabled {
-    background-color: #a2ded0; 
-    &:hover {
-      background-color: #a2ded0;
-    }
-  }
-`;
 
 export default class Generator extends Component {
   constructor() {
@@ -54,6 +23,8 @@ export default class Generator extends Component {
   
     this.state = {
       items: null,
+      page: 0,
+      count: 20
     }
   }
 
@@ -62,23 +33,26 @@ export default class Generator extends Component {
   }
 
   getItems() {
+    const {page, count} = this.state;
     let that = this;
     axios.get('/api/collection', {
       params: {
-        count: 20,
-        page: 0,
+        count: count,
+        page: page,
       }
     })
       .then(response => {
         that.setState({
           items: response.data.data,
+          itemsCount: response.data.count
         });
       })
       .catch(error => console.log(error))
   }
 
   render () {
-    const {items} = this.state;
+    const {items, page, count, itemsCount} = this.state;
+    let maxPages = Math.floor(itemsCount / count);
     return (
       <Grid> 
         <Header>Коллекция</Header>
@@ -93,6 +67,7 @@ export default class Generator extends Component {
               <Button onClick={() => this.saveDzerdan()} disabled={!savePossible}> {savePossible ? 'Сохранить' : 'Сохранено' }</Button>
             </Buttons> */}
         </Row>
+        <Pagination page={page} maxPage={maxPages} />
       </Grid>
     )
   }
