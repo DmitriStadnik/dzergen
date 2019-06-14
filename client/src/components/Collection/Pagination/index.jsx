@@ -10,20 +10,28 @@ const Wrapper = styled.div`
 `;
 
 const Page = styled.div`
-  text-align: center;
   font-size: 16px;
-  padding: 5px;
   transition: 0.2s;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px;
   &:hover {
     background-color: #87d37c; 
   }
 `;
 
 const Button = styled.button`
-  text-align: center;
   text-transform: uppercase;
   font-size: 16px;
-  padding: 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
   background-color: #26a65b;
   border: none;
