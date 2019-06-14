@@ -4,13 +4,15 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   width: 340px;
   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Page = styled.div`
   text-align: center;
   font-size: 16px;
   padding: 5px;
-  color: white;
   transition: 0.2s;
   &:hover {
     background-color: #87d37c; 
@@ -21,10 +23,9 @@ const Button = styled.button`
   text-align: center;
   text-transform: uppercase;
   font-size: 16px;
-  padding: 10px;
+  padding: 5px;
   color: white;
   background-color: #26a65b;
-  width: 50%;
   border: none;
   outline: none;
   transition: 0.2s;
@@ -87,11 +88,13 @@ export default class Pagination extends Component {
     let pagesArr = this.getPagesArr();
     return (
       <Wrapper>
+        <Button>{'<'}</Button>
         {
           pagesArr.map(item => (
             <Page>{item}</Page>
           ))
         }
+        <Button>{'>'}</Button>
       </Wrapper>
     )
   }
