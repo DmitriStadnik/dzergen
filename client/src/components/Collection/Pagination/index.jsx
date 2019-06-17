@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
+import {changePage} from "../../../actions/collection-actions";
+import {connect} from "react-redux";
 
 const Wrapper = styled.div`
   width: 340px;
@@ -40,7 +42,6 @@ const Button = styled.button`
   border: none;
   outline: none;
   transition: 0.2s;
-  margin: 0px 5px;
   &:hover {
     background-color: #87d37c; 
   }
@@ -55,30 +56,18 @@ const Button = styled.button`
   }
 `;
 
-export default class Pagination extends Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      ...this.props
-    }
-  }
-    
-  componentDidUpdate(prevProps) {
-    if(this.props.page !== prevProps.page || this.props.maxPage !== prevProps.maxPage) {
-      this.update();
-    }
-  } 
-    
-  update() {
-    this.setState({
-      page: this.props.page,
-      maxPage: this.props.maxPage
-    })
+class Pagination extends Component {
+  componentDidMount() {
+    this.changePage(0, 0);
   }
 
   getPagesArr() {
-    const {page, maxPage} = this.state;
+    const maxPage = this.maxPages();
+    const {
+      collection: {
+        page
+      }
+    } = this.props;
 
     let start = page - 5 < 0 ? 0 : page - 5;
     let end = page + 5 > maxPage ? maxPage : page + 5;
@@ -91,20 +80,64 @@ export default class Pagination extends Component {
     return pagesArr;
   }
 
+  maxPages() {
+    const {
+      collection: {
+        itemsCount,
+        itemsPerPage
+      }
+    } = this.props;
+    return Math.floor(itemsCount / itemsPerPage);
+  }
+
+  changePage(exactPage, dif) {
+    let newPage = 0;
+    if (exactPage !== null) {
+      newPage = exactPage;
+    } else {
+      const {
+        collection: {
+          page
+        }
+      } = this.props;
+      let temp = page + dif;
+      if (temp <= this.maxPages() && temp >= 0) {
+        newPage = temp
+      }
+    }
+    this.props.onChangePage(newPage);
+  }
+
 
   render () {
-    const {page, handler} = this.state;
     let pagesArr = this.getPagesArr();
+    const {
+      collection: {
+        page
+      }
+    } = this.props;
     return (
       <Wrapper>
-        <Button onClick={() => handler(null, -1)}>{'<'}</Button>
+        <Button onClick={() => this.changePage(0, 0)}>{'<<'}</Button>
+        <Button onClick={() => this.changePage(null, -1)}>{'<'}</Button>
         {
           pagesArr.map(item => (
-            <Page key={item} active={item === page} onClick={() => handler(item, 0)}>{item + 1}</Page>
+            <Page key={item} active={item === page} onClick={() => this.changePage(item, 0)}>{item + 1}</Page>
           ))
         }
-        <Button onClick={() => handler(null, 1)}>{'>'}</Button>
+        <Button onClick={() => this.changePage(null, 1)}>{'>'}</Button>
+        <Button onClick={() => this.changePage(this.maxPages(), 0)}>{'>>'}</Button>
       </Wrapper>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  collection: state.collection,
+});
+
+const mapActionsToProps = {
+  onChangePage: changePage
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Pagination);

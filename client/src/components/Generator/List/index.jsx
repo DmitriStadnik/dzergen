@@ -31,8 +31,8 @@ const Content = styled.div`
 `;
 
 const Image = styled.img`
-  height: 100px;
-  width: 100px;
+  height: 130px;
+  width: 130px;
   flex-shrink: 0;
   object-fit: cover;
   border: 1px solid ${({color}) => color ? color : '#2e3131'};
@@ -58,6 +58,28 @@ const Text = styled.div`
   font-size: 12px;
   width: 100%;
   text-align: center;
+`;
+
+const Stats = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+`;
+
+const Stat = styled.div`
+  border: 2px solid ${({color}) => color ? color : '#2e3131'};
+  background-color: ${({bgColor}) => bgColor ? bgColor : ''};
+  height: 25px;
+  width: 25px;
+  color: white;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 0 5px;
+  padding-top: 1px;
 `;
 
 export default class List extends Component {
@@ -103,8 +125,22 @@ export default class List extends Component {
               <Text>
                 {item.words.join(' ')}
               </Text>
+
+              <Stats>
+                <Stat color={'#26a65b'} bgColor={'#2ecc71'} title='Выносливость'>
+                  {item.stats.vitality}
+                </Stat>
+                <Stat color={'#cf000f'} bgColor={'#e74c3c'} title='Сила'>
+                  {item.stats.strength}
+                </Stat>
+                <Stat color={'#663399'} bgColor={'#a537fd'} title='ЖЕПА'>
+                  {item.stats.arse}
+                </Stat>
+                <Stat color={'#19b5fe'} bgColor={'#6bb9f0'} title='Интеллект'>
+                  {item.stats.intellect}
+                </Stat>
+              </Stats>
             </Content>
-            
           </Card>
         ))}
       </Wrapper>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import axios from 'axios';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dzerdan from '../Dzerdan'
 import Pagination from './Pagination'
+import {connect} from "react-redux";
+import {fetchCollection} from "../../actions/collection-actions";
 
 const Header = styled.div`
   text-align: center;
@@ -17,74 +18,57 @@ const Wrapper = styled(Col)`
 `;
 
 
-export default class Generator extends Component {
-  constructor() {
-    super();
-  
-    this.state = {
-      page: 0,
-      count: 9
-    };
-
-    this.items = null;
-    this.itemsCount = 0; //USE REDUX OR UNSTATED
+class Collection extends Component {
+  componentDidMount() {
+    this.getCollection()
   }
 
-  getItems() {
-    const {page, count} = this.state;
-    let that = this;
-    axios.get('/api/collection', {
-      params: {
-        count: count,
-        page: page,
-      }
-    })
-      .then(response => {
-        that.items = response.data.data;
-        that.itemsCount = response.data.count;
-      })
-      .catch(error => console.log(error))
-  }
-
-  changePage(exactPage, dif) {
-    if (exactPage !== null) {
-      this.setState({
-        page: exactPage
-      });
-    } else {
-      const {page} = this.state;
-      let newPage = page + dif;
-      if (newPage <= this.maxPages() && newPage >= 0) {
-        this.setState({
-          page: newPage
-        });
-      }
+  componentDidUpdate(prevProps) {
+    if(this.props.collection.page !== prevProps.collection.page) {
+      this.getCollection();
     }
-    this.getItems();
   }
 
-  maxPages() {
-    const {count} = this.state;
-    const {itemsCount} = this;
-    return Math.floor(itemsCount / count);
+  getCollection() {
+    const {
+      collection: {
+        page,
+        itemsPerPage
+      }
+    } = this.props;
+    this.props.onFetchCollection(page, itemsPerPage);
   }
 
   render () {
-    const {page} = this.state;
-    const {items} = this;
+    const {
+      collection: {
+        items
+      }
+    } = this.props;
+
     return (
-      <Grid> 
+      <Grid>
         <Header>Коллекция</Header>
-        <Pagination page={page} maxPage={this.maxPages()} handler={this.changePage.bind(this)} />
-        <Row>   
+        <Pagination />
+        <Row>
           { items && items.map(item =>(
             <Wrapper xl={4} md={6} sm={12} key={item.name.join('')}>
               <Dzerdan item={item} />  
             </Wrapper>
           ))}
         </Row>
-        <Pagination page={page} maxPage={this.maxPages()} handler={this.changePage.bind(this)} />
+        <Pagination />
       </Grid>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  collection: state.collection,
+});
+
+const mapActionsToProps = {
+  onFetchCollection: fetchCollection
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Collection);

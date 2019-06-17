@@ -129,7 +129,7 @@ export default class Dzerdan extends Component {
           {`${parseRarity(rarity)} дзердан`}
         </Rarity>
         <Stats>
-          <Stat color={'#1e824c'} bgColor={'#2ecc71'} title='Выносливость'>
+          <Stat color={'#26a65b'} bgColor={'#2ecc71'} title='Выносливость'>
             {stats.vitality}
           </Stat>
           <Stat color={'#cf000f'} bgColor={'#e74c3c'} title='Сила'>

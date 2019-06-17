@@ -1,9 +1,8 @@
-export default class Functions {
-  static imagePath(img) {
+export default {
+  imagePath: (img) => {
     return `/images/${img}`
-  }
-
-  static getColor(rarity = 0) {
+  },
+  getColor: (rarity = 0) => {
     switch (rarity) {
       case 0:
         return '#2e3131';
@@ -18,9 +17,8 @@ export default class Functions {
       default:
         return '#2e3131';
     }
-  }
-
-  static getBgColor(rarity = 0) {
+  },
+  getBgColor: (rarity = 0) => {
     switch (rarity) {
       case 0:
         return '#ececec';
@@ -35,9 +33,8 @@ export default class Functions {
       default:
         return '#ececec';
     }
-  }
-
-  static parseRarity(rarity) {
+  },
+  parseRarity: (rarity) => {
     switch (rarity) {
       case 0:
         return 'рядовой';
