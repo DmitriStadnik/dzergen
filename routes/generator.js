@@ -3,19 +3,20 @@ const generator = require('../src/controllers/Generator');
 const Dzerdan = require("../src/models/Dzerdan").Dzerdan;
 const router = express.Router();
 
-let generatedItem = {};
-
 router.get('/generate', function(req, res, next) {
   const creatorId = null;
-  generatedItem = generator.generate(creatorId);
+  const generatedItem = generator.generate(creatorId);
   res.json(generatedItem);
 });
 
 router.post('/save', function(req, res, next) {
-  generatedItem.save(function (err) {
+  let item = new Dzerdan({
+    ...req.body
+  });
+  item.save(function (err) {
     if (err) return console.error(err);
   });
-  res.json(generatedItem);
+  res.json(item);
 });
 
 router.use(function (err, req, res, next) {

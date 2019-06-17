@@ -113,7 +113,9 @@ export default class Generator extends Component {
 
   saveDzerdan() {
     this.setState({savePossible: false});
-    axios.post('/api/generator/save')
+    axios.post('/api/generator/save', {
+      ...this.state.dzerdan
+    })
       .catch(error => console.log(error))
   }
 
