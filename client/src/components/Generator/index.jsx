@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dzerdan from '../Dzerdan'
 import List from './List'
+import collectionRequests from "../../requests/collection-requests";
+import {Link} from "react-router-dom";
 
 const Header = styled.div`
   text-align: center;
@@ -31,6 +33,33 @@ const Button = styled.button`
   transition: 0.2s;
   &:hover {
     background-color: #87d37c; 
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: #a2ded0; 
+    &:hover {
+      background-color: #a2ded0;
+    }
+  }
+`;
+
+const StyledLink = styled(Link)`
+  text-align: center;
+  margin: auto;
+  display: block;
+  width: 200px;
+  text-transform: uppercase;
+  font-size: 16px;
+  padding: 10px;
+  color: white;
+  background-color: #26a65b;
+  transition: 0.2s;
+  &:hover {
+    background-color: #87d37c; 
+    color: white;
+    text-decoration: none;
   }
   &:focus {
     outline: none;
@@ -73,12 +102,7 @@ export default class Generator extends Component {
 
   getRecent() {
     let that = this;
-    axios.get('/api/collection', {
-      params: {
-        count: 9,
-        page: 0,
-      }
-    })
+    collectionRequests.getItems(0, 4)
       .then(response => {
         that.setState({
           recent: response.data.data,
@@ -120,12 +144,15 @@ export default class Generator extends Component {
             </Buttons>
           </Col>
           <Col md={6} sm={12}>
-            <Header>Последние</Header>
+            <Header>Последние дзерданы</Header>
             {
               recent ? 
                 <List items={recent} />
               : null
             }
+            <StyledLink to="/collection">
+              В коллекцию
+            </StyledLink>
           </Col>
         </Row>
       </Grid>
