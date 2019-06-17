@@ -1,14 +1,25 @@
-var Dzerdan = require("../models/Dzerdan").Dzerdan;
+const Dzerdan = require("../models/Dzerdan").Dzerdan;
 
 const composeQuery = (rarityParam, nameParam, aliveParam) => {
-  const query = Dzerdan.find().sort('-dateCreated')
+  const query = Dzerdan.find().sort('-dateCreated');
 
-  if (rarityParam) query.where('rarity').gte(rarityParam);
-  if (aliveParam) query.where('alive').eq(aliveParam);
-  if (nameParam) query.$where("(this.name[0] + this.name[1]).toLowerCase().indexOf('" + nameParam.toLowerCase() + "') !== -1");
+  if (rarityParam) {
+    query
+      .where('rarity')
+      .gte(rarityParam);
+  }
+  if (aliveParam) {
+    query
+      .where('alive')
+      .eq(aliveParam);
+  }
+  if (nameParam) {
+    query
+      .$where("(this.name[0] + this.name[1]).toLowerCase().indexOf('" + nameParam.toLowerCase() + "') !== -1");
+  }
 
   return query;
-}
+};
 
 const countItems = (rarityParam, nameParam, aliveParam, callback) => {
   if (callback) {
@@ -20,7 +31,7 @@ const countItems = (rarityParam, nameParam, aliveParam, callback) => {
         callback(true, count)
       });
   } 
-}
+};
 
 const getItems = (rarityParam, nameParam, aliveParam, page, count, callback) => {
   if (callback) {
@@ -33,10 +44,9 @@ const getItems = (rarityParam, nameParam, aliveParam, page, count, callback) => 
         callback(false, items)
       });
   } 
-}
+};
 
 module.exports = {
-  composeQuery,
   countItems,
   getItems,
 };

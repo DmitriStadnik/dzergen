@@ -3,7 +3,7 @@ const nameArrays = require('../arrays/name');
 const wordsArrays = require('../arrays/words');
 
 const generate = (createdBy) => {
-  var Dzerdan = require("../models/Dzerdan").Dzerdan;
+  const Dzerdan = require("../models/Dzerdan").Dzerdan;
 
   let name = generateName();
   let stats = generateStats();  
@@ -20,7 +20,7 @@ const generate = (createdBy) => {
     rarity,
     alive: true,
   });
-}
+};
 
 const setRarity = (name, stats) => {
   let rarity = 0;
@@ -37,11 +37,11 @@ const setRarity = (name, stats) => {
     else rarity = 4; // эпический
   }
   return rarity
-}
+};
 
 const setOwner = (obj, owner) => {
   obj.owner = owner;
-}
+};
 
 const generateName = () => {
   const startArr = utils.shuffleArray(nameArrays.start);
@@ -50,19 +50,19 @@ const generateName = () => {
   let start = startArr[Math.floor(Math.random() * nameArrays.start.length)];
   let end = endArr[Math.floor(Math.random() * nameArrays.end.length)];
 
-  if (Math.floor(Math.random() * 500) == 234) end = startж
-  if (Math.floor(Math.random() * 500) == 345) end += '-тян';
-  if (start[start.length - 1] == end[0]) end = end.substr(1, end.length);
+  if (Math.floor(Math.random() * 500) === 234) end = start;
+  if (Math.floor(Math.random() * 500) === 345) end += '-тян';
+  if (start[start.length - 1] === end[0]) end = end.substr(1, end.length);
 
   return [start, end];
-}
+};
 
 const generateImage = () => {
   const fs = require('fs');
   const images = fs.readdirSync('././public/img/dzerdan/') || [];
   let img = utils.shuffleArray(images)
   return img[Math.floor(Math.random() * img.length)];
-}
+};
 
 const generateWords = () => {
   const who = utils.shuffleArray(wordsArrays.who);
@@ -76,7 +76,7 @@ const generateWords = () => {
         whichM[Math.floor(Math.random() * whichM.length)],
         whatM[Math.floor(Math.random() * whatM.length)],
         who[Math.floor(Math.random() * who.length)]
-      ]
+      ];
     case 0:
       const whichF = utils.shuffleArray(wordsArrays.whichF);
       const whatF = utils.shuffleArray(wordsArrays.whatF);
@@ -84,34 +84,24 @@ const generateWords = () => {
         whichF[Math.floor(Math.random() * whichF.length)],
         whatF[Math.floor(Math.random() * whatF.length)],
         who[Math.floor(Math.random() * who.length)]
-      ]
+      ];
     default:
       return "well fuck " + g;
   }
-}
+};
 
 const generateStats = () => {
-  let vitality = 0;
-  let strength = 0;
-  let arse = 0;
-  let intellect = 0;
-
-  vitality = Math.floor(Math.random() * 10) + 1;
-  strength = Math.floor(Math.random() * 10) + 1;
-  arse = Math.floor(Math.random() * 10) + 1;
-  intellect = Math.floor(Math.random() * 10) + 1;
-
   return {
-    vitality,
-    strength,
-    arse,
-    intellect
+    vitality: Math.floor(Math.random() * 10) + 1,
+    strength: Math.floor(Math.random() * 10) + 1,
+    arse: Math.floor(Math.random() * 10) + 1,
+    intellect: Math.floor(Math.random() * 10) + 1,
   };
-}
+};
 
 const die = (obj) => {
   obj.alive = false;
-}
+};
 
 module.exports = {
   generate,

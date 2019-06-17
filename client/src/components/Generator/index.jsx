@@ -9,15 +9,13 @@ const Header = styled.div`
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
-  margin: 30px 0px;
+  margin: 30px 0;
 `;
 
 const Buttons = styled.div`
   text-align: center;
-  margin: auto;
-  margin-top: 10px;
   width: 340px;
-  margin-bottom: 50px;
+  margin: 10px auto 50px;
 `;
 
 const Button = styled.button`
@@ -78,6 +76,7 @@ export default class Generator extends Component {
     axios.get('/api/collection', {
       params: {
         count: 9,
+        page: 0,
       }
     })
       .then(response => {
@@ -107,8 +106,17 @@ export default class Generator extends Component {
               : null
             }
             <Buttons>
-              <Button onClick={() => this.getDzerdan()}>Генерировать</Button>
-              <Button onClick={() => this.saveDzerdan()} disabled={!savePossible}> {savePossible ? 'Сохранить' : 'Сохранено' }</Button>
+              <Button
+                onClick={() => this.getDzerdan()}
+              >
+                Генерировать
+              </Button>
+              <Button
+                onClick={() => this.saveDzerdan()}
+                disabled={!savePossible}
+              >
+                {savePossible ? 'Сохранить' : 'Сохранено' }
+              </Button>
             </Buttons>
           </Col>
           <Col md={6} sm={12}>

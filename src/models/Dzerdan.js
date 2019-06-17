@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var DzerdanSchema = new mongoose.Schema({
+const DzerdanSchema = new mongoose.Schema({
   id: mongoose.Schema.Types.ObjectId,
   dateCreated: Date,
   name: [String],
@@ -18,7 +18,7 @@ var DzerdanSchema = new mongoose.Schema({
   createdBy: mongoose.Schema.Types.ObjectId,
 });
 
-var Dzerdan = mongoose.model('Dzerdan', DzerdanSchema);
+const Dzerdan = mongoose.model('Dzerdan', DzerdanSchema);
 
 module.exports = {
   Dzerdan: Dzerdan

@@ -15,7 +15,7 @@ const Header = styled.div`
 `;
 
 const List = styled.ul`
-  margin: 0px;
+  margin: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;

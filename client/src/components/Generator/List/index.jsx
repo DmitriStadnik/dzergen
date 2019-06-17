@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import equal from 'fast-deep-equal';
+import Functions from "../../../utils/Functions";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -59,7 +60,7 @@ const Text = styled.div`
   text-align: center;
 `;
 
-export default class Dzerdan extends Component {
+export default class List extends Component {
   constructor(props) {
     super(props);
 
@@ -80,44 +81,6 @@ export default class Dzerdan extends Component {
     })
   }
 
-  imagePath(img) {
-    return `/images/${img}`
-  }
-
-  getColor(rarity = 0) {
-    switch (rarity) {
-      case 0:
-        return '#2e3131';
-      case 1:
-        return '#26a65b';
-      case 2:
-        return '#2c82c9';
-      case 3:
-        return '#663399';
-      case 4:
-        return '#f9690e';
-      default:
-        return '#2e3131';
-    }
-  }
-
-  getBgColor(rarity = 0) {
-    switch (rarity) {
-      case 0:
-        return '#ececec';
-      case 1:
-        return '#66cc99';
-      case 2:
-        return '#6bb9f0';
-      case 3:
-        return '#9b59b6';
-      case 4:
-        return '#fabe58';
-      default:
-        return '#ececec';
-    }
-  }
-
   render () {
     const {
       items
@@ -126,7 +89,7 @@ export default class Dzerdan extends Component {
       imagePath,
       getColor,
       getBgColor
-    } = this;
+    } = Functions;
 
     return (
       <Wrapper> 

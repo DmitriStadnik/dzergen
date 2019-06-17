@@ -9,7 +9,7 @@ const Header = styled.div`
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
-  margin: 30px 0px;
+  margin: 30px 0;
 `;
 
 const Wrapper = styled(Col)`
@@ -22,14 +22,12 @@ export default class Generator extends Component {
     super();
   
     this.state = {
-      items: null,
       page: 0,
-      count: 20
-    }
-  }
+      count: 9
+    };
 
-  componentDidMount() {
-    this.getItems();
+    this.items = null;
+    this.itemsCount = 0; //USE REDUX OR UNSTATED
   }
 
   getItems() {
@@ -42,32 +40,50 @@ export default class Generator extends Component {
       }
     })
       .then(response => {
-        that.setState({
-          items: response.data.data,
-          itemsCount: response.data.count
-        });
+        that.items = response.data.data;
+        that.itemsCount = response.data.count;
       })
       .catch(error => console.log(error))
   }
 
+  changePage(exactPage, dif) {
+    if (exactPage !== null) {
+      this.setState({
+        page: exactPage
+      });
+    } else {
+      const {page} = this.state;
+      let newPage = page + dif;
+      if (newPage <= this.maxPages() && newPage >= 0) {
+        this.setState({
+          page: newPage
+        });
+      }
+    }
+    this.getItems();
+  }
+
+  maxPages() {
+    const {count} = this.state;
+    const {itemsCount} = this;
+    return Math.floor(itemsCount / count);
+  }
+
   render () {
-    const {items, page, count, itemsCount} = this.state;
-    let maxPages = Math.floor(itemsCount / count);
+    const {page} = this.state;
+    const {items} = this;
     return (
       <Grid> 
         <Header>Коллекция</Header>
+        <Pagination page={page} maxPage={this.maxPages()} handler={this.changePage.bind(this)} />
         <Row>   
           { items && items.map(item =>(
             <Wrapper xl={4} md={6} sm={12} key={item.name.join('')}>
               <Dzerdan item={item} />  
             </Wrapper>
           ))}
-            {/* <Buttons>
-              <Button onClick={() => this.getDzerdan()}>Генерировать</Button>
-              <Button onClick={() => this.saveDzerdan()} disabled={!savePossible}> {savePossible ? 'Сохранить' : 'Сохранено' }</Button>
-            </Buttons> */}
         </Row>
-        <Pagination page={page} maxPage={maxPages} />
+        <Pagination page={page} maxPage={this.maxPages()} handler={this.changePage.bind(this)} />
       </Grid>
     )
   }

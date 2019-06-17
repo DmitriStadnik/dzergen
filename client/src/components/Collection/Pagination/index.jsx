@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   width: 340px;
-  margin: auto;
+  margin: 50px auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,16 +12,19 @@ const Wrapper = styled.div`
 const Page = styled.div`
   font-size: 16px;
   transition: 0.2s;
-  border-radius: 50%;
   width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px 5px;
+  cursor: pointer;
+  background: ${({active}) => active ? '#87d37c' : 'white'};
+  color: ${({active}) => active ? 'white' : 'inherit'};
   &:hover {
     background-color: #87d37c; 
+    color: white;
   }
+  
 `;
 
 const Button = styled.button`
@@ -37,6 +40,7 @@ const Button = styled.button`
   border: none;
   outline: none;
   transition: 0.2s;
+  margin: 0px 5px;
   &:hover {
     background-color: #87d37c; 
   }
@@ -84,25 +88,22 @@ export default class Pagination extends Component {
     for (let i = start; i <= end; i++) {
       pagesArr.push(i);
     }
-
-    console.log(pagesArr)
     return pagesArr;
   }
 
 
   render () {
-    const {page, maxPage} = this.state;
-
+    const {page, handler} = this.state;
     let pagesArr = this.getPagesArr();
     return (
       <Wrapper>
-        <Button>{'<'}</Button>
+        <Button onClick={() => handler(null, -1)}>{'<'}</Button>
         {
           pagesArr.map(item => (
-            <Page>{item}</Page>
+            <Page key={item} active={item === page} onClick={() => handler(item, 0)}>{item + 1}</Page>
           ))
         }
-        <Button>{'>'}</Button>
+        <Button onClick={() => handler(null, 1)}>{'>'}</Button>
       </Wrapper>
     )
   }

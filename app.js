@@ -1,24 +1,23 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
 
-var generatorRouter = require('./routes/generator');
-var collectionRouter = require('./routes/collection');
+const generatorRouter = require('./routes/generator');
+const collectionRouter = require('./routes/collection');
 
 if (process.env.NODE_ENV !== 'production') {
-  const env = require('node-env-file'); // щтоб вытащить URI из файла
+  const env = require('node-env-file');
   env(__dirname + '/env/.env');
 }
 const uri = process.env.URI;
 
-var app = express();
+const app = express();
 
 app.use(require("cors")());
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 

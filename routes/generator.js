@@ -1,7 +1,7 @@
-var express = require('express');
-var generator = require('../src/controllers/Generator');
-var Dzerdan = require("../src/models/Dzerdan").Dzerdan;
-var router = express.Router();
+const express = require('express');
+const generator = require('../src/controllers/Generator');
+const Dzerdan = require("../src/models/Dzerdan").Dzerdan;
+const router = express.Router();
 
 let generatedItem = {};
 

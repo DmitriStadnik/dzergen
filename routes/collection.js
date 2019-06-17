@@ -1,7 +1,7 @@
-var express = require('express');
-var Dzerdan = require("../src/models/Dzerdan").Dzerdan;
-var Collection = require('../src/controllers/Collection')
-var router = express.Router();
+const express = require('express');
+const Dzerdan = require("../src/models/Dzerdan").Dzerdan;
+const Collection = require('../src/controllers/Collection')
+const router = express.Router();
 
 router.get('/', function(req, res, next) {
   const page = parseInt(req.query.page) || 0;
