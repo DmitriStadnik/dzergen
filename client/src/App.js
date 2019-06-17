@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Generator from './components/Generator';
 import Collection from './components/Collection';
 import Header from './components/Header';
+import ScrollToTop from './components/ScrollToTop';
 
 export default () => (
   <>
@@ -11,5 +12,6 @@ export default () => (
       <Route exact path="/" component={Generator} />
       <Route path="/collection" component={Collection} />
     </Switch>
+    <ScrollToTop />
   </>
 );

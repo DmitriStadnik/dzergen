@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dzerdan from '../Dzerdan'
+import SmallCard from '../SmallCard'
 import Pagination from './Pagination'
 import {connect} from "react-redux";
 import {fetchCollection} from "../../actions/collection-actions";
@@ -14,7 +15,7 @@ const Header = styled.div`
 `;
 
 const Wrapper = styled(Col)`
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 `;
 
 
@@ -52,8 +53,8 @@ class Collection extends Component {
         <Pagination />
         <Row>
           { items && items.map(item =>(
-            <Wrapper xl={4} md={6} sm={12} key={item.name.join('')}>
-              <Dzerdan item={item} />  
+            <Wrapper md={6} sm={12} key={item.name.join('')}>
+              <SmallCard item={item} />
             </Wrapper>
           ))}
         </Row>

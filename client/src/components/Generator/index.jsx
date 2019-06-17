@@ -47,7 +47,7 @@ const Button = styled.button`
 
 const StyledLink = styled(Link)`
   text-align: center;
-  margin: auto;
+  margin: auto auto 20px;
   display: block;
   width: 200px;
   text-transform: uppercase;
@@ -151,7 +151,7 @@ export default class Generator extends Component {
               : null
             }
             <StyledLink to="/collection">
-              В коллекцию
+              Коллекция
             </StyledLink>
           </Col>
         </Row>
