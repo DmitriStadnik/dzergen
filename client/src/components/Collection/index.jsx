@@ -25,6 +25,7 @@ class Collection extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    window.scrollTo(0, 0);
     if(this.props.collection.page !== prevProps.collection.page) {
       this.getCollection();
     }
