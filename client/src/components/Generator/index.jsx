@@ -102,7 +102,7 @@ export default class Generator extends Component {
 
   getRecent() {
     let that = this;
-    collectionRequests.getItems(0, 4)
+    collectionRequests.getItems({page: 0, count: 4})
       .then(response => {
         that.setState({
           recent: response.data.data,
