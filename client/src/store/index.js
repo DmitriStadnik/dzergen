@@ -20,7 +20,11 @@ const store = createStore(
       page: 0,
       itemsPerPage: 20,
       items: [],
-      itemsCount: 0
+      itemsCount: 0,
+      filters: {
+        name: '',
+        rarity: 5
+      }
     },
     user: {
       name: 'nouser'

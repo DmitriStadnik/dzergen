@@ -108,7 +108,6 @@ class Pagination extends Component {
     this.props.onChangePage(newPage);
   }
 
-
   render () {
     let pagesArr = this.getPagesArr();
     const {

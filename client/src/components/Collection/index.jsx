@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dzerdan from '../Dzerdan'
+import Filters from './Filters'
 import SmallCard from '../SmallCard'
 import Pagination from './Pagination'
 import {connect} from "react-redux";
@@ -17,7 +18,6 @@ const Header = styled.div`
 const Wrapper = styled(Col)`
   margin-bottom: 10px;
 `;
-
 
 class Collection extends Component {
   componentDidMount() {
@@ -35,10 +35,12 @@ class Collection extends Component {
     const {
       collection: {
         page,
-        itemsPerPage
+        itemsPerPage,
+        filters
       }
     } = this.props;
-    this.props.onFetchCollection(page, itemsPerPage);
+    console.log('getcollection', this.props.collection)
+    this.props.onFetchCollection(page, itemsPerPage, filters);
   }
 
   render () {
@@ -51,6 +53,7 @@ class Collection extends Component {
     return (
       <Grid>
         <Header>Коллекция</Header>
+        <Filters />
         <Pagination />
         <Row>
           { items && items.map(item =>(

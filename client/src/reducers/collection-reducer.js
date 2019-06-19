@@ -1,4 +1,4 @@
-import {CHANGE_PAGE, FETCH_ERROR, FETCH_REQUEST, FETCH_SUCCESS} from "../actions/collection-actions";
+import {CHANGE_PAGE, FETCH_ERROR, FETCH_REQUEST, FETCH_SUCCESS, CHANGE_FILTERS} from "../actions/collection-actions";
 
 export default function collectionReducer(state = {}, {type, payload}) {
   switch (type) {
@@ -17,6 +17,11 @@ export default function collectionReducer(state = {}, {type, payload}) {
       return {
         ...state,
         page: payload.page
+      };
+    case CHANGE_FILTERS:
+      return {
+        ...state,
+        filters: payload.filters
       };
     default:
       return state;
