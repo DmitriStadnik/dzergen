@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
+import equal from 'fast-deep-equal';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dzerdan from '../Dzerdan'
 import Filters from './Filters'
@@ -26,7 +27,7 @@ class Collection extends Component {
 
   componentDidUpdate(prevProps) {
     window.scrollTo(0, 0);
-    if(this.props.collection.page !== prevProps.collection.page) {
+    if(!equal(this.props, prevProps)) {
       this.getCollection();
     }
   }
@@ -39,7 +40,6 @@ class Collection extends Component {
         filters
       }
     } = this.props;
-    console.log('getcollection', this.props.collection)
     this.props.onFetchCollection(page, itemsPerPage, filters);
   }
 

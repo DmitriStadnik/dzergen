@@ -51,14 +51,10 @@ export default {
     }
   },
   composeFilters: (filters) => {
-    let result;
-
+    let result = {};
     if (!filters) return result;
-
     if (filters.name !== '') result['name'] = filters.name;
-
     if (filters.rarity !== 5) result['rarity'] = filters.rarity;
-
     return result;
   }
 }

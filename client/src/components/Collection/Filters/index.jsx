@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import {connect} from "react-redux";
-import {changeFilters} from "../../../actions/collection-actions";
+import {changeFilters, changePage} from "../../../actions/collection-actions";
 
 const Wrapper = styled.div`
   margin-bottom: 10px;
@@ -50,6 +50,7 @@ class Filters extends Component {
       name,
       rarity
     });
+    this.props.onChangePage(0);
   }
 
   handleNameChange(event) {
@@ -107,7 +108,8 @@ const mapStateToProps = state => ({
 });
 
 const mapActionsToProps = {
-  onChangeFilters: changeFilters
+  onChangeFilters: changeFilters,
+  onChangePage: changePage
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(Filters);

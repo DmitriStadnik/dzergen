@@ -28,15 +28,17 @@ function fetchPostsError(payload) {
 }
 
 export function fetchCollection (page, count, filters) {
-  const filtersObj = Functions.composeFilters(filters);
   return (dispatch) => {
     dispatch(fetchPostsRequest());
-    return collectionRequests.getItems(page, count)
+    return collectionRequests.getItems({
+      page,
+      count,
+      ...Functions.composeFilters(filters)
+    })
       .then(response => {
         dispatch(fetchPostsSuccess({
           items: response.data.data,
           itemsCount: response.data.count,
-          ...filtersObj
         }));
       })
       .catch(e => fetchPostsError(e))
@@ -53,9 +55,8 @@ export function changePage (page) {
 }
 
 export function changeFilters (filters) {
-  console.log('change', filters)
   return {
-    type: CHANGE_PAGE,
+    type: CHANGE_FILTERS,
     payload: {
       filters: filters
     }

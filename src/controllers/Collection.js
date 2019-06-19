@@ -15,7 +15,7 @@ const composeQuery = (rarityParam, nameParam, aliveParam) => {
   }
   if (nameParam) {
     query
-      .$where("(this.name[0] + this.name[1]).toLowerCase().indexOf('" + nameParam.toLowerCase() + "') !== -1");
+      .where({"name": { "$regex": nameParam.toLowerCase(), "$options": "i" }});
   }
 
   return query;
