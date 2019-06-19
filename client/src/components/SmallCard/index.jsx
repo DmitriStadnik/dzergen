@@ -80,7 +80,7 @@ export default ({item}) => (
     <Image src={Functions.imagePath(item.image)} color={Functions.getColor(item.rarity)} />
     <Content>
       <Name color={Functions.getColor(item.rarity)}>
-        {item.name}
+        {item.nameStr}
       </Name>
       <Text>
         {item.words.join(' ')}

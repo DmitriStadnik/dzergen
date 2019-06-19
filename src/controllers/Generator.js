@@ -11,6 +11,7 @@ const generate = (createdBy) => {
 
   return new Dzerdan({
     name,
+    nameStr: name.join(''),
     image: generateImage(),
     words: generateWords(),
     stats,

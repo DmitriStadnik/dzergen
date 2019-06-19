@@ -6,7 +6,7 @@ const composeQuery = (rarityParam, nameParam, aliveParam) => {
   if (rarityParam) {
     query
       .where('rarity')
-      .gte(rarityParam);
+      .eq(rarityParam);
   }
   if (aliveParam) {
     query
@@ -15,7 +15,7 @@ const composeQuery = (rarityParam, nameParam, aliveParam) => {
   }
   if (nameParam) {
     query
-      .where({"name": { "$regex": nameParam.toLowerCase(), "$options": "i" }});
+      .where({"nameStr": { "$regex": nameParam.toLowerCase(), "$options": "i" }});
   }
 
   return query;

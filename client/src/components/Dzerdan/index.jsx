@@ -99,7 +99,7 @@ export default class Dzerdan extends Component {
   render () {
     const {
       item: {
-        name,
+        nameStr,
         stats,
         image,
         words,
@@ -120,7 +120,7 @@ export default class Dzerdan extends Component {
       <Wrapper color={color} bgColor={bgColor}> 
         <Image src={imagePath(image)} color={color} />
         <Name color={color}>
-          {name ? name.join('') : ''}
+          {nameStr ? nameStr : ''}
         </Name>
         <Text>
           {words ? words.join(' ') : ''}

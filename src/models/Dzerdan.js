@@ -4,6 +4,7 @@ const DzerdanSchema = new mongoose.Schema({
   id: mongoose.Schema.Types.ObjectId,
   dateCreated: Date,
   name: [String],
+  nameStr: String,
   image: String,
   words: [String],
   stats: {
