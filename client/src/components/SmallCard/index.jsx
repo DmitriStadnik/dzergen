@@ -11,7 +11,7 @@ const Card = styled.div`
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Content = styled.div`
@@ -24,13 +24,12 @@ const Content = styled.div`
 `;
 
 const Image = styled.img`
-  height: 130px;
-  width: 130px;
+  height: 150px;
+  width: 150px;
   flex-shrink: 0;
   object-fit: cover;
   border: 1px solid ${({color}) => color ? color : '#2e3131'};
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border-radius: 3px;
   margin-right: 10px;
 `;
 
@@ -50,6 +49,7 @@ const Text = styled.div`
   padding: 10px;
   font-size: 12px;
   width: 100%;
+  height: 60px;
   text-align: center;
 `;
 

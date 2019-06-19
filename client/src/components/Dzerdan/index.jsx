@@ -11,6 +11,10 @@ const Wrapper = styled.div`
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
   margin: auto;
   position: relative;
+  z-index: 123;
+  @media screen and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const Image = styled.img`
@@ -22,6 +26,9 @@ const Image = styled.img`
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
+  @media screen and (max-width: 600px) {
+    height: 270px;
+  }
 `;
 
 const Name = styled.div`

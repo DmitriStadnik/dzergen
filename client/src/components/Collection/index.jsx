@@ -18,16 +18,47 @@ const Header = styled.div`
 
 const Wrapper = styled(Col)`
   margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+const CardWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: ${({active}) => active ? 'flex' : 'none'};
+  justify-content: center;
+  align-items: center;
+`;
+
+const Overlay = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: black;
+  opacity: 0.5;
 `;
 
 class Collection extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dzerdan: null,
+      dzerdanVisible: false
+    }
+  }
+
   componentDidMount() {
     this.getCollection()
   }
 
   componentDidUpdate(prevProps) {
-    window.scrollTo(0, 0);
     if(!equal(this.props, prevProps)) {
+      window.scrollTo(0, 0);
       this.getCollection();
     }
   }
@@ -43,27 +74,52 @@ class Collection extends Component {
     this.props.onFetchCollection(page, itemsPerPage, filters);
   }
 
+  showCard(item) {
+    this.setState({
+      dzerdan: item,
+      dzerdanVisible: true
+    });
+  }
+
+  hideCard() {
+    this.setState({
+      dzerdan: null,
+      dzerdanVisible: false
+    });
+  }
+
   render () {
     const {
       collection: {
         items
       }
     } = this.props;
+    const { dzerdan, dzerdanVisible } = this.state;
 
     return (
-      <Grid>
-        <Header>Коллекция</Header>
-        <Filters />
-        <Pagination />
-        <Row>
-          { items && items.map(item =>(
-            <Wrapper md={6} sm={12} key={item.name.join('')}>
-              <SmallCard item={item} />
-            </Wrapper>
-          ))}
-        </Row>
-        <Pagination />
-      </Grid>
+      <>
+        <Grid>
+          <Header>Коллекция</Header>
+          <Filters />
+          <Pagination />
+          <Row>
+            { items && items.map(item =>(
+              <Wrapper md={6} sm={12} key={item.name.join('')} onClick={() => this.showCard(item)}>
+                <SmallCard item={item} />
+              </Wrapper>
+            ))}
+          </Row>
+          <Pagination />
+        </Grid>
+        <CardWrapper active={dzerdanVisible}>
+          {
+            dzerdan ?
+              <Dzerdan item={dzerdan} />
+              : null
+          }
+          <Overlay onClick={() => this.hideCard()} />
+        </CardWrapper>
+      </>
     )
   }
 }

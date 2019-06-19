@@ -4,7 +4,6 @@ import {changePage} from "../../../actions/collection-actions";
 import {connect} from "react-redux";
 
 const Wrapper = styled.div`
-  width: 340px;
   margin: 50px auto;
   display: flex;
   justify-content: center;
@@ -117,15 +116,35 @@ class Pagination extends Component {
     } = this.props;
     return (
       <Wrapper>
-        <Button onClick={() => this.changePage(0, 0)}>{'<<'}</Button>
-        <Button onClick={() => this.changePage(null, -1)}>{'<'}</Button>
+        <Button
+          onClick={() => this.changePage(0, 0)}
+          disabled={page === 0}
+        >
+          {'<<'}
+        </Button>
+        <Button
+          onClick={() => this.changePage(null, -1)}
+          disabled={page === 0}
+        >
+          {'<'}
+        </Button>
         {
           pagesArr.map(item => (
             <Page key={item} active={item === page} onClick={() => this.changePage(item, 0)}>{item + 1}</Page>
           ))
         }
-        <Button onClick={() => this.changePage(null, 1)}>{'>'}</Button>
-        <Button onClick={() => this.changePage(this.maxPages(), 0)}>{'>>'}</Button>
+        <Button
+          onClick={() => this.changePage(null, 1)}
+          disabled={page === this.maxPages()}
+        >
+          {'>'}
+        </Button>
+        <Button
+          onClick={() => this.changePage(this.maxPages(), 0)}
+          disabled={page === this.maxPages()}
+        >
+          {'>>'}
+        </Button>
       </Wrapper>
     )
   }

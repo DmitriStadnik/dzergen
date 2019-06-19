@@ -9,13 +9,16 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   display: ${({active}) => active ? 'flex' : 'none'};
+  justify-content: center;
 `;
 
 const Filter = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
+  width: 200px;
+  margin: 0 10px;
 `;
 
 const Title = styled.div`
@@ -24,10 +27,43 @@ const Title = styled.div`
 
 const Input = styled.input`
   width: 100%;
+  font-size: 14px;
+  height: 40px;
+  padding: 0 10px;
 `;
 
 const Select = styled.select`
   width: 100%;
+  font-size: 14px;
+  height: 40px;
+  padding: 0 10px;
+`;
+
+const Button = styled.button`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  padding: 10px;
+  color: white;
+  background-color: #26a65b;
+  width: 200px;
+  margin: 20px auto;
+  display: block;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  &:hover {
+    background-color: #87d37c; 
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: #a2ded0; 
+    &:hover {
+      background-color: #a2ded0;
+    }
+  }
 `;
 
 class Filters extends Component {
@@ -37,8 +73,16 @@ class Filters extends Component {
     this.state = {
       name: '',
       rarity: 5
-    }
+    };
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleRaritySelect = this.handleRaritySelect.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.onChangeFilters({
+      name: '',
+      rarity: 5
+    });
   }
 
   changeFilters() {
@@ -57,6 +101,10 @@ class Filters extends Component {
     this.setState({ name: event.target.value});
   }
 
+  handleRaritySelect(event) {
+    this.setState({ rarity: parseInt(event.target.value)});
+  }
+
   render () {
     const {
       collection: {
@@ -73,7 +121,7 @@ class Filters extends Component {
       'Легендарный',
       'Эпический',
       'Все'
-    ]
+    ];
 
     return (
       <Wrapper>
@@ -88,7 +136,7 @@ class Filters extends Component {
             <Title>
               Редкость
             </Title>
-            <Select defaultValue={rarity}>
+            <Select defaultValue={rarity} onChange={this.handleRaritySelect}>
               {
                 rarityArr.map((item, index) => (
                   <option value={index}>{item}</option>
@@ -97,7 +145,7 @@ class Filters extends Component {
             </Select>
           </Filter>
         </Container>
-        <button onClick={() => this.changeFilters()}>Применить</button>
+        <Button onClick={() => this.changeFilters()}>Применить</Button>
       </Wrapper>
     )
   }
