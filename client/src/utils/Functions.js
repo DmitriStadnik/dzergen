@@ -43,9 +43,9 @@ export default {
       case 2:
         return 'закаленный в бою';
       case 3:
-        return 'легендарный';
+        return 'достопочтенный';
       case 4:
-        return 'эпический';
+        return 'легендарный';
       default:
         return 'что это за';
     }

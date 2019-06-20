@@ -139,7 +139,7 @@ class Filters extends Component {
             <Select defaultValue={rarity} onChange={this.handleRaritySelect}>
               {
                 rarityArr.map((item, index) => (
-                  <option value={index}>{item}</option>
+                  <option value={index} key={item}>{item}</option>
                 ))
               }
             </Select>
