@@ -1,19 +1,25 @@
 const express = require('express');
-const User = require("../src/models/User").User;
+const users = require("../src/controllers/Users");
 const router = express.Router();
 
-// router.get('/register', function(req, res, next) {
-// });
+router.post('/register', function(req, res, next) {
+  const name = req.body.name || null;
+  const email = req.body.email || null;
+  const password = req.body.password || null;
 
-// router.post('/save', function(req, res, next) {
-//   let item = new Dzerdan({
-//     ...req.body
-//   });
-//   item.save(function (err) {
-//     if (err) return console.error(err);
-//   });
-//   res.json(item);
-// });
+  function sendResponse (item) {
+    if (item.error) {
+      res.json(item);
+      return;
+    }
+    item.save(function (err) {
+      if (err) return console.error(err);
+    });
+    res.json(item);
+  }
+
+  users.processNewUser(name, email, password, sendResponse);
+});
 
 router.use(function (err, req, res, next) {
   if (err) {
