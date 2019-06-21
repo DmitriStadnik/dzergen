@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 
 // env
@@ -41,6 +42,12 @@ mongoose.connect(uri, function (err) {
   if (err) throw err;
   console.log('Successfully connected');
 });
+
+
+// passport
+require('./config/passport')(passport);
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 // every route not mentioned before goes to the single-page app
