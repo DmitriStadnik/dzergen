@@ -21,6 +21,7 @@
     "node-env-file": "*",
     "nodemon": "^1.19.1",
     "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
   }
 }
