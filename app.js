@@ -34,7 +34,7 @@ app.use('/images', express.static(path.join(__dirname, "/public/img/dzerdan")));
 // routes
 app.use('/api/generator', require('./routes/generator'));
 app.use('/api/collection', require('./routes/collection'));
-app.use('/api/users', require('./routes/users'));
+// app.use('/api/users', require('./routes/users'));
 
 
 // db connect
@@ -45,9 +45,10 @@ mongoose.connect(uri, function (err) {
 
 
 // passport
-require('./config/passport')(passport);
-app.use(passport.initialize())
-app.use(passport.session())
+// const key = process.env.SESSION_SECRET;
+// require('./config/passport')(passport, key);
+// app.use(passport.initialize())
+// app.use(passport.session())
 
 
 // every route not mentioned before goes to the single-page app

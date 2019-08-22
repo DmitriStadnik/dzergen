@@ -14,7 +14,7 @@ const processNewUser = (name, email, password, callback) => {
   }
   if (!password || password.length <= 0) {
     callback && callback( {
-      error: 'password invalid'
+      error: 'Password invalid'
     })
   }
 
@@ -60,6 +60,41 @@ const ifUserExists = (name, email, callback) => {
     });
 };
 
+const login = (email, password, callback) => {
+  if (!email || email.length <= 0) {
+    callback && callback( {
+      error: 'Email invalid'
+    })
+  }
+  if (!password || password.length <= 0) {
+    callback && callback( {
+      error: 'Password invalid'
+    })
+  }
+
+  const hashPassword = (error) => {
+    if (error.length > 0) {
+      callback && callback({
+        error: error
+      });
+      return;
+    }
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(user.password, salt, function (err, hash) {
+        if (err) {
+          console.log(err);
+        }
+        user.password = hash;
+
+        callback && callback(user);
+      })
+    });
+  };
+
+  ifUserExists(null, email, hashPassword);
+};
+
 module.exports = {
   processNewUser,
+  login
 };
