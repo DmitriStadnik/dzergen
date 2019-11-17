@@ -104,7 +104,7 @@ class Collection extends Component {
           <Pagination />
           <Row>
             { items && items.map(item =>(
-              <Wrapper md={6} sm={12} key={item.name.join('')} onClick={() => this.showCard(item)}>
+              <Wrapper md={6} sm={12} key={item.name.join('') + item._id} onClick={() => this.showCard(item)}>
                 <SmallCard item={item} />
               </Wrapper>
             ))}
