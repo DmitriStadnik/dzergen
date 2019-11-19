@@ -14,7 +14,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const uri = process.env.URI;
 
-
 const app = express();
 
 
@@ -26,6 +25,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
+// passport
+require('./config/passport');
+app.use(passport.initialize())
+
+
 // static
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use('/images', express.static(path.join(__dirname, "/public/img/dzerdan")));
@@ -34,7 +38,7 @@ app.use('/images', express.static(path.join(__dirname, "/public/img/dzerdan")));
 // routes
 app.use('/api/generator', require('./routes/generator'));
 app.use('/api/collection', require('./routes/collection'));
-// app.use('/api/users', require('./routes/users'));
+app.use('/api/users', require('./routes/users'));
 
 
 // db connect
@@ -42,13 +46,6 @@ mongoose.connect(uri, function (err) {
   if (err) throw err;
   console.log('Successfully connected');
 });
-
-
-// passport
-// const key = process.env.SESSION_SECRET;
-// require('./config/passport')(passport, key);
-// app.use(passport.initialize())
-// app.use(passport.session())
 
 
 // every route not mentioned before goes to the single-page app

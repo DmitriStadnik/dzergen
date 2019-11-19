@@ -68,8 +68,6 @@ class Pagination extends Component {
       }
     } = this.props;
 
-    
-
     let start = page - 5 < 0 ? 0 : page - 5;
     let end = page + 5 > maxPage ? maxPage : page + 5;
 
