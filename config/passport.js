@@ -77,15 +77,13 @@ passport.use(
   'jwt',
   new JWTstrategy(jwtOptions, (jwt_payload, done) => {
     try {
-      User.findOne({
-        where: {
-          username: jwt_payload.id,
-        },
-      }).then(user => {
-        if (user) {
+      User.findOne()
+      .where({ email: jwt_payload.id })
+      .exec((err, item) => {
+        if (item) {
           console.log('user found in db in passport');
           // note the return removed with passport JWT - add this return for passport local
-          done(null, user);
+          done(null, item);
         } else {
           console.log('user not found in db');
           done(null, false);
