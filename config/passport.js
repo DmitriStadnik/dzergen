@@ -44,8 +44,8 @@ passport.use(
   'login',
   new localStrategy(
     {
-      email: 'email',
-      password: 'password',
+      usernameField: 'email',
+      passwordField: 'password',
       session: false,
     },
     (email, password, done) => {
@@ -55,14 +55,14 @@ passport.use(
         if (err) return done(err);
         if (item === null) return done(null, false, { message: 'no user found' });
 
-        bcrypt.compare(password, user.password).then(response => {
+        bcrypt.compare(password, item.password).then(response => {
           if (response !== true) {
             console.log('passwords do not match');
             return done(null, false, { message: 'passwords do not match' });
           }
           console.log('user found & authenticated');
           // note the return needed with passport local - remove this return for passport JWT
-          return done(null, user);
+          return done(null, item);
         });
       });
     }),

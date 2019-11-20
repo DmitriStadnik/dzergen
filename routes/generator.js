@@ -4,12 +4,13 @@ const Dzerdan = require("../src/models/Dzerdan").Dzerdan;
 const router = express.Router();
 
 router.get('/generate', function(req, res, next) {
-  const creatorId = null;
-  const generatedItem = generator.generate(creatorId);
+  const generatedItem = generator.generate(null);
   res.json(generatedItem);
 });
 
 router.post('/save', function(req, res, next) {
+  // TODO валидация?
+  // TODO добавление создателя
   let item = new Dzerdan({
     ...req.body
   });

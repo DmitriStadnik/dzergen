@@ -1,21 +1,19 @@
 const express = require('express');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const users = require("../src/controllers/Users");
 const User = require("../src/models/User").User;
 const router = express.Router();
 
+const jwtSecret = process.env.SESSION_SECRET;
+
 const bcrypt = require('bcryptjs');
 const BCRYPT_SALT_ROUNDS = 12;
 
-router.post('/register', function(req, res, next) {
+router.post('/register', (req, res, next) => {
   passport.authenticate('register', (err, user, info) => {
-    console.log(user)
-    if (err) {
-      res.json(err);
-      console.log(err);
-    }
+    if (err) res.json(err);
     if (info !== undefined) {
-      console.log(info.message);
       res.json(info.message);
     } else {
       bcrypt.hash(user.password, BCRYPT_SALT_ROUNDS).then(hashedPassword => {
@@ -26,32 +24,56 @@ router.post('/register', function(req, res, next) {
           image: null
         })
         newUser.save(function (error) {
-          if (error) return console.error(error);
-          res.json(newUser)
+          if (error) return res.json(newUser);
+          res.json(newUser);
         });
       });
     }
   })(req, res, next);
 });
 
-// TODO passport.js
-// router.post('/login', function(req, res, next) {
-//   const email = req.body.email || null;
-//   const password = req.body.password || null;
+router.post('/auth/login', (req, res, next) => {
+  passport.authenticate('login', (err, user, info) => {
+    if (err) res.json(err);
+    if (info !== undefined) {
+      res.json(info.message);
+    } else {
+      req.logIn(user, err => {
+        User.findOne()
+          .or([{ name: req.body.name }, { email: req.body.email }])
+          .exec((err, item) => {
+            if (err) res.json(err);
+            if (item) {
+              const token = jwt.sign({ id: item.email }, jwtSecret);
+              res.json({
+                auth: true,
+                token: token,
+                user: item
+              });
+            } else {
+              res.json({
+                auth: false,
+              });
+            }
+          })
+      })
+    }
+  })(req, res, next);
+});
 
-//   function sendResponse (item) {
-//     if (item.error) {
-//       res.json(item);
-//       return;
-//     }
-//     item.save(function (err) {
-//       if (err) return console.error(err);
-//     });
-//     res.json(item);
-//   }
-
-//   users.login(email, password, sendResponse);
-// });
+router.get('/auth/check', (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    if (err) res.json(err);
+    if (info !== undefined) {
+      res.json(info.message);
+    } else {
+      res.json({
+        auth: true,
+        user: user
+      });
+    }
+  })(req, res, next);
+});
 
 router.use(function (err, req, res, next) {
   if (err) {
