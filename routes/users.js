@@ -10,6 +10,8 @@ const jwtSecret = process.env.SESSION_SECRET;
 const bcrypt = require('bcryptjs');
 const BCRYPT_SALT_ROUNDS = 12;
 
+
+// user registration route
 router.post('/register', (req, res, next) => {
   passport.authenticate('register', (err, user, info) => {
     if (err) res.json(err);
@@ -32,6 +34,7 @@ router.post('/register', (req, res, next) => {
   })(req, res, next);
 });
 
+// user login route
 router.post('/auth/login', (req, res, next) => {
   passport.authenticate('login', (err, user, info) => {
     if (err) res.json(err);
@@ -61,6 +64,7 @@ router.post('/auth/login', (req, res, next) => {
   })(req, res, next);
 });
 
+// user auth check route
 router.get('/auth/check', (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err) res.json(err);
@@ -69,10 +73,21 @@ router.get('/auth/check', (req, res, next) => {
     } else {
       res.json({
         auth: true,
-        user: user
+        userId: user._id
       });
     }
   })(req, res, next);
+});
+
+router.get('/user/get', (req, res, next) => {
+  if (!req.query.id || req.query.id.length <= 0) {
+    res.json({
+      error: 'no id'
+    })
+  }
+  users.findUserById(req.query.id, (data) => {
+    res.json(data);
+  });
 });
 
 router.use(function (err, req, res, next) {
