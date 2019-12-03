@@ -127,10 +127,12 @@ export default class Dzerdan extends Component {
       <Wrapper color={color} bgColor={bgColor}> 
         <Image src={imagePath(image)} color={color} />
         <Name color={color}>
-          {nameStr ? nameStr : ''}
+          {/* {nameStr ? nameStr : ''} */}
+          { nameStr || ''}
         </Name>
         <Text>
-          {words ? words.join(' ') : ''}
+          {/* {words ? words.join(' ') : ''} */}
+          {(words && words.join(' ')) || ''}
         </Text>
         <Rarity>
           {`${parseRarity(rarity)} дзердан`}
