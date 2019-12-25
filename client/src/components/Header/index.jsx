@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import equal from 'fast-deep-equal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBars } from '@fortawesome/free-solid-svg-icons';
 import userRequests from "../../requests/user-requests";
 import Functions from "../../utils/Functions";
 
@@ -26,12 +26,21 @@ const LeftList = styled.ul`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  @media screen and (max-width: 767px) {
+    height: 300px;
+    flex-direction: column;
+  }
 `;
 
 const RightList = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-left: auto;
+  @media screen and (max-width: 767px) {
+    height: 300px;
+    margin-right: 20px;
+    align-items: flex-start;
+  }
 `;
 
 const ListItem = styled.li`
@@ -45,6 +54,11 @@ const ListItem = styled.li`
       text-decoration: none;
       color: #87d37c;
     }
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    margin-right: 0px;
   }
 `;
 
@@ -117,7 +131,29 @@ const MobileWrapper = styled.div`
   width: 100%;
   display: flex;
   @media screen and (max-width: 767px) {
-    display: none;
+    display: ${({visible}) => visible ? 'flex' : 'none'};
+    background: #26a65b;
+    padding-top: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 3000px;
+    z-index: 3000;
+  }
+`;
+
+const MobileMenuIcon = styled(FontAwesomeIcon)`
+  color: white;
+  transition: 0.2s;
+  font-size: 23px;
+  position: absolute;
+  cursor: pointer;
+  top: 15px;
+  right: 20px;
+  display: none;
+  z-index: 3002;
+  @media screen and (max-width: 767px) {
+    display: block;
   }
 `;
 
@@ -128,10 +164,12 @@ class Header extends Component {
     this.state = {
       version: '2.1',
       user: null,
+      mobileMenuVisible: false,
     }
 
     this.getUser = this.getUser.bind(this);
     this.setUser = this.setUser.bind(this);
+    this.toggleMobileMenu = this.toggleMobileMenu.bind(this);
   }
 
   componentDidMount () {
@@ -174,28 +212,42 @@ class Header extends Component {
     })
   }
 
+  toggleMobileMenu () {
+    const { mobileMenuVisible } = this.state;
+    if (window.innerWidth < 768) {
+      this.setState({
+        mobileMenuVisible: !mobileMenuVisible
+      })
+    }
+  }
+
   render () {
     const {
       version,
-      user
+      user,
+      mobileMenuVisible
     } = this.state;
 
     const {
       imagePath,
     } = Functions;
 
+    const {
+      toggleMobileMenu,
+    } = this;
+
     return (
       <Wrapper> 
         <Logo>{`DG v${version}`}</Logo>
-        <MobileWrapper>
+        <MobileWrapper visible={mobileMenuVisible}>
           <LeftList>
             <ListItem>
-              <Link to="/">
+              <Link to="/" onClick={() => toggleMobileMenu()}>
                 Генератор
               </Link>
             </ListItem>
             <ListItem>
-              <Link to="/collection">
+              <Link to="/collection" onClick={() => toggleMobileMenu()}>
                 Коллекция
               </Link>
             </ListItem>
@@ -203,7 +255,7 @@ class Header extends Component {
           <RightList>
             {
               user ? (
-                <RightItemWrapper>
+                <RightItemWrapper onClick={() => toggleMobileMenu()}>
                   <UserName>
                     { user.name }
                   </UserName>
@@ -219,15 +271,15 @@ class Header extends Component {
                 </RightItemWrapper>
               ) : (
                 <RightItemWrapper>
-                  <UserIconLink title={'Войти'} to="/auth/login">
+                  <UserIconLink title={'Войти'} to="/auth/login" onClick={() => toggleMobileMenu()}>
                     <UserIcon icon={faUser} />
                   </UserIconLink>          
                 </RightItemWrapper>
               )
-            }
-            
+            } 
           </RightList>         
         </MobileWrapper>
+        <MobileMenuIcon icon={faBars} onClick={() => toggleMobileMenu()} />
       </Wrapper>
     )
   }
