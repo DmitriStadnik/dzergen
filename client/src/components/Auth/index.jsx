@@ -155,7 +155,6 @@ export default class Auth extends Component {
 
   handleRegisterSuccess() {
     this.setState({
-      // registerSuccess: true,
       register: false,
     })
   }
