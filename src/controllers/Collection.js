@@ -1,7 +1,7 @@
 const Dzerdan = require("../models/Dzerdan").Dzerdan;
 
 const composeQuery = (rarityParam, nameParam, aliveParam) => {
-  const query = Dzerdan.find().sort('-dateCreated');
+  const query = Dzerdan.find().populate('owner').populate('createdBy').sort('-dateCreated');
 
   if (rarityParam) {
     query

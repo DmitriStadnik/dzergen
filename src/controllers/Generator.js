@@ -1,6 +1,7 @@
 const utils = require('../utils/utils');
 const nameArrays = require('../arrays/name');
 const wordsArrays = require('../arrays/words');
+const Users = require('./Users')
 
 const generate = (createdBy) => {
   const Dzerdan = require("../models/Dzerdan").Dzerdan;
@@ -16,7 +17,7 @@ const generate = (createdBy) => {
     words: generateWords(),
     stats,
     dateCreated: Date.now(),
-    owner: null,
+    owner: createdBy,
     createdBy,
     rarity,
     alive: true,

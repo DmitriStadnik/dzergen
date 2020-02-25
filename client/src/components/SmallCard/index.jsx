@@ -20,7 +20,6 @@ const Column = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  /* height: 100%; */
   width: 100%;
   flex: ${({left}) => left ? '1 0 30%' : '1 0 50%'};
   @media screen and (max-width: 500px) {
@@ -158,25 +157,25 @@ export default ({item}) => (
       </Text>
       <Data>
         <DataItem>
+          Создатель: {item.createdBy ? item.createdBy[0].name : 'Генератор'}
+        </DataItem>
+        <DataItem>
+          Владелец: {item.owner ? item.owner[0].name : 'Генератор'}
+        </DataItem>
+        <DataItem>
           Дата создания: { Functions.parseDate(item.dateCreated) }
-        </DataItem>
-        <DataItem>
-          Создатель: Генератор
-        </DataItem>
-        <DataItem>
-          Владелец: Генератор
         </DataItem>
       </Data>
     </Column>
     <Data mobile>
       <DataItem>
+        Создатель: {item.createdBy ? item.createdBy[0].name : 'Генератор'}
+      </DataItem>
+      <DataItem>
+        Владелец: {item.owner ? item.owner[0].name : 'Генератор'}
+      </DataItem>
+      <DataItem>
         Дата создания: { Functions.parseDate(item.dateCreated) }
-      </DataItem>
-      <DataItem>
-        Создатель: Генератор
-      </DataItem>
-      <DataItem>
-        Владелец: Генератор
       </DataItem>
     </Data>
   </Card>

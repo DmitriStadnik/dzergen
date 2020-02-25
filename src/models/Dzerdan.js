@@ -15,8 +15,8 @@ const DzerdanSchema = new mongoose.Schema({
   },
   rarity: Number,
   alive: Boolean,
-  owner: mongoose.Schema.Types.ObjectId,
-  createdBy: mongoose.Schema.Types.ObjectId,
+  owner: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  createdBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const Dzerdan = mongoose.model('Dzerdan', DzerdanSchema);

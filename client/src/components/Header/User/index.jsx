@@ -192,6 +192,7 @@ class User extends Component {
     this.setState({
       user: data
     })
+    this.props.onUserChange(data._id);
     this.composeMenu();
   }
 

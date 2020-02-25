@@ -12,7 +12,7 @@ export default () => (
     <Header />
     <Switch>
       <Route exact path="/" component={Generator} />
-      <Route path="/collection" component={Collection} />
+      <Route path="/collection/:id" component={Collection} />
       <Route path="/user/:id" component={Profile} />
       <Route path="/auth/:type" component={Auth} />
     </Switch>

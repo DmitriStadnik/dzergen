@@ -6,6 +6,7 @@ import Dzerdan from '../Dzerdan'
 import List from './List'
 import collectionRequests from "../../requests/collection-requests";
 import {Link} from "react-router-dom";
+import userRequests from "../../requests/user-requests";
 
 const Header = styled.div`
   text-align: center;
@@ -81,16 +82,21 @@ export default class Generator extends Component {
       savePossible: true,
       recent: null,
     }
+
+    this.checkAuth = this.checkAuth.bind(this);
+    this.getDzerdan = this.getDzerdan.bind(this);
   }
 
   componentDidMount() {
-    this.getDzerdan();
+    this.checkAuth();
     this.getRecent();
   }
 
-  getDzerdan() {
+  getDzerdan(userId) {
     let that = this;
-    axios.get('/api/generator/generate')
+    axios.get('/api/generator/generate', {
+      params: { userId }
+    })
       .then(response => {
         that.setState({
           dzerdan: response.data,
@@ -111,10 +117,29 @@ export default class Generator extends Component {
       .catch(error => console.log(error))
   }
 
+  checkAuth () {
+    const { getDzerdan } = this;
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      getDzerdan(null);
+      return;
+    }
+    userRequests.checkAuth(`JWT ${token}`)
+      .then(response => {
+        if (response.data.auth) {
+          getDzerdan(response.data.userId);
+        } else {
+          getDzerdan(null);
+          localStorage.removeItem('authToken');
+        }
+      })
+      .catch(error => console.log(error));
+  }
+
   saveDzerdan() {
     this.setState({savePossible: false});
     axios.post('/api/generator/save', {
-      ...this.state.dzerdan
+      ...this.state.dzerdan 
     })
       .catch(error => console.log(error))
   }
@@ -133,7 +158,7 @@ export default class Generator extends Component {
             }
             <Buttons>
               <Button
-                onClick={() => this.getDzerdan()}
+                onClick={() => this.checkAuth()}
               >
                 Генерировать
               </Button>

@@ -97,10 +97,12 @@ class Header extends Component {
     this.state = {
       version: '2.1',
       mobileMenuVisible: false,
+      userId: null
     }
 
     this.toggleMobileMenu = this.toggleMobileMenu.bind(this);
     this.closeMobileMenu = this.closeMobileMenu.bind(this);
+    this.setUserId = this.setUserId.bind(this);
   }
 
   componentDidMount () {
@@ -128,14 +130,22 @@ class Header extends Component {
     }
   }
 
+  setUserId (id) {
+    this.setState({
+      userId: id
+    })
+  }
+
   render () {
     const {
       version,
-      mobileMenuVisible
+      mobileMenuVisible,
+      userId
     } = this.state;
 
     const {
       toggleMobileMenu,
+      setUserId
     } = this;
 
     return (
@@ -149,13 +159,21 @@ class Header extends Component {
               </Link>
             </ListItem>
             <ListItem>
-              <Link to="/collection">
-                Коллекция
-              </Link>
+              {
+                userId ? (
+                  <Link to={`/collection/${userId}`}>
+                    Коллекция
+                  </Link>
+                ) : (
+                  <Link to="/collection/all">
+                    Коллекция
+                  </Link>
+                )
+              }
             </ListItem>
           </LeftList>
           <RightList>
-            <User />
+            <User onUserChange={setUserId} />
           </RightList>         
         </MobileWrapper>
         <MobileMenuIcon icon={faBars} onClick={() => toggleMobileMenu()} />

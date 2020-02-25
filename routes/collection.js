@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
     }
 
     if (itemsCount && items) {
+      console.log(items[0]);
       res.json({
         count: itemsCount,
         data: items
