@@ -4,6 +4,7 @@ import Generator from './components/Generator';
 import Collection from './components/Collection';
 import Auth from './components/Auth';
 import Header from './components/Header';
+import Profile from './components/Profile';
 import ScrollToTop from './components/ScrollToTop';
 
 export default () => (
@@ -12,6 +13,7 @@ export default () => (
     <Switch>
       <Route exact path="/" component={Generator} />
       <Route path="/collection" component={Collection} />
+      <Route path="/user/:id" component={Profile} />
       <Route path="/auth/:type" component={Auth} />
     </Switch>
     <ScrollToTop />

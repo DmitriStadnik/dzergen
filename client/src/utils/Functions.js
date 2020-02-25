@@ -56,5 +56,13 @@ export default {
     if (filters.name !== '') result['name'] = filters.name;
     if (filters.rarity !== 5) result['rarity'] = filters.rarity;
     return result;
+  },
+  parseDate: (date) => {
+    let d = new Date(date);
+
+    let day = d.getDate();
+    let month = d.getMonth() + 1;
+
+    return `${day < 10 ? day = '0' + day : day}.${month < 10 ? month = '0' + month : month}.${d.getFullYear()}`;
   }
 }

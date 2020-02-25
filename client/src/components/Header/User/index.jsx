@@ -12,12 +12,51 @@ const Dropdown = styled.div`
   border: 2px solid #26a65b;
   border-top: none;
   background: white;
-  width: 200px;
   position: absolute;
   top: 50px;
   right: 0;
   z-index: 9999;
   display: ${({active}) => active ? 'block' : 'none'};
+`;
+
+const DropdownList = styled.ul`
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const ListItem = styled.li`
+  width: 100%;
+  list-style: none;
+  transition: 0.2s;
+  text-align: center;
+  font-size: 12px;
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 2px 40px;
+    color: black;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &:hover {
+    background-color: #26a65b;
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    margin-right: 0px;
+  }
 `;
 
 const UserIconWrapper = styled.div`
@@ -91,33 +130,37 @@ class User extends Component {
 
     this.state = {
       user: null,
-      dropdownOpen: false
+      dropdownOpen: false,
+      menuItems: []
     }
 
     this.getUser = this.getUser.bind(this);
     this.setUser = this.setUser.bind(this);
     this.checkAuth = this.checkAuth.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
+    this.composeMenu = this.composeMenu.bind(this);
   }
 
   componentDidMount () {
     this.checkAuth();
-    this.unlisten = this.props.history.listen(() => this.checkAuth());
+    this.unlisten = this.props.history.listen(() => {
+      this.checkAuth();
+      this.closeDropdown();
+    });
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if(!equal(this.props, prevProps)) {
-  //     this.checkAuth();
-  //   }
-  // } 
 
   componentWillUnmount() {
     this.unlisten();
   }
 
   checkAuth () {
-    const token = localStorage.getItem('authToken');
     const { getUser, setUser } = this;
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      setUser(null);
+      return;
+    }
     userRequests.checkAuth(`JWT ${token}`)
       .then(response => {
         if (response.data.auth) {
@@ -128,6 +171,12 @@ class User extends Component {
         }
       })
       .catch(error => console.log(error));
+  }
+
+  logOut () {
+    localStorage.removeItem('authToken');
+    this.checkAuth();  
+    this.toggleDropdown();
   }
 
   getUser (id) {
@@ -143,6 +192,25 @@ class User extends Component {
     this.setState({
       user: data
     })
+    this.composeMenu();
+  }
+
+  composeMenu (userId) {
+    const { user } = this.state;
+    this.setState({
+      menuItems: [
+        {
+          name: 'Профиль',
+          route: `/user/${user._id}`,
+          onClick: null
+        },
+        {
+          name: 'Выйти',
+          route: this.props.location.pathname,
+          onClick: this.logOut.bind(this)
+        },
+      ]
+    })
   }
 
   toggleDropdown () {
@@ -152,10 +220,17 @@ class User extends Component {
     })
   }
 
+  closeDropdown () {
+    this.setState({
+      dropdownOpen: false
+    })
+  }
+
   render () {
     const {
       user,
-      dropdownOpen
+      dropdownOpen,
+      menuItems
     } = this.state;
 
     const {
@@ -170,20 +245,40 @@ class User extends Component {
       <> 
         {
           user ? (
-            <RightItemWrapper onClick={() => toggleDropdown()}>
-              <UserName>
-                { user.name }
-              </UserName>
-              <UserIconWrapper>
-                {
-                  user.image ? (
-                    <UserImage src={imagePath(user.image)} />
-                  ) : (
-                    <UserIcon icon={faUser} />
-                  )
-                }
-              </UserIconWrapper>          
-            </RightItemWrapper>
+            <>
+              <RightItemWrapper onClick={() => toggleDropdown()}>
+                <UserName>
+                  { user.name }
+                </UserName>
+                <UserIconWrapper>
+                  {
+                    user.image ? (
+                      <UserImage src={imagePath(user.image)} />
+                    ) : (
+                      <UserIcon icon={faUser} />
+                    )
+                  }
+                </UserIconWrapper>          
+              </RightItemWrapper>
+              <Dropdown active={dropdownOpen}>
+                <DropdownList>
+                  { menuItems && menuItems.map(item => (
+                    
+                    <ListItem key={item.name}>
+                      {item.onClick ? (
+                        <Link to={item.route} onClick={() => item.onClick()}>
+                          {item.name}
+                        </Link>
+                      ) : (
+                        <Link to={item.route}>
+                          {item.name}
+                        </Link>
+                      )}
+                    </ListItem>
+                  ))}
+                </DropdownList>
+              </Dropdown> 
+            </>
           ) : (
             <RightItemWrapper>
               <UserIconLink title={'Войти'} to="/auth/login">
@@ -191,13 +286,7 @@ class User extends Component {
               </UserIconLink>          
             </RightItemWrapper>
           )
-        }
-        <Dropdown active={dropdownOpen}>
-          <p>fffffffffff</p>
-          <p>fffffffffff</p>
-          <p>fffffffffff</p>
-          <p>fffffffffff</p>
-        </Dropdown>       
+        }      
       </>
     )
   }
