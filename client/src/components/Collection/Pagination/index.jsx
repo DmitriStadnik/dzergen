@@ -25,7 +25,6 @@ const Page = styled.div`
     background-color: #87d37c; 
     color: white;
   }
-  
 `;
 
 const Button = styled.button`
@@ -56,8 +55,23 @@ const Button = styled.button`
 `;
 
 class Pagination extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ...this.props
+    }
+
+    this.getPagesArr = this.getPagesArr.bind(this);
+  }
+
   componentDidMount() {
     this.changePage(0, 0);
+    window.addEventListener('resize', this.getPagesArr);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.getPagesArr);
   }
 
   getPagesArr() {
@@ -68,16 +82,21 @@ class Pagination extends Component {
       }
     } = this.props;
 
-    let start = page - 5 < 0 ? 0 : page - 5;
-    let end = page + 5 > maxPage ? maxPage : page + 5;
+    let pagesAmount = 5;
+    if (window.innerWidth < 600) {
+      pagesAmount = 2;
+    }
 
-    if (maxPage > 10) {
+    let start = page - pagesAmount < 0 ? 0 : page - pagesAmount;
+    let end = page + pagesAmount > maxPage ? maxPage : page + pagesAmount;
+
+    if (maxPage > pagesAmount * 2) {
       if (maxPage - page < page) {
-        while (end - start < 10) {
+        while (end - start < pagesAmount * 2) {
           start--;
         }
       } else {
-        while (end - start < 10) {
+        while (end - start < pagesAmount * 2) {
           end++;
         }
       }

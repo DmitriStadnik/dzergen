@@ -107,5 +107,5 @@ const die = (obj) => {
 module.exports = {
   generate,
   setOwner,
-  die,
+  die
 };
