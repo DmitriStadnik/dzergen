@@ -23,7 +23,8 @@ router.post('/register', (req, res, next) => {
           name: user.name,
           email: user.email,
           password: hashedPassword,
-          image: null
+          image: null,
+          accessLevel: 0
         })
         newUser.save(function (error) {
           if (error) return res.json(newUser);
@@ -89,6 +90,21 @@ router.get('/user/get', (req, res, next) => {
     res.json(data);
   });
 });
+
+// router.get('/update-base', function(req, res, next) {
+//   User.find(function (err, items) {
+//     if (err) return console.error(err);
+
+//     items.forEach(e => {
+//       if (!e.accessLevel) {
+//         e.accessLevel = 0;
+//         e.save();
+//       }
+//     });
+
+//     res.json(items);
+//   });
+// });
 
 router.use(function (err, req, res, next) {
   if (err) {

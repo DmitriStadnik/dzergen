@@ -33,21 +33,6 @@ router.get('/', function(req, res, next) {
   Collection.getItems(rarityParam, nameParam, aliveParam, owner, page, count, sendResponse);
 });
 
-// router.get('/update-base', function(req, res, next) {
-//   Dzerdan.find(function (err, items) {
-//     if (err) return console.error(err);
-//
-//     items.forEach(e => {
-//       if (!e.nameStr) {
-//         e.nameStr = e.name.join('');
-//         e.save();
-//       }
-//     });
-//
-//     res.json(items);
-//   });
-// });
-
 router.get('/:id', function(req, res, next) {
   Dzerdan.find(function (err, items) {
     if (err) return console.error(err);
