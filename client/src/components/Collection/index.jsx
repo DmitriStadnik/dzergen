@@ -69,9 +69,12 @@ class Collection extends Component {
         page,
         itemsPerPage,
         filters
-      }
+      },
     } = this.props;
-    this.props.onFetchCollection(page, itemsPerPage, filters);
+
+    let userId = this.props.match.params.id;
+
+    this.props.onFetchCollection(page, itemsPerPage, filters, userId === 'all' ? null : userId);
   }
 
   showCard(item) {
@@ -126,6 +129,7 @@ class Collection extends Component {
 
 const mapStateToProps = state => ({
   collection: state.collection,
+  user: state.user,
 });
 
 const mapActionsToProps = {

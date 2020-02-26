@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import userRequests from "../../../requests/user-requests";
 import Functions from "../../../utils/Functions";
+import {connect} from "react-redux";
+import {updateUser} from "../../../actions/user-actions";
 
 const Dropdown = styled.div`
   transition: 0.2s;
@@ -192,26 +194,38 @@ class User extends Component {
     this.setState({
       user: data
     })
-    this.props.onUserChange(data._id);
+    data ? this.props.onUpdateUser(data._id) : this.props.onUpdateUser(null);
     this.composeMenu();
   }
 
-  composeMenu (userId) {
+  composeMenu () {
     const { user } = this.state;
-    this.setState({
-      menuItems: [
-        {
-          name: 'Профиль',
-          route: `/user/${user._id}`,
-          onClick: null
-        },
-        {
-          name: 'Выйти',
-          route: this.props.location.pathname,
-          onClick: this.logOut.bind(this)
-        },
-      ]
-    })
+    if (user) {
+      this.setState({
+        menuItems: [
+          {
+            name: 'Профиль',
+            route: `/user/${user._id}`,
+            onClick: null
+          },
+          {
+            name: 'Личная коллекция',
+            route: `/collection/${user._id}`,
+            onClick: null
+          },
+          {
+            name: 'Выйти',
+            route: this.props.location.pathname,
+            onClick: this.logOut.bind(this)
+          },
+        ]
+      })
+    } else {
+      this.setState({
+        menuItems: []
+      })
+    }
+    
   }
 
   toggleDropdown () {
@@ -293,4 +307,12 @@ class User extends Component {
   }
 }
 
-export default withRouter(User);
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapActionsToProps = {
+  onUpdateUser: updateUser
+};
+
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(User));

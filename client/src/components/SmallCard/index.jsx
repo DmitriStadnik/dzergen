@@ -157,10 +157,10 @@ export default ({item}) => (
       </Text>
       <Data>
         <DataItem>
-          Создатель: {item.createdBy ? item.createdBy[0].name : 'Генератор'}
+          Создатель: {item.createdBy && item.createdBy.length > 0 ? item.createdBy[0].name : 'Генератор'}
         </DataItem>
         <DataItem>
-          Владелец: {item.owner ? item.owner[0].name : 'Генератор'}
+          Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
         </DataItem>
         <DataItem>
           Дата создания: { Functions.parseDate(item.dateCreated) }
@@ -169,10 +169,10 @@ export default ({item}) => (
     </Column>
     <Data mobile>
       <DataItem>
-        Создатель: {item.createdBy ? item.createdBy[0].name : 'Генератор'}
+        Создатель: {item.createdBy && item.createdBy.length > 0 ? item.createdBy[0].name : 'Генератор'}
       </DataItem>
       <DataItem>
-        Владелец: {item.owner ? item.owner[0].name : 'Генератор'}
+        Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
       </DataItem>
       <DataItem>
         Дата создания: { Functions.parseDate(item.dateCreated) }

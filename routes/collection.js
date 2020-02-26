@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   const rarityParam = parseInt(req.query.rarity) || null;
   const nameParam = req.query.name || null;
   const aliveParam = req.query.alive || null;
-  // const created = req.query.created || null;
+  const owner = req.query.owner || null;
 
   let itemsCount = null;
   let items = null;
@@ -22,7 +22,6 @@ router.get('/', function(req, res, next) {
     }
 
     if (itemsCount && items) {
-      console.log(items[0]);
       res.json({
         count: itemsCount,
         data: items
@@ -30,8 +29,8 @@ router.get('/', function(req, res, next) {
     }
   }
 
-  Collection.countItems(rarityParam, nameParam, aliveParam, sendResponse);
-  Collection.getItems(rarityParam, nameParam, aliveParam, page, count, sendResponse);
+  Collection.countItems(rarityParam, nameParam, aliveParam, owner, sendResponse);
+  Collection.getItems(rarityParam, nameParam, aliveParam, owner, page, count, sendResponse);
 });
 
 // router.get('/update-base', function(req, res, next) {

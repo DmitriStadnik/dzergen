@@ -28,7 +28,6 @@ const store = createStore(
     },
     user: {
       userId: '',
-      token: '',
     }
   },
   allStoreEnhancers

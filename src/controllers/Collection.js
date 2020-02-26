@@ -1,7 +1,8 @@
 const Dzerdan = require("../models/Dzerdan").Dzerdan;
+const ObjectID = require('mongodb').ObjectID;
 
-const composeQuery = (rarityParam, nameParam, aliveParam) => {
-  const query = Dzerdan.find().populate('owner').populate('createdBy').sort('-dateCreated');
+const composeQuery = (rarityParam, nameParam, aliveParam, ownerParam) => {
+  const query = Dzerdan.find();
 
   if (rarityParam) {
     query
@@ -17,13 +18,17 @@ const composeQuery = (rarityParam, nameParam, aliveParam) => {
     query
       .where({"nameStr": { "$regex": nameParam.toLowerCase(), "$options": "i" }});
   }
+  if (ownerParam) {
+    query
+      .where({"owner": new ObjectID(ownerParam)});
+  }
 
-  return query;
+  return query.populate('owner').populate('createdBy').sort('-dateCreated');
 };
 
-const countItems = (rarityParam, nameParam, aliveParam, callback) => {
+const countItems = (rarityParam, nameParam, aliveParam, ownerParam, callback) => {
   if (callback) {
-    const query = composeQuery(rarityParam, nameParam, aliveParam);
+    const query = composeQuery(rarityParam, nameParam, aliveParam, ownerParam);
     query
       .countDocuments()
       .exec((err, count) => {
@@ -33,9 +38,9 @@ const countItems = (rarityParam, nameParam, aliveParam, callback) => {
   } 
 };
 
-const getItems = (rarityParam, nameParam, aliveParam, page, count, callback) => {
+const getItems = (rarityParam, nameParam, aliveParam, ownerParam, page, count, callback) => {
   if (callback) {
-    const query = composeQuery(rarityParam, nameParam, aliveParam);
+    const query = composeQuery(rarityParam, nameParam, aliveParam, ownerParam);
     query
       .skip(page * count)
       .limit(count)

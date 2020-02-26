@@ -4,7 +4,7 @@ export function updateUser(newUser) {
   return {
     type: UPDATE_USER,
     payload: {
-      name: newUser
+      userId: newUser
     }
   }
 }

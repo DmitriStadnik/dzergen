@@ -5,7 +5,7 @@ export default function userReducer(state = {}, {type, payload}) {
     case UPDATE_USER:
       return {
         ...state,
-        name: payload.name
+        userId: payload.userId
       };
     default:
       return state;
