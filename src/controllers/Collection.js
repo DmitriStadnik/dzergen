@@ -4,7 +4,7 @@ const ObjectID = require('mongodb').ObjectID;
 const composeQuery = (rarityParam, nameParam, aliveParam, ownerParam) => {
   const query = Dzerdan.find();
 
-  if (rarityParam) {
+  if (rarityParam !== null) {
     query
       .where('rarity')
       .eq(rarityParam);

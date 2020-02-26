@@ -13,7 +13,8 @@ const Header = styled.div`
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
-  margin: 30px 0;
+  margin: 0;
+  margin-top: 30px;
 `;
 
 const Wrapper = styled(Col)`

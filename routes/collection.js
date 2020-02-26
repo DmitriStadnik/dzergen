@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   const page = parseInt(req.query.page) || 0;
   const count = parseInt(req.query.count) || 20;
-  const rarityParam = parseInt(req.query.rarity) || null;
+  const rarityParam = req.query.rarity && req.query.rarity !== null ? parseInt(req.query.rarity) : null;
   const nameParam = req.query.name || null;
   const aliveParam = req.query.alive || null;
   const owner = req.query.owner || null;

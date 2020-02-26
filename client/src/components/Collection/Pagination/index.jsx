@@ -4,7 +4,7 @@ import {changePage} from "../../../actions/collection-actions";
 import {connect} from "react-redux";
 
 const Wrapper = styled.div`
-  margin: 50px auto;
+  margin: 10px auto;
   display: flex;
   justify-content: center;
   align-items: center;

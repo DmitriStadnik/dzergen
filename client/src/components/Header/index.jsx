@@ -136,12 +136,6 @@ class Header extends Component {
     } = this.state;
 
     const {
-      user: {
-        userId
-      }
-    } = this.props;
-
-    const {
       toggleMobileMenu,
     } = this;
 
