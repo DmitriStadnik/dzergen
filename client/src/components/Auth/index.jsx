@@ -33,10 +33,11 @@ const Button = styled.button`
   }
 `;
 
-const AuthMenu = styled.div`
+const AuthMenu = styled.form`
   max-width: 400px;
   margin: auto;
   margin-top: 80px;
+  display: block;
 `;
 
 const InputWrapper = styled.div`
@@ -101,6 +102,7 @@ export default class Auth extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
     this.handleRegisterSuccess = this.handleRegisterSuccess.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.changeErrorMsg = this.changeErrorMsg.bind(this);
   }
 
@@ -192,6 +194,10 @@ export default class Auth extends Component {
       .catch(error => console.log(error))
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
   render () {
     const {
       register,
@@ -211,7 +217,7 @@ export default class Auth extends Component {
       <Grid> 
         <Row>
           <Col sm={12}>
-            <AuthMenu>
+            <AuthMenu onSubmit={this.handleSubmit}>
               {
                 register && (
                   <InputWrapper>

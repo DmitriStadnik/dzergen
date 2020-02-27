@@ -19,6 +19,9 @@ const Dropdown = styled.div`
   right: 0;
   z-index: 9999;
   display: ${({active}) => active ? 'block' : 'none'};
+  @media screen and (max-width: 767px) {
+    top: 80px;
+  }
 `;
 
 const DropdownList = styled.ul`
@@ -40,7 +43,7 @@ const ListItem = styled.li`
     display: block;
     width: 100%;
     height: 100%;
-    padding: 2px 40px;
+    padding: 2px 10px;
     color: black;
     &:hover {
       text-decoration: none;

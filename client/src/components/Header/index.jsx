@@ -72,7 +72,7 @@ const MobileWrapper = styled.div`
     left: 0;
     top: 0;
     height: 3000px;
-    z-index: 3000;
+    z-index: 9998;
   }
 `;
 
@@ -85,7 +85,7 @@ const MobileMenuIcon = styled(FontAwesomeIcon)`
   top: 15px;
   right: 20px;
   display: none;
-  z-index: 3002;
+  z-index: 9999;
   @media screen and (max-width: 767px) {
     display: block;
   }
@@ -96,7 +96,7 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      version: '2.1',
+      version: '2.4',
       mobileMenuVisible: false,
     }
 

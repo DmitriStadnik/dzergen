@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import userRequests from "../../requests/user-requests";
 import Functions from "../../utils/Functions";
+import noimg from "./noimage.png";
 
 const Header = styled.div`
   text-align: center;
@@ -13,15 +14,15 @@ const Header = styled.div`
 
 const UserImg = styled.img`
   display: block;
-  height: 300px;
-  width: 300px;
+  height: 200px;
+  width: 200px;
   object-fit: cover;
   margin: auto; 
   border-radius: 5px;
   border: 2px solid #26a65b;
   @media screen and (max-width: 600px) {
-    height: 270px;
-    width: 270px;
+    height: 150px;
+    width: 150px;
   }
 `;
 
@@ -92,15 +93,26 @@ export default class Profile extends Component {
           {
             user ? (
               <>
-                <Col sm={6}>
-                  <UserImg src={Functions.imagePath(user.image)} />
-                </Col>
-                <Col sm={6}>
+                <Col sm={4}>
+                  {
+                    user.image ? (
+                      <UserImg src={Functions.imagePath(user.image)} />
+                    ) : (
+                      <UserImg src={noimg} />
+                    )
+                  }
                   <List>
                     <ListItem>
                       {user.name}
                     </ListItem>
                   </List>
+                </Col>
+                <Col sm={8}>
+                  {/* <List>
+                    <ListItem>
+                      {user.name}
+                    </ListItem>
+                  </List> */}
                 </Col>
               </>
             ) : (

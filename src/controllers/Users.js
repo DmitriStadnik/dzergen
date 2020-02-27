@@ -5,6 +5,7 @@ const findUserById = (id, callback) => {
   User.findOne()
     // .or([{ name: name }, { email: email }])
     .where({ _id: id })
+    .select('-password')
     .exec((err, item) => {
       if (item) {
         console.log('user found in db in passport');
