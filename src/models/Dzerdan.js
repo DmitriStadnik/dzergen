@@ -14,6 +14,7 @@ const DzerdanSchema = new mongoose.Schema({
     intellect: Number
   },
   rarity: Number,
+  price: Number,
   alive: Boolean,
   owner: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   createdBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

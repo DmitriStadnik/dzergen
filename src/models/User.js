@@ -16,7 +16,11 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   image: String,
-  accessLevel: Number
+  accessLevel: Number,
+  currency: {
+    coin: Number,
+    z: Number
+  },
 });
 
 const User = mongoose.model('User', UserSchema);

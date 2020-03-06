@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import userRequests from "../../requests/user-requests";
 import Functions from "../../utils/Functions";
 import noimg from "./noimage.png";
+import collectionRequests from '../../requests/collection-requests';
 
 const Header = styled.div`
   text-align: center;
@@ -18,7 +20,6 @@ const UserImg = styled.img`
   width: 200px;
   object-fit: cover;
   margin: auto; 
-  border-radius: 5px;
   border: 2px solid #26a65b;
   @media screen and (max-width: 600px) {
     height: 150px;
@@ -38,7 +39,46 @@ const List = styled.ul`
 const ListItem = styled.li`
   width: 100%;
   list-style: none;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const ListItemLeft = styled.div`
+  width: 100%;
+`;
+
+const ListItemRight = styled.div`
+  width: 100%;
+`;
+
+const Name = styled.div`
   text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 5px;
+  color: white;
+  background-color: #26a65b;
+  width: 200px;
+  display: block;
+  margin: auto;
+`;
+
+const Button = styled(Link)`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 5px;
+  color: white;
+  background-color: #26a65b;
+  width: 200px;
+  display: block;
+  margin: auto;
+  transition: 0.2s;
+  &:hover {
+    background-color: #87d37c; 
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 export default class Profile extends Component {
@@ -46,11 +86,14 @@ export default class Profile extends Component {
     super(props);
 
     this.state = {
-      user: null
+      user: null,
+      dzerdanCount: 0
     }
 
     this.getUser = this.getUser.bind(this);
     this.setUser = this.setUser.bind(this);
+    this.getDzerdanCount = this.getDzerdanCount.bind(this);
+    this.setDzerdanCount = this.setDzerdanCount.bind(this);
   }
 
   componentDidMount () {
@@ -62,6 +105,7 @@ export default class Profile extends Component {
       }
     } = this.props;
     this.getUser(id);
+    this.getDzerdanCount(id);
   }
 
   getUser (id) {
@@ -79,15 +123,31 @@ export default class Profile extends Component {
     })
   }
 
+  setDzerdanCount (data) {
+    this.setState({
+      dzerdanCount: data
+    })
+  }
+
+  getDzerdanCount (id) {
+    const { setDzerdanCount } = this;
+    collectionRequests.countItems({owner: id, showAll: false})
+      .then(response => {
+        setDzerdanCount(response.data.count)
+      })
+      .catch(error => console.log(error));
+  }
+
   render () {
     const {
-      user
+      user,
+      dzerdanCount
     } = this.state;
 
     return (
       <Grid> 
         <Header>
-          Профиль пользователя
+          Профиль
         </Header>
         <Row>
           {
@@ -101,18 +161,28 @@ export default class Profile extends Component {
                       <UserImg src={noimg} />
                     )
                   }
-                  <List>
-                    <ListItem>
-                      {user.name}
-                    </ListItem>
-                  </List>
+                  <Name>
+                    {user.name}
+                  </Name>
+                  <Button to={`/collection/${user._id}`}>
+                    Коллекция
+                  </Button>
                 </Col>
                 <Col sm={8}>
-                  {/* <List>
+                  <List>
                     <ListItem>
-                      {user.name}
+                      <ListItemLeft>Дзерданы:</ListItemLeft>
+                      <ListItemRight>{dzerdanCount}</ListItemRight>
                     </ListItem>
-                  </List> */}
+                    <ListItem>
+                      <ListItemLeft>Дзеркоины:</ListItemLeft>
+                      <ListItemRight>{user.currency.coin}</ListItemRight>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemLeft>Жыжа:</ListItemLeft>
+                      <ListItemRight>{user.currency.z}</ListItemRight>
+                    </ListItem>
+                  </List>
                 </Col>
               </>
             ) : (

@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
   const rarityParam = req.query.rarity && req.query.rarity !== null ? parseInt(req.query.rarity) : null;
   const nameParam = req.query.name || null;
   const aliveParam = req.query.alive || null;
+  const showAll = req.query.showAll || false;
   const owner = req.query.owner || null;
 
   let itemsCount = null;
@@ -29,15 +30,26 @@ router.get('/', function(req, res, next) {
     }
   }
 
-  Collection.countItems(rarityParam, nameParam, aliveParam, owner, sendResponse);
-  Collection.getItems(rarityParam, nameParam, aliveParam, owner, page, count, sendResponse);
+  Collection.countItems(rarityParam, nameParam, aliveParam, showAll, owner, sendResponse);
+  Collection.getItems(rarityParam, nameParam, aliveParam, showAll, owner, page, count, sendResponse);
 });
 
-router.get('/:id', function(req, res, next) {
-  Dzerdan.find(function (err, items) {
-    if (err) return console.error(err);
-    res.json(items);
-  })
+router.get('/count', function(req, res, next) {
+  const rarityParam = req.query.rarity && req.query.rarity !== null ? parseInt(req.query.rarity) : null;
+  const nameParam = req.query.name || null;
+  const aliveParam = req.query.alive || null;
+  const showAll = req.query.showAll || false;
+  const owner = req.query.owner || null;
+
+  function sendResponse(variant, item) {
+    if (item) {
+      res.json({
+        count: item,
+      });
+    }
+  }
+
+  Collection.countItems(rarityParam, nameParam, aliveParam, showAll, owner, sendResponse);
 });
 
 router.use(function (err, req, res, next) {

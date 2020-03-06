@@ -96,8 +96,11 @@ router.get('/user/get', (req, res, next) => {
 //     if (err) return console.error(err);
 
 //     items.forEach(e => {
-//       if (!e.accessLevel) {
-//         e.accessLevel = 0;
+//       if (!e.currency) {
+//         e.currency = {
+//           coin: 0,
+//           z: 0
+//         }
 //         e.save();
 //       }
 //     });

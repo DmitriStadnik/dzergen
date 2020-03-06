@@ -20,6 +20,7 @@ const generate = (createdBy) => {
     owner: createdBy,
     createdBy,
     rarity,
+    price: generatePrice(rarity),
     alive: true,
   });
 };
@@ -90,6 +91,10 @@ const generateWords = () => {
     default:
       return "well fuck " + g;
   }
+};
+
+const generatePrice = (rarity) => {
+  return (Math.floor(Math.random() * 80) + 20) + (rarity * 100);
 };
 
 const generateStats = () => {

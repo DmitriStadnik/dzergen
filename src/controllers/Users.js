@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 
 const findUserById = (id, callback) => {
   User.findOne()
-    // .or([{ name: name }, { email: email }])
     .where({ _id: id })
     .select('-password')
     .exec((err, item) => {

@@ -8,4 +8,11 @@ export default {
       }
     })
   },
+  countItems: (params) => {
+    return axios.get('/api/collection/count', {
+      params: {
+        ...params
+      }
+    })
+  },
 }

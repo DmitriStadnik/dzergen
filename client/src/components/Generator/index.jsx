@@ -108,13 +108,27 @@ export default class Generator extends Component {
 
   getRecent() {
     let that = this;
-    collectionRequests.getItems({page: 0, count: 4})
+    collectionRequests.getItems({page: 0, count: 4, showAll: true})
       .then(response => {
         that.setState({
           recent: response.data.data,
         });
       })
       .catch(error => console.log(error))
+  }
+
+  getCollection() {
+    const {
+      collection: {
+        page,
+        itemsPerPage,
+        filters
+      },
+    } = this.props;
+
+    let userId = this.props.match.params.id;
+
+    this.props.onFetchCollection(page, itemsPerPage, filters, false, userId === 'all' ? null : userId);
   }
 
   checkAuth () {

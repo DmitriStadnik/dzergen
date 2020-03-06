@@ -27,12 +27,13 @@ function fetchPostsError(payload) {
   }
 }
 
-export function fetchCollection (page, count, filters, owner) {
+export function fetchCollection (page, count, filters, showAll, owner) {
   return (dispatch) => {
     dispatch(fetchPostsRequest());
     return collectionRequests.getItems({
       page,
       count,
+      showAll,
       owner,
       ...Functions.composeFilters(filters)
     })
