@@ -64,4 +64,4 @@ typings/
 
 nodemon.json
 
-src/arrays/build
+src/arrays/build/
