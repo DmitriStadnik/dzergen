@@ -44,7 +44,10 @@ app.use('/api/users', require('./routes/users'));
 
 
 // db connect
-mongoose.connect(uri, function (err) {
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}, function (err) {
   if (err) throw err;
   console.log('Successfully connected');
 });

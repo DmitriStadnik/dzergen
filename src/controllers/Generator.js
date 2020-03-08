@@ -25,7 +25,7 @@ const generate = (createdBy) => {
 };
 
 const setRarity = (name, stats) => {
-  let nameArrays = require('../arrays/name');
+  let nameArrays = require('../arrays/legendary');
   let rarity = 0;
   if (nameArrays.legendaryNames.includes(`${name[0].word}${name[1].word}`)) {
     rarity = 4; // эпический
@@ -49,8 +49,8 @@ const setOwner = (obj, owner) => {
 const generateName = () => {
   const fs = require('fs');
 
-  const nameStart = require('../arrays/new/nameStart');
-  const nameEnd = require('../arrays/new/nameEnd');
+  const nameStart = require('../arrays/build/nameStart');
+  const nameEnd = require('../arrays/build/nameEnd');
 
   let start = nameStart.content[Math.floor(Math.random() * nameStart.content.length)];
   let end = nameEnd.content[Math.floor(Math.random() * nameEnd.content.length)];

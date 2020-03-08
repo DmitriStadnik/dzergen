@@ -38,7 +38,7 @@ export default class List extends Component {
     return (
       <Wrapper> 
         { items.map(item => (
-          <SmallCard key={item.name.join('')} item={item} />
+          <SmallCard key={item.nameStr} item={item} />
         ))}
       </Wrapper>
     )

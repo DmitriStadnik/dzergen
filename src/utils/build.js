@@ -1,6 +1,6 @@
 const generateNamesArray = () => {
-  const start = require('../arrays/new/name').start;
-  const end = require('../arrays/new/name').end;
+  const start = require('../arrays/name').start;
+  const end = require('../arrays/name').end;
 
   writeFile('nameStart', generateWordArray(start));
   writeFile('nameEnd', generateWordArray(end));
@@ -28,19 +28,19 @@ const writeFile = (fileName, fileContent) => {
 
   console.log(`Generating ${fileName}.js`);
 
-  fs.writeFile(`./src/arrays/new/${fileName}.js`, `module.exports = { \n"content": [`, (err) => {
+  fs.writeFile(`./src/arrays/build/${fileName}.js`, `module.exports = { \n"content": [`, (err) => {
     if (err) throw err;
     console.log(`${fileName}.js generation has started`);
 
     let counter = 0;
 
     fileContent.forEach((e, index) => {
-      fs.appendFile(`./src/arrays/new/${fileName}.js`, `\n${JSON.stringify(e)},`, (err) => {
+      fs.appendFile(`./src/arrays/build/${fileName}.js`, `\n${JSON.stringify(e)},`, (err) => {
         if (err) throw err;
 
         counter++;
         if (counter === fileContent.length) {
-          fs.appendFile(`./src/arrays/new/${fileName}.js`, `\n]}`, (err) => {
+          fs.appendFile(`./src/arrays/build/${fileName}.js`, `\n]}`, (err) => {
             if (err) throw err;
             console.log(`${fileName}.js generation has finished`);
           });
