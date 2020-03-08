@@ -52,6 +52,26 @@ router.get('/count', function(req, res, next) {
   Collection.countItems(rarityParam, nameParam, aliveParam, showAll, owner, sendResponse);
 });
 
+// router.get('/update-base', function(req, res, next) {
+//   Dzerdan.find(function (err, items) {
+//     if (err) return console.error(err);
+
+//     items.forEach(e => {
+//         e.name = [{
+//           word: e.name[0].word,
+//           value: 1
+//         },
+//         {
+//           word: e.name[1].word,
+//           value: 1
+//         }]
+//         e.save();
+//     });
+
+//     res.json(items);
+//   });
+// });
+
 router.use(function (err, req, res, next) {
   if (err) {
     console.log('Error', err);

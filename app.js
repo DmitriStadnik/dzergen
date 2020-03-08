@@ -6,6 +6,8 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+const launch = require('./src/utils/build');
+launch();
 
 // env
 if (process.env.NODE_ENV !== 'production') {

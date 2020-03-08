@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const DzerdanSchema = new mongoose.Schema({
   id: mongoose.Schema.Types.ObjectId,
   dateCreated: Date,
-  name: [String],
+  name: [mongoose.Schema.Types.Mixed],
   nameStr: String,
   image: String,
   words: [String],

@@ -1,5 +1,4 @@
 const utils = require('../utils/utils');
-const nameArrays = require('../arrays/name');
 const wordsArrays = require('../arrays/words');
 const Users = require('./Users')
 
@@ -12,7 +11,7 @@ const generate = (createdBy) => {
 
   return new Dzerdan({
     name,
-    nameStr: name.join(''),
+    nameStr: `${name[0].word}${name[1].word}`,
     image: generateImage(),
     words: generateWords(),
     stats,
@@ -26,8 +25,9 @@ const generate = (createdBy) => {
 };
 
 const setRarity = (name, stats) => {
+  let nameArrays = require('../arrays/name');
   let rarity = 0;
-  if (nameArrays.legendaryNames.includes(`${name[0]}${name[1]}`)) {
+  if (nameArrays.legendaryNames.includes(`${name[0].word}${name[1].word}`)) {
     rarity = 4; // эпический
   } else {
     let statSum = 0;
@@ -47,15 +47,23 @@ const setOwner = (obj, owner) => {
 };
 
 const generateName = () => {
-  const startArr = utils.shuffleArray(nameArrays.start);
-  const endArr = utils.shuffleArray(nameArrays.end);
+  const fs = require('fs');
 
-  let start = startArr[Math.floor(Math.random() * nameArrays.start.length)];
-  let end = endArr[Math.floor(Math.random() * nameArrays.end.length)];
+  const nameStart = require('../arrays/new/nameStart');
+  const nameEnd = require('../arrays/new/nameEnd');
 
-  if (Math.floor(Math.random() * 500) === 234) end = start;
-  if (Math.floor(Math.random() * 500) === 345) end += '-тян';
-  if (start[start.length - 1] === end[0]) end = end.substr(1, end.length);
+  let start = nameStart.content[Math.floor(Math.random() * nameStart.content.length)];
+  let end = nameEnd.content[Math.floor(Math.random() * nameEnd.content.length)];
+
+  if (Math.floor(Math.random() * 500) === 234) {
+    end.word = start.word;
+    end.value = start.value;
+  }
+  if (Math.floor(Math.random() * 500) === 345) {
+    end.word += '-тян'
+  };
+
+  if (start.word[start.word.length - 1] === end.word[0]) end.word = end.word.substr(1, end.word.length);
 
   return [start, end];
 };
