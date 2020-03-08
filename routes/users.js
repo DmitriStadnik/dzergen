@@ -24,7 +24,11 @@ router.post('/register', (req, res, next) => {
           email: user.email,
           password: hashedPassword,
           image: null,
-          accessLevel: 0
+          accessLevel: 0,
+          currency: {
+            coin: 0,
+            z: 0
+        }
         })
         newUser.save(function (error) {
           if (error) return res.json(newUser);
