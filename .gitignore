@@ -63,3 +63,5 @@ typings/
 .idea
 
 nodemon.json
+
+src/arrays/build
