@@ -13,6 +13,7 @@ const DzerdanSchema = new mongoose.Schema({
   alive: Boolean,
   owner: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   createdBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  kawaii: Boolean
 });
 
 const Dzerdan = mongoose.model('Dzerdan', DzerdanSchema);

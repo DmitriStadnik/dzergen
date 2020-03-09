@@ -36,6 +36,7 @@ const Name = styled.div`
   font-size: 18px;
   text-transform: uppercase;  
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
+  color: ${({text}) => text ? '#db0a5b' : 'auto'};
   border-top: none;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -103,7 +104,8 @@ export default class Dzerdan extends Component {
         alignment,
         image,
         words,
-        rarity
+        rarity,
+        kawaii
       } 
     } = this.state;
     const {
@@ -121,8 +123,8 @@ export default class Dzerdan extends Component {
     return (
       <Wrapper color={color} bgColor={bgColor}> 
         <Image src={imagePath(image)} color={color} />
-        <Name color={color}>
-          { nameStr || ''}
+        <Name color={color} text={kawaii}>
+          { nameStr || ''}{kawaii && '-тян'}
         </Name>
         <Text>
           {(words && words.join(' ')) || ''}

@@ -27,15 +27,17 @@ const generate = (createdBy) => {
 const setRarity = (name, alignment) => {
   let nameArrays = require('../arrays/legendary');
   let rarity = 0;
+
+  let statSum = name[0].value + name[1].value + Math.abs(alignment);
+
   if (nameArrays.legendaryNames.includes(`${name[0].word}${name[1].word}`)) {
     rarity = 4; // эпический
   } else {
-
-    // if (statSum >= 0 && statSum < 20) rarity = 0; // рядовой
-    // else if (statSum >= 20 && statSum < 30) rarity = 1; // бывалый
-    // else if (statSum >= 30 && statSum < 36) rarity = 2; // закаленный в бою
-    // else if (statSum >= 36 && statSum < 40) rarity = 3; // легендарный
-    // else rarity = 4; // эпический
+    if (statSum >= 2 && statSum < 7) rarity = 0; // рядовой
+    else if (statSum >= 7 && statSum < 11) rarity = 1; // бывалый
+    else if (statSum >= 11 && statSum < 13) rarity = 2; // закаленный в бою
+    else if (statSum >= 13 && statSum < 15) rarity = 3; // легендарный
+    else rarity = 4; // эпический
   }
   return rarity
 };

@@ -53,11 +53,14 @@ router.get('/count', function(req, res, next) {
 });
 
 // router.get('/update-base', function(req, res, next) {
+//   const generator = require('../src/controllers/Generator');
 //   Dzerdan.find(function (err, items) {
 //     if (err) return console.error(err);
 
 //     items.forEach(e => {
-//         e.alignment = Math.floor(Math.random() * 10) - 5
+//         if (e.name[1].word.includes('-')) {
+//           console.log(e.nameStr);
+//         }
 //         e.save();
 //     });
 

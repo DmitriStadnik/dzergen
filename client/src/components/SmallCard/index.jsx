@@ -49,6 +49,7 @@ const Image = styled.img`
 const Name = styled.div`
   background-color: white;
   border: 1px solid ${({color}) => color ? color : '#2e3131'};
+  color: ${({text}) => text ? '#db0a5b' : 'auto'};
   text-align: center;
   text-transform: uppercase;
   padding: 10px;
@@ -138,8 +139,8 @@ export default ({item}) => (
       }
     </Column>
     <Column>
-      <Name color={Functions.getColor(item.rarity)}>
-        {item.nameStr}
+      <Name color={Functions.getColor(item.rarity)} text={item.kawaii}>
+        {item.nameStr}{item.kawaii && '-тян'}
       </Name>
       <Text>
         {item.words.join(' ')}
