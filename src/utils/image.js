@@ -29,12 +29,6 @@ function launch () {
 
       width[0] <= width[1] ? firstImage.resize(width[1], Jimp.AUTO) : secondImage.resize(width[0], Jimp.AUTO);
 
-      console.log(firstImage.bitmap.width, firstImage.bitmap.height);
-      console.log(secondImage.bitmap.width, secondImage.bitmap.height);
-
-      // width[0] <= width[1] ? targetWidth = width[0] : targetWidth = width[1];
-      // height[0] <= height[1] ? targetHeight = height[0] : targetHeight = height[1];
-
       targetHeight = height[0];
       targetWidth = width[0];
 

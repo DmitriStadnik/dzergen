@@ -7,12 +7,7 @@ const DzerdanSchema = new mongoose.Schema({
   nameStr: String,
   image: String,
   words: [String],
-  stats: {
-    vitality: Number,
-    strength: Number,
-    arse: Number,
-    intellect: Number
-  },
+  alignment: Number,
   rarity: Number,
   price: Number,
   alive: Boolean,

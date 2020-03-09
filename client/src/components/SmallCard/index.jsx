@@ -13,6 +13,7 @@ const Card = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
+  position: relative;
 `;
 
 const Column = styled.div`
@@ -75,19 +76,6 @@ const Text = styled.div`
   }
 `;
 
-const Stats = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 200px;
-  margin-top: 10px;
-  @media screen and (max-width: 991px) {
-    width: 150px;
-  }
-  @media screen and (max-width: 500px) {
-    width: 115px;
-  }
-`;
-
 const Stat = styled.div`
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
@@ -99,8 +87,9 @@ const Stat = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  margin: 0 5px;
-  padding-top: 1px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
   @media screen and (max-width: 991px) {
     height: 25px;
     width: 25px;
@@ -133,20 +122,21 @@ export default ({item}) => (
   <Card color={Functions.getColor(item.rarity)} bgColor={Functions.getBgColor(item.rarity)} key={item.name.join('')}>
     <Column left>
       <Image src={Functions.imagePath(item.image)} color={Functions.getColor(item.rarity)} />
-      <Stats>
-        <Stat color={'#26a65b'} bgColor={'#2ecc71'} title='Выносливость'>
-          {item.stats.vitality}
-        </Stat>
-        <Stat color={'#cf000f'} bgColor={'#e74c3c'} title='Сила'>
-          {item.stats.strength}
-        </Stat>
-        <Stat color={'#663399'} bgColor={'#a537fd'} title='ЖЕПА'>
-          {item.stats.arse}
-        </Stat>
-        <Stat color={'#19b5fe'} bgColor={'#6bb9f0'} title='Интеллект'>
-          {item.stats.intellect}
-        </Stat>
-      </Stats>
+      {
+        item.alignment > 0 ? (
+          <Stat color={'#26a65b'} bgColor={'#2ecc71'} title={`Порядочный: +${item.alignment}`}>
+            {`+${item.alignment}`}
+          </Stat>
+        ) : item.alignment < 0 ? (
+          <Stat color={'#cf000f'} bgColor={'#e74c3c'} title={`Хитровыебанный: ${item.alignment}`}>
+            {item.alignment}
+          </Stat>
+        ) : (
+          <Stat color={'#2e3131'} bgColor={'#ececec'} title={`Нейтральный: ${item.alignment}`}>
+            {item.alignment}
+          </Stat>
+        )
+      }
     </Column>
     <Column>
       <Name color={Functions.getColor(item.rarity)}>

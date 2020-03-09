@@ -6,15 +6,15 @@ const generate = (createdBy) => {
   const Dzerdan = require("../models/Dzerdan").Dzerdan;
 
   let name = generateName();
-  let stats = generateStats();  
-  let rarity = setRarity(name, stats);
+  let alignment = generateAlignment();  
+  let rarity = setRarity(name, alignment);
 
   return new Dzerdan({
     name,
     nameStr: `${name[0].word}${name[1].word}`,
     image: generateImage(),
     words: generateWords(),
-    stats,
+    alignment,
     dateCreated: Date.now(),
     owner: createdBy,
     createdBy,
@@ -24,20 +24,18 @@ const generate = (createdBy) => {
   });
 };
 
-const setRarity = (name, stats) => {
+const setRarity = (name, alignment) => {
   let nameArrays = require('../arrays/legendary');
   let rarity = 0;
   if (nameArrays.legendaryNames.includes(`${name[0].word}${name[1].word}`)) {
     rarity = 4; // эпический
   } else {
-    let statSum = 0;
-    Object.keys(stats).forEach(e => statSum += stats[e]);
 
-    if (statSum >= 0 && statSum < 20) rarity = 0; // рядовой
-    else if (statSum >= 20 && statSum < 30) rarity = 1; // бывалый
-    else if (statSum >= 30 && statSum < 36) rarity = 2; // закаленный в бою
-    else if (statSum >= 36 && statSum < 40) rarity = 3; // легендарный
-    else rarity = 4; // эпический
+    // if (statSum >= 0 && statSum < 20) rarity = 0; // рядовой
+    // else if (statSum >= 20 && statSum < 30) rarity = 1; // бывалый
+    // else if (statSum >= 30 && statSum < 36) rarity = 2; // закаленный в бою
+    // else if (statSum >= 36 && statSum < 40) rarity = 3; // легендарный
+    // else rarity = 4; // эпический
   }
   return rarity
 };
@@ -105,13 +103,8 @@ const generatePrice = (rarity) => {
   return (Math.floor(Math.random() * 80) + 20) + (rarity * 100);
 };
 
-const generateStats = () => {
-  return {
-    vitality: Math.floor(Math.random() * 10) + 1,
-    strength: Math.floor(Math.random() * 10) + 1,
-    arse: Math.floor(Math.random() * 10) + 1,
-    intellect: Math.floor(Math.random() * 10) + 1,
-  };
+const generateAlignment = () => {
+  return Math.floor(Math.random() * 10) - 5;
 };
 
 const die = (obj) => {

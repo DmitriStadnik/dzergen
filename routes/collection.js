@@ -57,14 +57,7 @@ router.get('/count', function(req, res, next) {
 //     if (err) return console.error(err);
 
 //     items.forEach(e => {
-//         e.name = [{
-//           word: e.name[0].word,
-//           value: 1
-//         },
-//         {
-//           word: e.name[1].word,
-//           value: 1
-//         }]
+//         e.alignment = Math.floor(Math.random() * 10) - 5
 //         e.save();
 //     });
 

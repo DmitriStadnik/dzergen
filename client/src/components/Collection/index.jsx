@@ -31,6 +31,7 @@ const CardWrapper = styled.div`
   display: ${({active}) => active ? 'flex' : 'none'};
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 `;
 
 const Overlay = styled.div`
@@ -41,6 +42,7 @@ const Overlay = styled.div`
   left: 0;
   background: black;
   opacity: 0.5;
+  z-index: 9998;
 `;
 
 class Collection extends Component {
