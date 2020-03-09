@@ -19,7 +19,7 @@ const generate = (createdBy) => {
     owner: createdBy,
     createdBy,
     rarity,
-    price: generatePrice(rarity),
+    price: generatePrice(alignment, name, rarity),
     alive: true,
   });
 };
@@ -47,8 +47,6 @@ const setOwner = (obj, owner) => {
 };
 
 const generateName = () => {
-  const fs = require('fs');
-
   const nameStart = require('../arrays/build/nameStart');
   const nameEnd = require('../arrays/build/nameEnd');
 
@@ -101,8 +99,9 @@ const generateWords = () => {
   }
 };
 
-const generatePrice = (rarity) => {
-  return (Math.floor(Math.random() * 80) + 20) + (rarity * 100);
+const generatePrice = (alignment, name, rarity) => {
+  let mod = alignment * (name[0].value + name[1].value);
+  return (Math.floor(Math.random() * 80) + 20) + (rarity * 100) + mod;
 };
 
 const generateAlignment = () => {

@@ -70,22 +70,17 @@ const Text = styled.div`
 const Stat = styled.div`
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
+  font-size: 12px;
   color: white;
-  font-size: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   position: absolute;
-  top: 5px;
-  left: 5px;
-  @media screen and (max-width: 991px) {
-    height: 25px;
-    width: 25px;
-    font-size: 12px;
-  }
+  top: 2px;
+  left: 2px;
 `;
 
 const Data = styled.div`
@@ -132,17 +127,6 @@ export default ({item}) => (
       <Name color={Functions.getColor(item.rarity)} text={item.kawaii}>
         {item.nameStr}{item.kawaii && '-тян'}
       </Name>
-      {/* <Data>
-        <DataItem>
-          Создатель: {item.createdBy && item.createdBy.length > 0 ? item.createdBy[0].name : 'Генератор'}
-        </DataItem>
-        <DataItem>
-          Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
-        </DataItem>
-        <DataItem>
-          Дата создания: { Functions.parseDate(item.dateCreated) }
-        </DataItem>
-      </Data> */}
       <Rarity>
         {`${item.alignment > 0 ? 'Порядочный' : item.alignment < 0 ? 'Хитровыебанный' : ''} ${Functions.parseRarity(item.rarity)} ${item.kawaii ? 'ня-' : ''}дзердан`}
       </Rarity>
@@ -152,6 +136,12 @@ export default ({item}) => (
     </Text>
     <DataItem>
       Дата создания: { Functions.parseDate(item.dateCreated) }
+    </DataItem>
+    <DataItem>
+      Создатель: {item.createdBy && item.createdBy.length > 0 ? item.createdBy[0].name : 'Генератор'}
+    </DataItem>
+    <DataItem>
+      Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
     </DataItem>
   </Card>
 );

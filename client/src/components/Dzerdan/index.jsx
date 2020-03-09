@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
   margin: auto;
   position: relative;
-  z-index: 9999;
+  z-index: 9000;
   @media screen and (max-width: 600px) {
     width: 300px;
   }
@@ -74,6 +74,7 @@ const Stat = styled.div`
   position: absolute; 
   top: 5px;
   left: 5px;
+  line-height: 15px;
 `;
 
 export default class Dzerdan extends Component {
