@@ -33,9 +33,9 @@ const setRarity = (name, alignment) => {
   if (nameArrays.legendaryNames.includes(`${name[0].word}${name[1].word}`)) {
     rarity = 4; // эпический
   } else {
-    if (statSum >= 2 && statSum < 7) rarity = 0; // рядовой
-    else if (statSum >= 7 && statSum < 11) rarity = 1; // бывалый
-    else if (statSum >= 11 && statSum < 13) rarity = 2; // закаленный в бою
+    if (statSum >= 2 && statSum < 6) rarity = 0; // рядовой
+    else if (statSum >= 6 && statSum < 10) rarity = 1; // бывалый
+    else if (statSum >= 10 && statSum < 13) rarity = 2; // закаленный в бою
     else if (statSum >= 13 && statSum < 15) rarity = 3; // легендарный
     else rarity = 4; // эпический
   }

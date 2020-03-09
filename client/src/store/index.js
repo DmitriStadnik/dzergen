@@ -18,7 +18,7 @@ const store = createStore(
   {
     collection: {
       page: 0,
-      itemsPerPage: 20,
+      itemsPerPage: 30,
       items: [],
       itemsCount: 0,
       filters: {
