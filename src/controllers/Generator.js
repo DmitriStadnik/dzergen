@@ -19,6 +19,7 @@ const generate = (createdBy) => {
     rarity,
     price: generatePrice(alignment, name, rarity),
     alive: true,
+    kawaii: Math.floor(Math.random() * 500) === 345
   });
 };
 
@@ -55,9 +56,6 @@ const generateName = () => {
     end.word = start.word;
     end.value = start.value;
   }
-  if (Math.floor(Math.random() * 500) === 345) {
-    end.word += '-тян'
-  };
 
   if (start.word[start.word.length - 1] === end.word[0]) end.word = end.word.substr(1, end.word.length);
 
