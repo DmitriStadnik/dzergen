@@ -29,21 +29,13 @@ const Column = styled.div`
 `;
 
 const Image = styled.img`
-  height: 200px;
-  width: 200px;
+  height: 100px;
+  width: 100px;
   flex-shrink: 0;
   object-fit: cover;
   border: 1px solid ${({color}) => color ? color : '#2e3131'};
   border-radius: 3px;
   margin-right: 10px;
-  @media screen and (max-width: 991px) {
-    height: 150px;
-    width: 150px;
-  }
-  @media screen and (max-width: 500px) {
-    height: 115px;
-    width: 115px;
-  }
 `;
 
 const Name = styled.div`
@@ -67,7 +59,8 @@ const Text = styled.div`
   font-size: 12px;
   width: 100%;
   height: 145px;
-  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
   @media screen and (max-width: 991px) {
     height: 130px;
   }
@@ -99,15 +92,11 @@ const Stat = styled.div`
 `;
 
 const Data = styled.div`
-  display: ${({mobile}) => mobile ? 'none' : 'flex'};
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
   margin-top: 5px;
-  @media screen and (max-width: 991px) {
-    display: ${({mobile}) => mobile ? 'flex' : 'none'};
-  }
 `;
 
 const DataItem = styled.div`
@@ -116,6 +105,13 @@ const DataItem = styled.div`
   @media screen and (max-width: 500px) {
     font-size: 10px;
   }
+`;
+
+const Rarity = styled.div`
+  width: 100%;
+  font-size: 10px;
+  text-transform: uppercase;
+  text-align: center;
 `;
 
 export default ({item}) => (
@@ -142,10 +138,7 @@ export default ({item}) => (
       <Name color={Functions.getColor(item.rarity)} text={item.kawaii}>
         {item.nameStr}{item.kawaii && '-тян'}
       </Name>
-      <Text>
-        {item.words.join(' ')}
-      </Text>
-      <Data>
+      {/* <Data>
         <DataItem>
           Создатель: {item.createdBy && item.createdBy.length > 0 ? item.createdBy[0].name : 'Генератор'}
         </DataItem>
@@ -155,18 +148,16 @@ export default ({item}) => (
         <DataItem>
           Дата создания: { Functions.parseDate(item.dateCreated) }
         </DataItem>
-      </Data>
+      </Data> */}
+      <Rarity>
+        {`${item.alignment > 0 ? 'Порядочный' : item.alignment < 0 ? 'Хитровыебанный' : ''} ${Functions.parseRarity(item.rarity)} ${item.kawaii ? 'ня-' : ''}дзердан`}
+      </Rarity>
     </Column>
-    <Data mobile>
-      <DataItem>
-        Создатель: {item.createdBy && item.createdBy.length > 0 ? item.createdBy[0].name : 'Генератор'}
-      </DataItem>
-      <DataItem>
-        Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
-      </DataItem>
-      <DataItem>
-        Дата создания: { Functions.parseDate(item.dateCreated) }
-      </DataItem>
-    </Data>
+    <Text>
+      {item.words.join(' ')}
+    </Text>
+    <DataItem>
+      Дата создания: { Functions.parseDate(item.dateCreated) }
+    </DataItem>
   </Card>
 );
