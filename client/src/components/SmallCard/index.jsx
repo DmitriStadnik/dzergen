@@ -59,11 +59,10 @@ const Traits = styled.div`
 const Trait = styled.div`
   background-color: rgba(255, 255, 255, 0.5);
   margin-bottom: 2px;
-  padding: 5px;
+  padding: 5px 2px;
   border-radius: 5px;
-  font-size: 10px;
+  font-size: 11px;
   text-align: center;
-  margin-right: 2px;
 `;
 
 const Stat = styled.div`
