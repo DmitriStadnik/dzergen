@@ -22,10 +22,7 @@ const Column = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
-  flex: ${({left}) => left ? '1 0 30%' : '1 0 50%'};
-  @media screen and (max-width: 500px) {
-    width: ${({left}) => left ? 'auto' : '100%'};
-  }
+  flex: ${({left}) => left ? '0' : '1'};
 `;
 
 const Image = styled.img`
@@ -58,14 +55,14 @@ const Text = styled.div`
   padding: 10px;
   font-size: 12px;
   width: 100%;
-  height: 145px;
+  height: 80px;
   margin-top: 10px;
   margin-bottom: 10px;
   @media screen and (max-width: 991px) {
-    height: 130px;
+    height: 70px;
   }
   @media screen and (max-width: 500px) {
-    height: 100px;
+    height: 60px;
     font-size: 11px;
   }
 `;
@@ -73,10 +70,10 @@ const Text = styled.div`
 const Stat = styled.div`
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
-  height: 35px;
-  width: 35px;
+  height: 30px;
+  width: 30px;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,10 +98,7 @@ const Data = styled.div`
 
 const DataItem = styled.div`
   width: 100%;
-  font-size: 12px;
-  @media screen and (max-width: 500px) {
-    font-size: 10px;
-  }
+  font-size: 10px;
 `;
 
 const Rarity = styled.div`

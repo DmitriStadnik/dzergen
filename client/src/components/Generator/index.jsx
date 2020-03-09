@@ -164,7 +164,7 @@ export default class Generator extends Component {
       <Grid> 
         <Row>
           <Col md={6} sm={12}>
-            <Header>Генератор 2.1</Header>
+            <Header>Генератор 2.5</Header>
             {
               dzerdan ? 
                 <Dzerdan item={dzerdan} />

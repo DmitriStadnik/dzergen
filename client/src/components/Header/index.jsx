@@ -96,7 +96,7 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      version: '2.4',
+      version: '2.5',
       mobileMenuVisible: false,
     }
 
