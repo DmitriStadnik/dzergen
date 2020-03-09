@@ -46,7 +46,7 @@ const Name = styled.div`
 const Rarity = styled.div`
   width: 100%;
   text-align: center;
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase; 
   margin-top: 10px;
 `;
@@ -116,6 +116,8 @@ export default class Dzerdan extends Component {
     let color = getColor(rarity);
     let bgColor = getBgColor(rarity);
 
+    let rarityMod = alignment > 0 ? 'Порядочный' : alignment < 0 ? 'Хитровыебанный' : '';
+
     return (
       <Wrapper color={color} bgColor={bgColor}> 
         <Image src={imagePath(image)} color={color} />
@@ -126,7 +128,7 @@ export default class Dzerdan extends Component {
           {(words && words.join(' ')) || ''}
         </Text>
         <Rarity>
-          {`${parseRarity(rarity)} дзердан`}
+          {`${rarityMod} ${parseRarity(rarity)} дзердан`}
         </Rarity>
         {
           alignment > 0 ? (

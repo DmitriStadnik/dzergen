@@ -79,8 +79,8 @@ const Text = styled.div`
 const Stat = styled.div`
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   color: white;
   font-size: 16px;
   display: flex;
@@ -94,7 +94,6 @@ const Stat = styled.div`
     height: 25px;
     width: 25px;
     font-size: 12px;
-    margin: 0 1px;
   }
 `;
 
