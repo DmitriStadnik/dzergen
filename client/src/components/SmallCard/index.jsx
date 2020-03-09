@@ -33,6 +33,7 @@ const Image = styled.img`
   border: 1px solid ${({color}) => color ? color : '#2e3131'};
   border-radius: 3px;
   margin-right: 10px;
+  margin-bottom: 5px;
 `;
 
 const Name = styled.div`
@@ -50,21 +51,19 @@ const Name = styled.div`
   }
 `;
 
-const Text = styled.div`
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 10px;
-  font-size: 12px;
+const Traits = styled.div`
+  height: 140px;
   width: 100%;
-  height: 80px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  @media screen and (max-width: 991px) {
-    height: 70px;
-  }
-  @media screen and (max-width: 500px) {
-    height: 60px;
-    font-size: 11px;
-  }
+`;
+
+const Trait = styled.div`
+  background-color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 2px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 10px;
+  text-align: center;
+  margin-right: 2px;
 `;
 
 const Stat = styled.div`
@@ -99,6 +98,7 @@ const DataItem = styled.div`
 const Rarity = styled.div`
   width: 100%;
   font-size: 10px;
+  padding: 5px;
   text-transform: uppercase;
   text-align: center;
 `;
@@ -131,9 +131,15 @@ export default ({item}) => (
         {`${item.alignment > 0 ? 'Порядочный' : item.alignment < 0 ? 'Хитровыебанный' : ''} ${Functions.parseRarity(item.rarity)} ${item.kawaii ? 'ня-' : ''}дзердан`}
       </Rarity>
     </Column>
-    <Text>
-      {item.words.join(' ')}
-    </Text>
+    <Traits>
+      { item.traits && item.traits.map(trait =>(
+        <Trait key={`${trait.which.word} ${trait.what.word} ${trait.who.word}`}>
+        {
+          `${trait.which.word} ${trait.what.word} ${trait.who.word}`
+        }
+        </Trait>
+      ))}
+    </Traits>
     <DataItem>
       Дата создания: { Functions.parseDate(item.dateCreated) }
     </DataItem>

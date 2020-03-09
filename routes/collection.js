@@ -58,10 +58,8 @@ router.get('/count', function(req, res, next) {
 //     if (err) return console.error(err);
 
 //     items.forEach(e => {
-//         if (e.name[1].word.includes('-')) {
-//           console.log(e.nameStr);
-//         }
-//         e.save();
+//       e.traits = generator.generateTraits(e.rarity + 1)
+//       e.save();
 //     });
 
 //     res.json(items);

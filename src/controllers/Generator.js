@@ -1,6 +1,4 @@
 const utils = require('../utils/utils');
-const wordsArrays = require('../arrays/words');
-const Users = require('./Users')
 
 const generate = (createdBy) => {
   const Dzerdan = require("../models/Dzerdan").Dzerdan;
@@ -13,7 +11,7 @@ const generate = (createdBy) => {
     name,
     nameStr: `${name[0].word}${name[1].word}`,
     image: generateImage(),
-    words: generateWords(),
+    traits: generateTraits(rarity + 1),
     alignment,
     dateCreated: Date.now(),
     owner: createdBy,
@@ -73,30 +71,38 @@ const generateImage = () => {
   return img[Math.floor(Math.random() * img.length)];
 };
 
-const generateWords = () => {
-  const who = utils.shuffleArray(wordsArrays.who);
+const generateTraits = (amount) => {
+  const who = require('../arrays/build/who').content;
 
-  let g = Math.floor(Math.random() * 2);
-  switch (g) {
-    case 1:
-      const whichM = utils.shuffleArray(wordsArrays.whichM);
-      const whatM = utils.shuffleArray(wordsArrays.whatM);
-      return [
-        whichM[Math.floor(Math.random() * whichM.length)],
-        whatM[Math.floor(Math.random() * whatM.length)],
-        who[Math.floor(Math.random() * who.length)]
-      ];
-    case 0:
-      const whichF = utils.shuffleArray(wordsArrays.whichF);
-      const whatF = utils.shuffleArray(wordsArrays.whatF);
-      return [
-        whichF[Math.floor(Math.random() * whichF.length)],
-        whatF[Math.floor(Math.random() * whatF.length)],
-        who[Math.floor(Math.random() * who.length)]
-      ];
-    default:
-      return "well fuck " + g;
-  }
+  let result = [];
+  let which = [];
+  let what = [];
+  
+  [...Array(amount)].map(() => {
+    let g = Math.floor(Math.random() * 3);
+    switch (g) {
+      case 2:
+        which = require('../arrays/build/whichM').content;
+        what = require('../arrays/build/whatM').content;
+      case 1:
+        which = require('../arrays/build/whichF').content;
+        what = require('../arrays/build/whatF').content;
+      case 0:
+        which = require('../arrays/build/whichMulti').content;
+        what = require('../arrays/build/whatMulti').content;
+      default:
+        which = require('../arrays/build/whichM').content;
+        what = require('../arrays/build/whatM').content;
+    }
+
+    result.push({
+      which: which[Math.floor(Math.random() * which.length)],
+      what: what[Math.floor(Math.random() * what.length)],
+      who: who[Math.floor(Math.random() * who.length)]
+    });
+  })
+  
+  return result;
 };
 
 const generatePrice = (alignment, name, rarity) => {

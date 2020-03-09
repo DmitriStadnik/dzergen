@@ -6,6 +6,7 @@ import Functions from "../../utils/Functions";
 const Wrapper = styled.div`
   border: 3px solid ${({color}) => color ? color : '#2e3131'};
   width: 340px;
+  height: 550px;
   padding: 10px;
   border-radius: 10px;
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
@@ -41,6 +42,7 @@ const Name = styled.div`
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 5px;
+  margin-bottom: 10px;
   background-color: white;
 `;
 
@@ -49,16 +51,18 @@ const Rarity = styled.div`
   text-align: center;
   font-size: 10px;
   text-transform: uppercase; 
-  margin-top: 10px;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
 `;
 
 const Text = styled.div`
   background-color: rgba(255, 255, 255, 0.5);
-  text-align: center;
-  margin-top: 10px;
-  padding: 20px;
-  height: 120px;
+  margin-bottom: 2px;
+  padding: 5px;
   border-radius: 5px;
+  font-size: 10px;
+  text-align: center;
 `;
 
 const Stat = styled.div`
@@ -104,7 +108,7 @@ export default class Dzerdan extends Component {
         nameStr,
         alignment,
         image,
-        words,
+        traits,
         rarity,
         kawaii
       } 
@@ -127,9 +131,14 @@ export default class Dzerdan extends Component {
         <Name color={color} text={kawaii}>
           { nameStr || ''}{kawaii && '-тян'}
         </Name>
-        <Text>
-          {(words && words.join(' ')) || ''}
-        </Text>
+        { traits && traits.map(item =>(
+          <Text key={`${item.which.word} ${item.what.word} ${item.who.word}`}>
+            {
+              `${item.which.word} ${item.what.word} ${item.who.word}`
+            }
+          </Text>
+        ))}
+        
         <Rarity>
           {`${rarityMod} ${parseRarity(rarity)} ${kawaii ? 'ня-' : ''}дзердан`}
         </Rarity>
