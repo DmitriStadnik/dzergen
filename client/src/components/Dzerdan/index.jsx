@@ -130,7 +130,7 @@ export default class Dzerdan extends Component {
           {(words && words.join(' ')) || ''}
         </Text>
         <Rarity>
-          {`${rarityMod} ${parseRarity(rarity)} ${kawaii && 'ня-'}дзердан`}
+          {`${rarityMod} ${parseRarity(rarity)} ${kawaii ? 'ня-' : ''}дзердан`}
         </Rarity>
         {
           alignment > 0 ? (
