@@ -154,7 +154,7 @@ export default ({item}) => (
     <DataItem>
       Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
     </DataItem>
-    <Price color={'#cf000f'} bgColor={'#e74c3c'}>
+    <Price color={'#cf000f'} bgColor={'#e74c3c'}  title={`Цена: ${item.price} дк`}>
       {item.price}
     </Price>
   </Card>
