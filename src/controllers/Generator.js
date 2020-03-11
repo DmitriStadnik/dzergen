@@ -82,15 +82,19 @@ const generateTraits = (amount) => {
       case 2:
         which = require('../arrays/build/whichM').content;
         what = require('../arrays/build/whatM').content;
+        break;
       case 1:
         which = require('../arrays/build/whichF').content;
         what = require('../arrays/build/whatF').content;
+        break;
       case 0:
         which = require('../arrays/build/whichMulti').content;
         what = require('../arrays/build/whatMulti').content;
+        break;
       default:
         which = require('../arrays/build/whichM').content;
         what = require('../arrays/build/whatM').content;
+        break;
     }
 
     result.push({

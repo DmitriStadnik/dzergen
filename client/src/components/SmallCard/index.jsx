@@ -81,14 +81,6 @@ const Stat = styled.div`
   left: 2px;
 `;
 
-const Data = styled.div`
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 5px;
-`;
-
 const DataItem = styled.div`
   width: 100%;
   font-size: 10px;
@@ -100,6 +92,20 @@ const Rarity = styled.div`
   padding: 5px;
   text-transform: uppercase;
   text-align: center;
+`;
+
+const Price = styled.div`
+  border: 2px solid ${({color}) => color ? color : '#2e3131'};
+  background-color: ${({bgColor}) => bgColor ? bgColor : ''};
+  font-size: 12px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  padding: 5px 10px;
+  bottom: 10px;
+  right: 10px;
 `;
 
 export default ({item}) => (
@@ -148,5 +154,8 @@ export default ({item}) => (
     <DataItem>
       Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
     </DataItem>
+    <Price color={'#cf000f'} bgColor={'#e74c3c'}>
+      {item.price}
+    </Price>
   </Card>
 );

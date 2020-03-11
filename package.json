@@ -1,6 +1,6 @@
 {
-  "name": "dzergen",
-  "version": "0.0.0",
+  "name": "Dynamic Zerdan Generator",
+  "version": "0.2.5",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
