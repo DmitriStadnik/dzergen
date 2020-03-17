@@ -73,6 +73,39 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const DebugWrapper = styled.div`
+  position: fixed;
+  top: 50px;
+  left: 0;
+  z-index: 9999;
+`;
+
+const DebugButton = styled.button`
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 5px;
+  color: white;
+  background-color: #26a65b;
+  width: 100%;
+  display: block;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  text-align: left;
+  &:hover {
+    background-color: #87d37c; 
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: #a2ded0; 
+    &:hover {
+      background-color: #a2ded0;
+    }
+  }
+`;
+
 export default class Generator extends Component {
   constructor() {
     super();
@@ -81,6 +114,44 @@ export default class Generator extends Component {
       dzerdan: null,
       savePossible: true,
       recent: null,
+      debug: false,
+      debugButtons: [
+        {
+          name: 'рядовой',
+          path: '/generator/debug/generate',
+          data: {
+            rarity: 0
+          }
+        },
+        {
+          name: 'бывалый',
+          path: '/generator/debug/generate',
+          data: {
+            rarity: 1
+          }
+        },
+        {
+          name: 'закаленный в бою',
+          path: '/generator/debug/generate',
+          data: {
+            rarity: 2
+          }
+        },
+        {
+          name: 'достопочтенный',
+          path: '/generator/debug/generate',
+          data: {
+            rarity: 3
+          }
+        },
+        {
+          name: 'легендарный',
+          path: '/generator/debug/generate',
+          data: {
+            rarity: 4
+          }
+        },
+      ]
     }
 
     this.checkAuth = this.checkAuth.bind(this);
@@ -158,45 +229,76 @@ export default class Generator extends Component {
       .catch(error => console.log(error))
   }
 
+  debugGetDzerdan(path, data) {
+    let that = this;
+    axios.get(path, {
+      params: data
+    })
+      .then(response => {
+        that.setState({
+          dzerdan: response.data,
+          savePossible: true
+        });
+      })
+      .catch(error => console.log(error))
+  }
+
   render () {
-    const {dzerdan, savePossible, recent} = this.state;
+    const {
+      dzerdan, 
+      savePossible, 
+      recent, 
+      debugButtons,
+      debug
+    } = this.state;
     return (
-      <Grid> 
-        <Row>
-          <Col md={6} sm={12}>
-            <Header>Генератор 2.5</Header>
-            {
-              dzerdan ? 
-                <Dzerdan item={dzerdan} />
-              : null
-            }
-            <Buttons>
-              <Button
-                onClick={() => this.checkAuth()}
-              >
-                Генерировать
-              </Button>
-              <Button
-                onClick={() => this.saveDzerdan()}
-                disabled={!savePossible}
-              >
-                {savePossible ? 'Сохранить' : 'Сохранено' }
-              </Button>
-            </Buttons>
-          </Col>
-          <Col md={6} sm={12}>
-            <Header>Последние дзерданы</Header>
-            {
-              recent ? 
-                <List items={recent} />
-              : null
-            }
-            <StyledLink to="/collection">
-              Коллекция
-            </StyledLink>
-          </Col>
-        </Row>
-      </Grid>
+      <>
+        {
+          debug && (
+            <DebugWrapper> 
+              { debugButtons.map(item => (
+                <DebugButton key={item.name} onClick={() => this.debugGetDzerdan(item.path, item.data)}>{item.name}</DebugButton>
+              ))}
+            </DebugWrapper>
+          )
+        }
+        <Grid> 
+          <Row>
+            <Col md={6} sm={12}>
+              <Header>Генератор 2.5</Header>
+              {
+                dzerdan ? 
+                  <Dzerdan item={dzerdan} />
+                : null
+              }
+              <Buttons>
+                <Button
+                  onClick={() => this.checkAuth()}
+                >
+                  Генерировать
+                </Button>
+                <Button
+                  onClick={() => this.saveDzerdan()}
+                  disabled={!savePossible}
+                >
+                  {savePossible ? 'Сохранить' : 'Сохранено' }
+                </Button>
+              </Buttons>
+            </Col>
+            <Col md={6} sm={12}>
+              <Header>Последние дзерданы</Header>
+              {
+                recent ? 
+                  <List items={recent} />
+                : null
+              }
+              <StyledLink to="/collection">
+                Коллекция
+              </StyledLink>
+            </Col>
+          </Row>
+        </Grid>
+      </>
     )
   }
 }

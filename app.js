@@ -41,6 +41,7 @@ app.use('/images', express.static(path.join(__dirname, "/public/img/dzerdan")));
 app.use('/api/generator', require('./routes/generator'));
 app.use('/api/collection', require('./routes/collection'));
 app.use('/api/users', require('./routes/users'));
+app.use('/api/market', require('./routes/market'));
 
 
 // db connect

@@ -77,7 +77,7 @@ class Collection extends Component {
 
     let userId = this.props.match.params.id;
 
-    this.props.onFetchCollection(page, itemsPerPage, filters, true, userId === 'all' ? null : userId);
+    this.props.onFetchCollection(page, itemsPerPage, filters, userId === 'all' ? null : userId);
   }
 
   showCard(item) {
