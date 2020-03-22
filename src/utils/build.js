@@ -4,6 +4,11 @@ function launch () {
 
   generateNamesArray();
   generateTraitsArray();
+
+  // Temporary stuff
+  const timerController = require('../controllers/Timer');
+
+  timerController.checkTimers();
 }
 
 module.exports = launch;

@@ -1,5 +1,6 @@
 const express = require('express');
 const Collection = require('../src/controllers/Collection')
+// const Market = require('../src/controllers/Market')
 const router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -17,10 +18,8 @@ router.get('/', function(req, res, next) {
   function sendResponse(variant, item) {
     if (variant) {
       itemsCount = item;
-      console.log(itemsCount)
     } else {
       items = item;
-      console.log(items)
     }
 
     if (itemsCount && items) {

@@ -154,6 +154,11 @@ class Header extends Component {
                 Коллекция
               </Link>
             </ListItem>
+            <ListItem>
+              <Link to="/market/">
+                Рынок
+              </Link>
+            </ListItem>
           </LeftList>
           <RightList>
             <User />

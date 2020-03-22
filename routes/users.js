@@ -26,7 +26,7 @@ router.post('/register', (req, res, next) => {
           image: null,
           accessLevel: 0,
           currency: {
-            coin: 0,
+            coin: 1000,
             z: 0
         }
         })
