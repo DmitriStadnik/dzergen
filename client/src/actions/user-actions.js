@@ -1,10 +1,10 @@
 export const UPDATE_USER = 'user:updateUser';
 
-export function updateUser(newUser) {
+export function updateUser(data) {
   return {
     type: UPDATE_USER,
     payload: {
-      userId: newUser
+      data: data
     }
   }
 }

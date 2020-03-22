@@ -39,7 +39,12 @@ const store = createStore(
       }
     },
     user: {
-      userId: '',
+      data: {
+        currency: {
+          z: 0,
+          coin: 0
+        }
+      }
     }
   },
   allStoreEnhancers

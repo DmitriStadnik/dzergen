@@ -1,22 +1,34 @@
 const User = require("../models/User").User;
-const bcrypt = require('bcryptjs');
 
 const findUserById = (id, callback) => {
   User.findOne()
     .where({ _id: id })
     .select('-password')
     .exec((err, item) => {
+      if (err) return console.error(err);
       if (item) {
-        console.log('user found in db in passport');
-        // note the return removed with passport JWT - add this return for passport local
         callback && callback(item);
       } else {
-        console.log('user not found in db');
         callback && callback('user not found in db');
       }
     });
 }
 
+const removeCurrency = (id, card, callback) => {
+  User.findById(id).exec((err, item) => {
+    if (err) return console.error(err);
+    
+    if (item.currency.coin - card.price >= 0) {
+      item.currency.coin -= card.price;
+      item.save();
+      callback && callback(card);
+    } else {
+      callback && callback('no currency');
+    }
+  });
+}
+
 module.exports = {
   findUserById,
+  removeCurrency
 };

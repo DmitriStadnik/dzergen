@@ -1,6 +1,6 @@
 const express = require('express');
 const Collection = require('../src/controllers/Collection')
-// const Market = require('../src/controllers/Market')
+const Market = require('../src/controllers/Market')
 const router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -32,6 +32,20 @@ router.get('/', function(req, res, next) {
 
   Collection.countItems(rarityParam, nameParam, aliveParam, owner, sendResponse, noOwner);
   Collection.getItems(rarityParam, nameParam, aliveParam, owner, page, count, sendResponse, noOwner);
+});
+
+router.get('/buy', function(req, res, next) {
+  const card = req.query.card || null;
+  const user = req.query.user || null;
+
+  const sendResponse = (err, item) => {
+    console.log('sendResponse');
+    if (err) res.json(err);
+    else res.json(item);
+  }
+  console.log('/buy');
+
+  Market.buyCard(card, user, sendResponse);
 });
 
 module.exports = router;

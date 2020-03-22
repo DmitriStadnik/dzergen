@@ -15,4 +15,11 @@ export default {
       }
     })
   },
+  buyCard: (params) => {
+    return axios.get('/api/market/buy', {
+      params: {
+        ...params
+      }
+    })
+  },
 }

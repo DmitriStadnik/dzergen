@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import {changePage} from "../../../actions/collection-actions";
+import {changePage} from "../../../actions/market-actions";
 import {connect} from "react-redux";
 
 const Wrapper = styled.div`
@@ -77,7 +77,7 @@ class Pagination extends Component {
   getPagesArr() {
     const maxPage = this.maxPages();
     const {
-      collection: {
+      market: {
         page
       }
     } = this.props;
@@ -112,7 +112,7 @@ class Pagination extends Component {
 
   maxPages() {
     const {
-      collection: {
+      market: {
         itemsCount,
         itemsPerPage
       }
@@ -126,7 +126,7 @@ class Pagination extends Component {
       newPage = exactPage;
     } else {
       const {
-        collection: {
+        market: {
           page
         }
       } = this.props;
@@ -141,7 +141,7 @@ class Pagination extends Component {
   render () {
     let pagesArr = this.getPagesArr();
     const {
-      collection: {
+      market: {
         page
       }
     } = this.props;
@@ -182,7 +182,7 @@ class Pagination extends Component {
 }
 
 const mapStateToProps = state => ({
-  collection: state.collection,
+  market: state.market,
 });
 
 const mapActionsToProps = {

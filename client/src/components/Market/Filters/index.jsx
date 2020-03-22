@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import {connect} from "react-redux";
-import {changeFilters, changePage} from "../../../actions/collection-actions";
+import {changeFilters, changePage} from "../../../actions/market-actions";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -161,13 +161,6 @@ class Filters extends Component {
   }
 
   render () {
-    // const {
-    //   collection: {
-    //     filters: {
-    //       rarity
-    //     }
-    //   }
-    // } = this.props;
     const {
       active,
       rarity
@@ -218,7 +211,7 @@ class Filters extends Component {
 }
 
 const mapStateToProps = state => ({
-  collection: state.collection,
+  market: state.market,
 });
 
 const mapActionsToProps = {

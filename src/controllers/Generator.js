@@ -1,8 +1,8 @@
+const ObjectID = require('mongodb').ObjectID;
+const Dzerdan = require("../models/Dzerdan").Dzerdan;
 const utils = require('../utils/utils');
 
 const generate = (createdBy) => {
-  const Dzerdan = require("../models/Dzerdan").Dzerdan;
-
   let name = generateName();
   let alignment = generateAlignment();  
   let rarity = setRarity(name, alignment);
@@ -39,10 +39,6 @@ const setRarity = (name, alignment) => {
     else rarity = 4; // эпический
   }
   return rarity
-};
-
-const setOwner = (obj, owner) => {
-  obj.owner = owner;
 };
 
 const generateName = () => {
@@ -116,12 +112,11 @@ const generateAlignment = () => {
   return Math.floor(Math.random() * 10) - 5;
 };
 
-const die = (obj) => {
-  obj.alive = false;
+const setOwner = (card, user, callback) => {
+  callback && Dzerdan.findByIdAndUpdate(card, { owner: new ObjectID(user) }, {}, callback)
 };
 
 module.exports = {
   generate,
-  setOwner,
-  die
+  setOwner
 };

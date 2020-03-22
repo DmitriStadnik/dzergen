@@ -161,13 +161,6 @@ class Filters extends Component {
   }
 
   render () {
-    // const {
-    //   collection: {
-    //     filters: {
-    //       rarity
-    //     }
-    //   }
-    // } = this.props;
     const {
       active,
       rarity

@@ -8,6 +8,8 @@ import SmallCard from '../SmallCard'
 import Pagination from './Pagination'
 import {connect} from "react-redux";
 import {fetchMarket} from "../../actions/market-actions";
+import marketRequests from "../../requests/market-requests";
+import userRequests from "../../requests/user-requests";
 
 const Header = styled.div`
   text-align: center;
@@ -19,6 +21,10 @@ const Header = styled.div`
 
 const Wrapper = styled(Col)`
   margin-bottom: 10px;
+`;
+
+const SmallCardWrapper = styled.div`
+  width: 100%;
   cursor: pointer;
 `;
 
@@ -45,6 +51,32 @@ const Overlay = styled.div`
   z-index: 8999;
 `;
 
+const Buy = styled.button`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 5px;
+  color: white;
+  background-color: #26a65b;
+  width: 100%;
+  display: block;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  &:hover {
+    background-color: #87d37c; 
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: #a2ded0; 
+    &:hover {
+      background-color: #a2ded0;
+    }
+  }
+`;
+
 class Market extends Component {
   constructor(props) {
     super(props);
@@ -53,10 +85,12 @@ class Market extends Component {
       dzerdan: null,
       dzerdanVisible: false
     }
+
+    this.getMarket = this.getMarket.bind(this);
   }
 
   componentDidMount() {
-    this.getMarket()
+    this.getMarket();
   }
 
   componentDidUpdate(prevProps) {
@@ -92,6 +126,41 @@ class Market extends Component {
     });
   }
 
+  buyCard(id) {
+    const {
+      user: {
+        data: {
+          _id
+        }
+      }
+    } = this.props;
+    const {
+      getMarket
+    } = this;
+
+    marketRequests.buyCard({
+      card: id,
+      user: _id
+    })
+      .then(response => {
+        getMarket();
+      })
+      .catch(e => console.error(e))
+  }
+
+  canBuy(price) {
+    const {
+      user: {
+        data: {
+          currency: {
+            coin
+          }
+        }
+      }
+    } = this.props;
+    return coin - price < 0;
+  }
+
   render () {
     const {
       market: {
@@ -108,8 +177,13 @@ class Market extends Component {
           <Pagination />
           <Row>
             { items && items.map(item =>(
-              <Wrapper lg={4} md={6} sm={12} key={item.nameStr + item._id} onClick={() => this.showCard(item)}>
-                <SmallCard item={item} />
+              <Wrapper lg={4} md={6} sm={12} key={item.nameStr + item._id}>
+                <SmallCardWrapper onClick={() => this.showCard(item)}>
+                  <SmallCard item={item} />
+                </SmallCardWrapper>
+                <Buy onClick={() => this.buyCard(item._id)} disabled={this.canBuy(item.price)}>
+                  Нанять ({this.canBuy(item.price) ? "недостаточно" : item.price} дк)
+                </Buy>
               </Wrapper>
             ))}
           </Row>

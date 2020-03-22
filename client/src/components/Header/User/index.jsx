@@ -197,7 +197,7 @@ class User extends Component {
     this.setState({
       user: data
     })
-    data ? this.props.onUpdateUser(data._id) : this.props.onUpdateUser(null);
+    data ? this.props.onUpdateUser(data) : this.props.onUpdateUser(null);
     this.composeMenu();
   }
 
