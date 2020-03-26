@@ -11,10 +11,10 @@ const Wrapper = styled.div`
 `;
 
 const Page = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   transition: 0.2s;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,9 +29,9 @@ const Page = styled.div`
 
 const Button = styled.button`
   text-transform: uppercase;
-  font-size: 16px;
-  width: 30px;
-  height: 30px;
+  font-size: 14px;
+  width: 25px;
+  height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;

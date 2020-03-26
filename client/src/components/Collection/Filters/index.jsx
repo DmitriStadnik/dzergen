@@ -5,8 +5,8 @@ import {changeFilters, changePage} from "../../../actions/collection-actions";
 
 const Wrapper = styled.div`
   position: fixed;
-  top: 50px;
-  left: 0;
+  top: 0px;
+  left: 200px;
   z-index: 9000;
   @media screen and (max-width: 767px) {
     top: auto;

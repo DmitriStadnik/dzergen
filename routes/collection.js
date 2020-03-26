@@ -50,25 +50,25 @@ router.get('/count', function(req, res, next) {
   Collection.countItems(rarityParam, nameParam, aliveParam, owner, sendResponse);
 });
 
-// router.get('/update-base', function(req, res, next) {
-//   const generator = require('../src/controllers/Generator');
-//   const Dzerdan = require("../src/models/Dzerdan").Dzerdan;
-//   Dzerdan.find(function (err, items) {
-//     if (err) return console.error(err);
+router.get('/update-base', function(req, res, next) {
+  const generator = require('../src/controllers/Generator');
+  const Dzerdan = require("../src/models/Dzerdan").Dzerdan;
+  Dzerdan.find(function (err, items) {
+    if (err) return console.error(err);
 
-//     items.forEach(e => {
-//       let temp = e.rarity;
-//       e.rarity = generator.setRarity(e.name, e.alignment)
-//       if (temp !== e.rarity) {
-//         e.traits = generator.generateTraits(e.rarity + 1);
-//       }
-//       e.price = generator.generatePrice(e.alignment, e.name, e.rarity);
-//       e.save();
-//     });
+    items.forEach(e => {
+      let temp = e.rarity;
+      e.rarity = generator.setRarity(e.name, e.alignment)
+      if (temp !== e.rarity) {
+        e.traits = generator.generateTraits(e.rarity + 1);
+      }
+      e.price = generator.generatePrice(e.alignment, e.name, e.rarity);
+      e.save();
+    });
 
-//     res.json(items);
-//   });
-// });
+    res.json(items);
+  });
+});
 
 router.use(function (err, req, res, next) {
   if (err) {

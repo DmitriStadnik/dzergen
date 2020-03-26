@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import equal from 'fast-deep-equal';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
+import { GridOverflow, Header } from '../Reusable/styled.js';
 import Dzerdan from '../Dzerdan'
 import Filters from './Filters'
 import SmallCard from '../SmallCard'
@@ -9,15 +10,6 @@ import Pagination from './Pagination'
 import {connect} from "react-redux";
 import {fetchMarket} from "../../actions/market-actions";
 import marketRequests from "../../requests/market-requests";
-import userRequests from "../../requests/user-requests";
-
-const Header = styled.div`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 18px;
-  margin: 0;
-  margin-top: 30px;
-`;
 
 const Wrapper = styled(Col)`
   margin-bottom: 10px;
@@ -171,7 +163,7 @@ class Market extends Component {
 
     return (
       <>
-        <Grid>
+        <GridOverflow fluid>
           <Header>Рынок</Header>
           <Filters />
           <Pagination />
@@ -188,7 +180,7 @@ class Market extends Component {
             ))}
           </Row>
           <Pagination />
-        </Grid>
+        </GridOverflow>
         <CardWrapper active={dzerdanVisible}>
           {
             dzerdan ?

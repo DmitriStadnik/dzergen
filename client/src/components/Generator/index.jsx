@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
+import { GridOverflow, Header } from '../Reusable/styled.js';
 import Dzerdan from '../Dzerdan'
 import List from './List'
 import collectionRequests from "../../requests/collection-requests";
 import {Link} from "react-router-dom";
 import userRequests from "../../requests/user-requests";
-
-const Header = styled.div`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 18px;
-  margin: 30px 0;
-`;
 
 const Buttons = styled.div`
   text-align: center;
@@ -166,10 +160,10 @@ export default class Generator extends Component {
     } = this.state;
     return (
       <>
-        <Grid> 
+        <GridOverflow fluid> 
           <Row>
             <Col md={6} sm={12}>
-              <Header>Генератор 2.5</Header>
+              <Header>Генератор</Header>
               {
                 dzerdan ? 
                   <Dzerdan item={dzerdan} />
@@ -201,7 +195,7 @@ export default class Generator extends Component {
               </StyledLink>
             </Col>
           </Row>
-        </Grid>
+        </GridOverflow>
       </>
     )
   }

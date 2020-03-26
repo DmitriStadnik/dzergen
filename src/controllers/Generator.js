@@ -118,5 +118,8 @@ const setOwner = (card, user, callback) => {
 
 module.exports = {
   generate,
-  setOwner
+  setOwner,
+  setRarity,
+  generateTraits,
+  generatePrice,
 };
