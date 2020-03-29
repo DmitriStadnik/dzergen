@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import equal from 'fast-deep-equal';
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import { Header } from '../Reusable/styled.js';
+import { Row, Col } from 'react-flexbox-grid';
+import { GridOverflow, Header } from '../Reusable/styled.js';
 import Dzerdan from '../Dzerdan'
 import Filters from './Filters'
 import SmallCard from '../SmallCard'
@@ -97,7 +97,7 @@ class Collection extends Component {
 
     return (
       <>
-        <Grid>
+        <GridOverflow>
           <Header>Коллекция</Header>
           <Filters />
           <Pagination />         
@@ -109,7 +109,7 @@ class Collection extends Component {
             ))}
           </Row>
           <Pagination />
-        </Grid>
+        </GridOverflow>
         <CardWrapper active={dzerdanVisible}>
           {
             dzerdan ?

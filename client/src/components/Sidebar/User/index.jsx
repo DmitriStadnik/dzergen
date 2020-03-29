@@ -28,12 +28,13 @@ const ListItem = styled.li`
   font-size: 14px;
 
   a {
-    padding: 2px 10px;
+    padding: 5px;
+    padding-left: 20px;
     color: white;
     transition: 0.2s;
     width: 100%;
     display: block;
-    text-align: center;
+    text-align: left;
     &:hover {
       text-decoration: none;
       background: #87d37c;
@@ -51,8 +52,8 @@ const RightItemWrapper = styled(Link)`
   align-items: center;
   flex-direction: column;
   color: white;
-  padding: 10px 0px;
-  
+  padding-top: 10px;  
+  padding-bottom: 5px;  
   &:hover {
     text-decoration: none;
     color: white;
@@ -67,8 +68,8 @@ const UserIcon = styled(FontAwesomeIcon)`
   transition: 0.2s;
   border: 3px solid white;
   border-radius: 50%;
-  width: 50px!important;
-  height: 50px!important;
+  width: 120px!important;
+  height: 120px!important;
   overflow: hidden!important;
 `;
 
@@ -77,9 +78,27 @@ const UserImage = styled.img`
   transition: 0.2s;
   border: 3px solid white;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 120px;
+  height: 120px;
   overflow: hidden;
+`;
+
+const UserStats = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+`;
+
+const UserStat = styled.div`
+  width: 100%;
+  color: white;
+  text-align: left;
+  font-size: 10px;
 `;
 
 class User extends Component {
@@ -222,7 +241,7 @@ class User extends Component {
                 }
                 <UserName>
                   { user.name }
-                </UserName>        
+                </UserName>       
               </RightItemWrapper>
               <Menu>
                 <MenuList>
@@ -242,10 +261,21 @@ class User extends Component {
                   ))}
                 </MenuList>
               </Menu> 
+              <UserStats>
+                <UserStat>
+                  дк: { user.currency.coin }
+                </UserStat>
+                <UserStat>
+                  жыжа: { user.currency.z }
+                </UserStat>
+              </UserStats> 
             </>
-          ) : (
+          ) : (   
             <RightItemWrapper title={'Войти'} to="/auth/login">
-              <UserIcon icon={faUser} />         
+              <UserIcon icon={faUser} /> 
+              <UserName>
+                Войти 
+              </UserName>     
             </RightItemWrapper>
           )
         }      

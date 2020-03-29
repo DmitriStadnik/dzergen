@@ -42,12 +42,13 @@ const ListItem = styled.li`
   font-size: 14px;
 
   a {
-    padding: 2px 10px;
+    padding: 5px;
+    padding-left: 20px;
     color: white;
     transition: 0.2s;
     width: 100%;
     display: block;
-    text-align: center;
+    text-align: left;
     &:hover {
       text-decoration: none;
       background: #87d37c;
