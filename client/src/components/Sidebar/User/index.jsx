@@ -8,9 +8,10 @@ import userRequests from "../../../requests/user-requests";
 import Functions from "../../../utils/Functions";
 import {connect} from "react-redux";
 import {updateUser} from "../../../actions/user-actions";
+import colors from "../../Reusable/colors";
 
 const Menu = styled.div`
-  border-bottom: 2px solid #26a65b;
+  
 `;
 
 const MenuList = styled.ul`
@@ -37,7 +38,7 @@ const ListItem = styled.li`
     text-align: left;
     &:hover {
       text-decoration: none;
-      background: #87d37c;
+      background: ${({сolor}) => сolor ? сolor : 'auto'};
     }
   }
 `;
@@ -54,10 +55,11 @@ const RightItemWrapper = styled(Link)`
   color: white;
   padding-top: 10px;  
   padding-bottom: 5px;  
+  transition: 0.2s;
   &:hover {
     text-decoration: none;
     color: white;
-    background: #87d37c;
+    background: ${({сolor}) => сolor ? сolor : 'auto'};
   }
 `;
 
@@ -231,7 +233,7 @@ class User extends Component {
         {
           user ? (
             <>
-              <RightItemWrapper title={'Профиль'} to={`/user/${user._id}`}>
+              <RightItemWrapper title={'Профиль'} to={`/user/${user._id}`} сolor={colors.green_hl}>
                 {
                   user.image ? (
                     <UserImage src={imagePath(user.image)} />
@@ -247,7 +249,7 @@ class User extends Component {
                 <MenuList>
                   { menuItems && menuItems.map(item => (
                     
-                    <ListItem key={item.name}>
+                    <ListItem key={item.name} сolor={colors.green_hl}>
                       {item.onClick ? (
                         <Link to={item.route} onClick={() => item.onClick()}>
                           {item.name}
@@ -271,7 +273,7 @@ class User extends Component {
               </UserStats> 
             </>
           ) : (   
-            <RightItemWrapper title={'Войти'} to="/auth/login">
+            <RightItemWrapper title={'Войти'} to="/auth/login" сolor={colors.green_hl}>
               <UserIcon icon={faUser} /> 
               <UserName>
                 Войти 

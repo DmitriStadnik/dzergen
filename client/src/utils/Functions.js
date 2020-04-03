@@ -1,3 +1,5 @@
+import colors from "../components/Reusable/colors";
+
 export default {
   imagePath: (img) => {
     return `/images/${img}`
@@ -5,33 +7,33 @@ export default {
   getColor: (rarity = 0) => {
     switch (rarity) {
       case 0:
-        return '#2e3131';
+        return colors.border_grey;
       case 1:
-        return '#26a65b';
+        return colors.border_green;
       case 2:
-        return '#2c82c9';
+        return colors.border_blue;
       case 3:
-        return '#663399';
+        return colors.border_purple;
       case 4:
-        return '#f9690e';
+        return colors.border_orange;
       default:
-        return '#2e3131';
+        return colors.border_grey;
     }
   },
   getBgColor: (rarity = 0) => {
     switch (rarity) {
       case 0:
-        return '#ececec';
+        return colors.card_grey;
       case 1:
-        return '#66cc99';
+        return colors.card_green;
       case 2:
-        return '#6bb9f0';
+        return colors.card_blue;
       case 3:
-        return '#9b59b6';
+        return colors.card_purple;
       case 4:
-        return '#fabe58';
+        return colors.card_orange;
       default:
-        return '#ececec';
+        return colors.card_grey;
     }
   },
   parseRarity: (rarity) => {

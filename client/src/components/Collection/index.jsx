@@ -9,10 +9,26 @@ import SmallCard from '../SmallCard'
 import Pagination from './Pagination'
 import {connect} from "react-redux";
 import {fetchCollection} from "../../actions/collection-actions";
+import colors from "../Reusable/colors";
 
-const Wrapper = styled(Col)`
-  margin-bottom: 10px;
+const ColMod = styled(Col)`
+  justify-content: center;
+  display: flex;
+`;
+
+const Wrapper = styled.div`
+  margin-bottom: 5px;
+  justify-content: center;
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  max-width: 700px;
   cursor: pointer;
+`;
+
+const ClickWrapper = styled.div`
+  width: 100%;
+  height: 100%;
 `;
 
 const CardWrapper = styled.div`
@@ -36,6 +52,42 @@ const Overlay = styled.div`
   background: black;
   opacity: 0.5;
   z-index: 8999;
+`;
+
+const Buttons = styled.div`
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: 8998;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 5px;
+  color: white;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'white'};
+  width: 80px;
+  display: block;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+  &:hover {
+    background-color: ${({hlColor}) => hlColor ? hlColor : 'white'};
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
+    &:hover {
+      background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
+    }
+  }
 `;
 
 class Collection extends Component {
@@ -103,9 +155,23 @@ class Collection extends Component {
           <Pagination />         
           <Row>
             { items && items.map(item =>(
-              <Wrapper lg={4} md={6} sm={12} key={item.nameStr + item._id} onClick={() => this.showCard(item)}>
-                <SmallCard item={item} />
-              </Wrapper>
+              <ColMod sm={12} key={item.nameStr + item._id}>
+                <Wrapper>
+                  <ClickWrapper onClick={() => this.showCard(item)}>
+                    <SmallCard item={item} /> 
+                  </ClickWrapper>
+                  {/* <Buttons>
+                    <Button
+                      onClick={() => this.showCard(item)}
+                      bgColor={colors.green_main}
+                      hlColor={colors.green_hl}
+                      dsColor={colors.green_ds}
+                    >
+                      Показать
+                    </Button>
+                  </Buttons> */}
+                </Wrapper>
+              </ColMod>
             ))}
           </Row>
           <Pagination />

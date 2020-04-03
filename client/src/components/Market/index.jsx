@@ -10,14 +10,26 @@ import Pagination from './Pagination'
 import {connect} from "react-redux";
 import {fetchMarket} from "../../actions/market-actions";
 import marketRequests from "../../requests/market-requests";
+import colors from "../Reusable/colors";
 
-const Wrapper = styled(Col)`
-  margin-bottom: 10px;
+const ColMod = styled(Col)`
+  justify-content: center;
+  display: flex;
 `;
 
-const SmallCardWrapper = styled.div`
+const Wrapper = styled.div`
+  margin-bottom: 5px;
+  justify-content: center;
+  display: inline-flex;
+  position: relative;
   width: 100%;
+  max-width: 700px;
   cursor: pointer;
+`;
+
+const ClickWrapper = styled.div`
+  width: 100%;
+  height: 100%;
 `;
 
 const CardWrapper = styled.div`
@@ -43,28 +55,38 @@ const Overlay = styled.div`
   z-index: 8999;
 `;
 
-const Buy = styled.button`
+const Buttons = styled.div`
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: 8998;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const Button = styled.button`
   text-align: center;
   text-transform: uppercase;
   font-size: 12px;
   padding: 5px;
   color: white;
-  background-color: #26a65b;
-  width: 100%;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'white'};
+  width: 120px;
   display: block;
   border: none;
   outline: none;
   transition: 0.2s;
   &:hover {
-    background-color: #87d37c; 
+    background-color: ${({hlColor}) => hlColor ? hlColor : 'white'};
   }
   &:focus {
     outline: none;
   }
   &:disabled {
-    background-color: #a2ded0; 
+    background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
     &:hover {
-      background-color: #a2ded0;
+      background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
     }
   }
 `;
@@ -169,14 +191,24 @@ class Market extends Component {
           <Pagination />
           <Row>
             { items && items.map(item =>(
-              <Wrapper lg={4} md={6} sm={12} key={item.nameStr + item._id}>
-                <SmallCardWrapper onClick={() => this.showCard(item)}>
-                  <SmallCard item={item} />
-                </SmallCardWrapper>
-                <Buy onClick={() => this.buyCard(item._id)} disabled={this.canBuy(item.price)}>
-                  Нанять ({this.canBuy(item.price) ? "недостаточно" : item.price} дк)
-                </Buy>
-              </Wrapper>
+              <ColMod sm={12} key={item.nameStr + item._id}>
+                <Wrapper>
+                  <ClickWrapper onClick={() => this.showCard(item)}>
+                    <SmallCard item={item} />  
+                  </ClickWrapper>
+                  <Buttons>
+                    <Button
+                      onClick={() => this.buyCard(item._id)} 
+                      disabled={this.canBuy(item.price)}
+                      bgColor={colors.green_main}
+                      hlColor={colors.green_hl}
+                      dsColor={colors.green_ds}
+                    >
+                      Нанять ({this.canBuy(item.price) ? "недостаточно" : item.price} дк)
+                    </Button>
+                  </Buttons>
+                </Wrapper>
+              </ColMod>
             ))}
           </Row>
           <Pagination />

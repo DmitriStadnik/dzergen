@@ -6,10 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import User from "./User";
 import {connect} from "react-redux";
+import colors from "../Reusable/colors";
 
 const Wrapper = styled.div`
   width: 200px;
-  background-color: #26a65b;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'auto'};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -51,7 +52,7 @@ const ListItem = styled.li`
     text-align: left;
     &:hover {
       text-decoration: none;
-      background: #87d37c;
+      background: ${({сolor}) => сolor ? сolor : 'auto'};
     }
   }
 `;
@@ -126,22 +127,22 @@ class Header extends Component {
     } = this;
 
     return (
-      <Wrapper> 
+      <Wrapper bgColor={colors.green_main}> 
         <Logo>{`DG v${version}`}</Logo>
         <MobileWrapper visible={mobileMenuVisible}>
           <User />
           <MenuList>
-            <ListItem>
+            <ListItem сolor={colors.green_hl}>
               <Link to="/">
                 Генератор
               </Link>
             </ListItem>
-            <ListItem>
+            <ListItem сolor={colors.green_hl}>
               <Link to="/collection/all">
                 Коллекция
               </Link>
             </ListItem>
-            <ListItem>
+            <ListItem сolor={colors.green_hl}>
               <Link to="/market/">
                 Рынок
               </Link>

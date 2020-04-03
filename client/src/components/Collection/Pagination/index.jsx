@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import {changePage} from "../../../actions/collection-actions";
 import {connect} from "react-redux";
+import colors from "../../Reusable/colors";
 
 const Wrapper = styled.div`
   margin: 10px auto;
@@ -19,10 +20,10 @@ const Page = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background: ${({active}) => active ? '#87d37c' : 'white'};
+  background: ${({active, bgColor}) => active ? bgColor : 'white'};
   color: ${({active}) => active ? 'white' : 'inherit'};
   &:hover {
-    background-color: #87d37c; 
+    background-color: ${({bgColor}) => bgColor ? bgColor : 'auto'};
     color: white;
   }
 `;
@@ -36,20 +37,20 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   color: white;
-  background-color: #26a65b;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'white'};
   border: none;
   outline: none;
   transition: 0.2s;
   &:hover {
-    background-color: #87d37c; 
+    background-color: ${({hlColor}) => hlColor ? hlColor : 'white'};
   }
   &:focus {
     outline: none;
   }
   &:disabled {
-    background-color: #a2ded0; 
+    background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
     &:hover {
-      background-color: #a2ded0;
+      background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
     }
   }
 `;
@@ -150,29 +151,48 @@ class Pagination extends Component {
         <Button
           onClick={() => this.changePage(0, 0)}
           disabled={page === 0}
+          bgColor={colors.green_main}
+          hlColor={colors.green_hl}
+          dsColor={colors.green_ds}
         >
           {'<<'}
         </Button>
         <Button
           onClick={() => this.changePage(null, -1)}
           disabled={page === 0}
+          bgColor={colors.green_main}
+          hlColor={colors.green_hl}
+          dsColor={colors.green_ds}
         >
           {'<'}
         </Button>
         {
           pagesArr.map(item => (
-            <Page key={item} active={item === page} onClick={() => this.changePage(item, 0)}>{item + 1}</Page>
+            <Page 
+              key={item} 
+              active={item === page} 
+              onClick={() => this.changePage(item, 0)} 
+              bgColor={colors.green_hl}
+            >
+              {item + 1}
+            </Page>
           ))
         }
         <Button
           onClick={() => this.changePage(null, 1)}
           disabled={page === this.maxPages()}
+          bgColor={colors.green_main}
+          hlColor={colors.green_hl}
+          dsColor={colors.green_ds}
         >
           {'>'}
         </Button>
         <Button
           onClick={() => this.changePage(this.maxPages(), 0)}
           disabled={page === this.maxPages()}
+          bgColor={colors.green_main}
+          hlColor={colors.green_hl}
+          dsColor={colors.green_ds}
         >
           {'>>'}
         </Button>

@@ -8,6 +8,7 @@ import List from './List'
 import collectionRequests from "../../requests/collection-requests";
 import {Link} from "react-router-dom";
 import userRequests from "../../requests/user-requests";
+import colors from "../Reusable/colors";
 
 const Buttons = styled.div`
   text-align: center;
@@ -21,21 +22,21 @@ const Button = styled.button`
   font-size: 16px;
   padding: 10px;
   color: white;
-  background-color: #26a65b;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'auto'};
   width: 50%;
   border: none;
   outline: none;
   transition: 0.2s;
   &:hover {
-    background-color: #87d37c; 
+    background-color: ${({hlColor}) => hlColor ? hlColor : 'auto'}; 
   }
   &:focus {
     outline: none;
   }
   &:disabled {
-    background-color: #a2ded0; 
+    background-color: ${({dsColor}) => dsColor ? dsColor : 'auto'}; 
     &:hover {
-      background-color: #a2ded0;
+      background-color: ${({dsColor}) => dsColor ? dsColor : 'auto'}; 
     }
   }
 `;
@@ -162,28 +163,34 @@ export default class Generator extends Component {
       <>
         <GridOverflow fluid> 
           <Row>
-            <Col md={6} sm={12}>
+            <Col sm={12}>
               <Header>Генератор</Header>
               {
                 dzerdan ? 
-                  <Dzerdan item={dzerdan} />
+                  <Dzerdan item={dzerdan} newItem />
                 : null
               }
               <Buttons>
                 <Button
                   onClick={() => this.checkAuth()}
+                  bgColor={colors.green_main}
+                  hlColor={colors.green_hl}
+                  dsColor={colors.green_ds}
                 >
                   Генерировать
                 </Button>
                 <Button
                   onClick={() => this.saveDzerdan()}
                   disabled={!savePossible}
+                  bgColor={colors.green_main}
+                  hlColor={colors.green_hl}
+                  dsColor={colors.green_ds}
                 >
                   {savePossible ? 'Сохранить' : 'Сохранено' }
                 </Button>
               </Buttons>
             </Col>
-            <Col md={6} sm={12}>
+            {/* <Col md={6} sm={12}>
               <Header>Последние дзерданы</Header>
               {
                 recent ? 
@@ -193,7 +200,7 @@ export default class Generator extends Component {
               <StyledLink to="/collection">
                 Коллекция
               </StyledLink>
-            </Col>
+            </Col> */}
           </Row>
         </GridOverflow>
       </>

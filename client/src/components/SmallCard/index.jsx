@@ -4,7 +4,6 @@ import Functions from "../../utils/Functions";
 
 const Card = styled.div`
   width: 100%;
-  margin: 5px 0;
   padding: 10px;
   border-radius: 5px;
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
@@ -14,6 +13,7 @@ const Card = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   position: relative;
+  max-width: 700px;
 `;
 
 const Column = styled.div`
@@ -22,18 +22,17 @@ const Column = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
-  flex: ${({left}) => left ? '0' : '1'};
+  flex: ${({flex}) => flex};
 `;
 
 const Image = styled.img`
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   flex-shrink: 0;
   object-fit: cover;
   border: 1px solid ${({color}) => color ? color : '#2e3131'};
   border-radius: 3px;
   margin-right: 10px;
-  margin-bottom: 5px;
 `;
 
 const Name = styled.div`
@@ -42,28 +41,15 @@ const Name = styled.div`
   color: ${({text}) => text ? '#db0a5b' : 'auto'};
   text-align: center;
   text-transform: uppercase;
-  padding: 10px;
+  padding: 5px;
   font-size: 14px;
-  width: 100%;
-  margin-bottom: 12px;
+  width: 250px;
+  margin-bottom: 5px;
   @media screen and (max-width: 500px) {
     margin-bottom: 7px;
   }
 `;
 
-const Traits = styled.div`
-  height: 140px;
-  width: 100%;
-`;
-
-const Trait = styled.div`
-  background-color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 2px;
-  padding: 5px 2px;
-  border-radius: 5px;
-  font-size: 11px;
-  text-align: center;
-`;
 
 const Stat = styled.div`
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
@@ -84,33 +70,20 @@ const Stat = styled.div`
 const DataItem = styled.div`
   width: 100%;
   font-size: 10px;
+  padding-left: 10px;
 `;
 
 const Rarity = styled.div`
-  width: 100%;
+  width: 250px;
   font-size: 10px;
   padding: 5px;
   text-transform: uppercase;
   text-align: center;
 `;
 
-const Price = styled.div`
-  border: 2px solid ${({color}) => color ? color : '#2e3131'};
-  background-color: ${({bgColor}) => bgColor ? bgColor : ''};
-  font-size: 12px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  padding: 5px 10px;
-  bottom: 10px;
-  right: 10px;
-`;
-
 export default ({item}) => (
   <Card color={Functions.getColor(item.rarity)} bgColor={Functions.getBgColor(item.rarity)} key={item.name.join('')}>
-    <Column left>
+    <Column flex={0}>
       <Image src={Functions.imagePath(item.image)} color={Functions.getColor(item.rarity)} />
       {
         item.alignment > 0 ? (
@@ -128,7 +101,7 @@ export default ({item}) => (
         )
       }
     </Column>
-    <Column>
+    <Column flex={0}>
       <Name color={Functions.getColor(item.rarity)} text={item.kawaii}>
         {item.nameStr}{item.kawaii && '-тян'}
       </Name>
@@ -136,29 +109,19 @@ export default ({item}) => (
         {`${item.alignment > 0 ? 'Порядочный' : item.alignment < 0 ? 'Хитровыебанный' : ''} ${Functions.parseRarity(item.rarity)} ${item.kawaii ? 'ня-' : ''}дзердан`}
       </Rarity>
     </Column>
-    <Traits>
-      { item.traits && item.traits.map(trait =>(
-        <Trait key={`${trait.which.word} ${trait.what.word} ${trait.who.word}`}>
-        {
-          `${trait.which.word} ${trait.what.word} ${trait.who.word}`
-        }
-        </Trait>
-      ))}
-    </Traits>
-    <DataItem>
-      Дата создания: { Functions.parseDate(item.dateCreated) }
-    </DataItem>
-    <DataItem>
-      Создатель: {item.createdBy && item.createdBy.length > 0 ? item.createdBy[0].name : 'Генератор'}
-    </DataItem>
-    <DataItem>
-      Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
-    </DataItem>
-    <DataItem>
-      Цена: {item.price} дк
-    </DataItem>
-    {/* <Price color={'#cf000f'} bgColor={'#e74c3c'}  title={`Цена: ${item.price} дк`}>
-      {item.price}
-    </Price> */}
+    <Column flex={1}>
+      <DataItem>
+        Дата создания: { Functions.parseDate(item.dateCreated) }
+      </DataItem>
+      <DataItem>
+        Создатель: {item.createdBy && item.createdBy.length > 0 ? item.createdBy[0].name : 'Генератор'}
+      </DataItem>
+      <DataItem>
+        Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
+      </DataItem>
+      <DataItem>
+        Цена: {item.price} дк
+      </DataItem>
+    </Column>
   </Card>
 );

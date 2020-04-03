@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import {connect} from "react-redux";
 import {changeFilters, changePage} from "../../../actions/market-actions";
+import colors from "../../Reusable/colors";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -20,7 +21,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 250px;
   background: white;
-  border: 2px solid #26a65b;
+  border: ${({brColor}) => brColor ? `2px solid ${brColor}` : 'white'};
 `;
 
 const Filter = styled.div`
@@ -59,22 +60,22 @@ const Button = styled.button`
   font-size: 12px;
   padding: 5px;
   color: white;
-  background-color: #26a65b;
   width: 100%;
   display: block;
   border: none;
   outline: none;
   transition: 0.2s;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'white'};
   &:hover {
-    background-color: #87d37c; 
+    background-color: ${({hlColor}) => hlColor ? hlColor : 'white'};
   }
   &:focus {
     outline: none;
   }
   &:disabled {
-    background-color: #a2ded0; 
+    background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
     &:hover {
-      background-color: #a2ded0;
+      background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
     }
   }
 `;
@@ -85,19 +86,19 @@ const SideButton = styled.div`
   font-size: 12px;
   padding: 5px 7px;
   color: white;
-  background-color: #26a65b;
   transition: 0.2s;
   cursor: pointer;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'white'};
   &:hover {
-    background-color: #87d37c; 
+    background-color: ${({hlColor}) => hlColor ? hlColor : 'white'};
   }
   &:focus {
     outline: none;
   }
   &:disabled {
-    background-color: #a2ded0; 
+    background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
     &:hover {
-      background-color: #a2ded0;
+      background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
     }
   }
 `;
@@ -176,12 +177,19 @@ class Filters extends Component {
       'Достопочтенный',
       'Легендарный',
       'Все'
-    ];
+    ]; 
 
     return (
       <Wrapper>
-        <SideButton onClick={() => toggleActive()}>{active ? 'Закрыть' : 'Фильтры'}</SideButton>
-        <Container active={active}>
+        <SideButton 
+          onClick={() => toggleActive()}
+          bgColor={colors.green_main}
+          hlColor={colors.green_hl}
+          dsColor={colors.green_ds}
+        >
+          {active ? 'Закрыть' : 'Фильтры'}
+        </SideButton>
+        <Container active={active} brColor={colors.green_main}>
           <Filter>
             <Title>
               Имя
@@ -201,8 +209,22 @@ class Filters extends Component {
             </Select>
           </Filter>
           <Buttons>
-            <Button onClick={() => this.changeFilters()}>Применить</Button>
-            <Button onClick={() => this.changeFilters(true)}>Сбросить</Button>
+            <Button 
+              onClick={() => this.changeFilters()}
+              bgColor={colors.green_main}
+              hlColor={colors.green_hl}
+              dsColor={colors.green_ds}
+            >
+              Применить
+            </Button>
+            <Button 
+              onClick={() => this.changeFilters(true)}
+              bgColor={colors.green_main}
+              hlColor={colors.green_hl}
+              dsColor={colors.green_ds}
+            >
+              Сбросить
+            </Button>
           </Buttons>
         </Container>
       </Wrapper>

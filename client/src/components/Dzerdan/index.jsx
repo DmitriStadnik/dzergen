@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import equal from 'fast-deep-equal';
 import Functions from "../../utils/Functions";
+import colors from "../Reusable/colors";
 
 const Wrapper = styled.div`
   border: 3px solid ${({color}) => color ? color : '#2e3131'};
   width: 340px;
-  height: 550px;
+  height: 410px;
   padding: 10px;
   border-radius: 10px;
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
@@ -52,17 +53,24 @@ const Rarity = styled.div`
   font-size: 10px;
   text-transform: uppercase; 
   position: absolute;
-  bottom: 5px;
+  bottom: 10px;
   left: 0;
 `;
 
 const Text = styled.div`
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: white;
   margin-bottom: 2px;
-  padding: 5px 2px;
+  padding: 5px;
   border-radius: 5px;
-  font-size: 11px;
+  font-size: 12px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid ${({color}) => color ? color : '#2e3131'};
   text-align: center;
+  line-height: 1;
 `;
 
 const Stat = styled.div`
@@ -81,12 +89,47 @@ const Stat = styled.div`
   line-height: 15px;
 `;
 
+const DataItem = styled.div`
+  width: 100%;
+  font-size: 10px;
+`;
+
+const Main = styled.div`
+  
+`;
+
+const Secondary = styled.div`
+  display: ${({active}) => active ? 'flex' : 'none'};
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: RGBA(255, 255, 255, 0.8);
+  z-index: 9001;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+`;
+
+const Data = styled.div`
+  width: 100%;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+`;
+
+
 export default class Dzerdan extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      ...this.props
+      ...this.props,
+      secondaryActive: false
     }
   }
 
@@ -102,6 +145,11 @@ export default class Dzerdan extends Component {
     })
   }
 
+  toggleSecondary() {
+    const { secondaryActive } = this.state;
+    this.setState({ secondaryActive: !secondaryActive });
+  }
+
   render () {
     const {
       item: {
@@ -110,8 +158,14 @@ export default class Dzerdan extends Component {
         image,
         traits,
         rarity,
-        kawaii
-      } 
+        kawaii,
+        dateCreated,
+        createdBy,
+        owner,
+        price
+      },
+      newItem,
+      secondaryActive
     } = this.state;
     const {
       imagePath,
@@ -126,37 +180,58 @@ export default class Dzerdan extends Component {
     let rarityMod = alignment > 0 ? 'Порядочный' : alignment < 0 ? 'Хитровыебанный' : '';
 
     return (
-      <Wrapper color={color} bgColor={bgColor}> 
-        <Image src={imagePath(image)} color={color} />
-        <Name color={color} text={kawaii}>
-          { nameStr || ''}{kawaii && '-тян'}
-        </Name>
-        { traits && traits.map(item =>(
-          <Text key={`${item.which.word} ${item.what.word} ${item.who.word}`}>
-            {
-              `${item.which.word} ${item.what.word} ${item.who.word}`
-            }
-          </Text>
-        ))}
-        
+      <Wrapper color={color} bgColor={bgColor} onClick={() => this.toggleSecondary()}> 
+        <Main>
+          <Image src={imagePath(image)} color={color} />
+          <Name color={color} text={kawaii}>
+            { nameStr || ''}{kawaii && '-тян'}
+          </Name>
+          {
+            alignment > 0 ? (
+              <Stat color={colors.border_green} bgColor={colors.card_green} title={`Порядочный: +${alignment}`}>
+                {`+${alignment}`}
+              </Stat>
+            ) : alignment < 0 ? (
+              <Stat color={colors.border_red} bgColor={colors.card_red} title={`Хитровыебанный: ${alignment}`}>
+                {alignment}
+              </Stat>
+            ) : (
+              <Stat color={colors.border_grey} bgColor={colors.card_grey} title={`Нейтральный: ${alignment}`}>
+                {alignment}
+              </Stat>
+            )
+          }
+        </Main>
+        <Secondary active={secondaryActive}>
+          { traits && traits.map(item =>(
+            <Text color={color} key={`${item.which.word} ${item.what.word} ${item.who.word}`}>
+              {
+                `${item.which.word} ${item.what.word} ${item.who.word}`
+              }
+            </Text>
+          ))}
+          <Data>
+            { !newItem && (
+              <>
+                <DataItem>
+                  Создатель: {createdBy && createdBy.length > 0 ? createdBy[0].name : 'Генератор'}
+                </DataItem>
+                <DataItem>
+                  Владелец: {createdBy && owner.length > 0 ? owner[0].name : 'Генератор'}
+                </DataItem>
+              </>
+            )}
+            <DataItem>
+              Дата создания: { Functions.parseDate(dateCreated) }
+            </DataItem>
+            <DataItem>
+              Цена: {price} дк
+            </DataItem>
+          </Data>
+        </Secondary>
         <Rarity>
           {`${rarityMod} ${parseRarity(rarity)} ${kawaii ? 'ня-' : ''}дзердан`}
         </Rarity>
-        {
-          alignment > 0 ? (
-            <Stat color={'#26a65b'} bgColor={'#2ecc71'} title={`Порядочный: +${alignment}`}>
-              {`+${alignment}`}
-            </Stat>
-          ) : alignment < 0 ? (
-            <Stat color={'#cf000f'} bgColor={'#e74c3c'} title={`Хитровыебанный: ${alignment}`}>
-              {alignment}
-            </Stat>
-          ) : (
-            <Stat color={'#2e3131'} bgColor={'#ececec'} title={`Нейтральный: ${alignment}`}>
-              {alignment}
-            </Stat>
-          )
-        }
       </Wrapper>
     )
   }
