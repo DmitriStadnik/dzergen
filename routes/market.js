@@ -39,11 +39,9 @@ router.get('/buy', function(req, res, next) {
   const user = req.query.user || null;
 
   const sendResponse = (err, item) => {
-    console.log('sendResponse');
     if (err) res.json(err);
     else res.json(item);
   }
-  console.log('/buy');
 
   Market.buyCard(card, user, sendResponse);
 });

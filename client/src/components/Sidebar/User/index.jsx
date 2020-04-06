@@ -93,13 +93,16 @@ class User extends Component {
 
     this.state = {
       user: null,
-      menuItems: []
+      menuItems: [],
+      MenuOpen: false
     }
 
     this.getUser = this.getUser.bind(this);
     this.setUser = this.setUser.bind(this);
     this.checkAuth = this.checkAuth.bind(this);
     this.composeMenu = this.composeMenu.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   componentDidMount () {
@@ -154,6 +157,19 @@ class User extends Component {
     })
     data ? this.props.onUpdateUser(data) : this.props.onUpdateUser(null);
     this.composeMenu();
+  }
+
+  toggleMenu () {
+    const { MenuOpen } = this.state;
+    this.setState({
+      MenuOpen: !MenuOpen
+    })
+  }
+
+  closeMenu () {
+    this.setState({
+      MenuOpen: false
+    })
   }
 
   composeMenu () {

@@ -35,6 +35,7 @@ export const ListItem = styled.li`
   list-style: none;
   width: 100%;
   font-size: 14px;
+  display: ${({visible}) => visible ? 'block' : 'none'};
 
   a {
     padding: 5px;

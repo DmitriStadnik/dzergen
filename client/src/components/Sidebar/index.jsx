@@ -76,6 +76,7 @@ class Header extends Component {
 
     this.toggleMenu = this.toggleMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
+    this.isLoggedIn = this.isLoggedIn.bind(this);
   }
 
   componentDidMount () {
@@ -84,6 +85,16 @@ class Header extends Component {
 
   componentWillUnmount() {
     this.unlisten();
+  }
+
+  isLoggedIn() {
+    const {
+      user: {
+        data
+      },
+    } = this.props;
+
+    return data !== null;
   }
 
   closeMenu () {
@@ -109,6 +120,7 @@ class Header extends Component {
 
     const {
       toggleMenu,
+      isLoggedIn
     } = this;
 
     return (
@@ -117,17 +129,17 @@ class Header extends Component {
           <Logo>{`DG v${version}`}</Logo>
           <User />
           <MenuList>
-            <ListItem сolor={colors.green_hl}>
+            <ListItem сolor={colors.green_hl} visible>
               <Link to="/" onClick={() => toggleMenu()}>
                 Генератор
               </Link>
             </ListItem>
-            <ListItem сolor={colors.green_hl}>
+            <ListItem сolor={colors.green_hl} visible>
               <Link to="/collection/all" onClick={() => toggleMenu()}>
                 Коллекция
               </Link>
             </ListItem>
-            <ListItem сolor={colors.green_hl}>
+            <ListItem сolor={colors.green_hl} visible={isLoggedIn()}>
               <Link to="/market/" onClick={() => toggleMenu()}>
                 Рынок
               </Link>

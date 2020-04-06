@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import equal from 'fast-deep-equal';
+import { Redirect } from "react-router-dom";
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { PaddingWrapper, Header } from '../Reusable/styled.js';
 import Dzerdan from '../Dzerdan'
@@ -61,6 +62,7 @@ class Market extends Component {
     }
 
     this.getMarket = this.getMarket.bind(this);
+    this.isLoggedIn = this.isLoggedIn.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +74,16 @@ class Market extends Component {
       window.scrollTo(0, 0);
       this.getMarket();
     }
+  }
+
+  isLoggedIn() {
+    const {
+      user: {
+        data
+      },
+    } = this.props;
+
+    return data !== null;
   }
 
   getMarket() {
@@ -143,7 +155,9 @@ class Market extends Component {
     } = this.props;
     const { dzerdan, dzerdanVisible } = this.state;
 
-    return (
+    return !this.isLoggedIn() ? (
+        <Redirect to={"/collection/all"} />
+      ) : (
       <>
         <PaddingWrapper>
           <Grid fluid>

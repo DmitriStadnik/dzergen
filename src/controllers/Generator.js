@@ -28,7 +28,6 @@ const setRarity = (name, alignment) => {
   let rarity = 0;
 
   let statSum = name[0].value + name[1].value + Math.abs(alignment);
-  console.log(statSum)
 
   if (nameArrays.legendaryNames.includes(`${name[0].word}${name[1].word}`)) {
     rarity = 4; // эпический
