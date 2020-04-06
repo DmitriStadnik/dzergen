@@ -1,68 +1,26 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import equal from 'fast-deep-equal';
-import { Row, Col } from 'react-flexbox-grid';
-import { GridOverflow, Header } from '../Reusable/styled.js';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import { PaddingWrapper, Header } from '../Reusable/styled.js';
 import Dzerdan from '../Dzerdan'
 import Filters from './Filters'
-import SmallCard from '../SmallCard'
 import Pagination from './Pagination'
 import {connect} from "react-redux";
 import {fetchMarket} from "../../actions/market-actions";
 import marketRequests from "../../requests/market-requests";
 import colors from "../Reusable/colors";
-
-const ColMod = styled(Col)`
-  justify-content: center;
-  display: flex;
-`;
-
-const Wrapper = styled.div`
-  margin-bottom: 5px;
-  justify-content: center;
-  display: inline-flex;
-  position: relative;
-  width: 100%;
-  max-width: 700px;
-  cursor: pointer;
-`;
-
-const ClickWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const CardWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: ${({active}) => active ? 'flex' : 'none'};
-  justify-content: center;
-  align-items: center;
-  z-index: 9000;
-`;
-
-const Overlay = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: black;
-  opacity: 0.5;
-  z-index: 8999;
-`;
+import {
+  Wrapper,
+  CardWrapper,
+  Overlay
+} from "../Reusable/collection";
 
 const Buttons = styled.div`
-  position: absolute;
-  top: 0;
-  right: 10px;
-  z-index: 8998;
-  height: 100%;
+  width: 100%;
   display: flex;
-  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 `;
 
 const Button = styled.button`
@@ -72,12 +30,14 @@ const Button = styled.button`
   padding: 5px;
   color: white;
   background-color: ${({bgColor}) => bgColor ? bgColor : 'white'};
-  width: 120px;
+  width: 200px;
   display: block;
   border: none;
   outline: none;
-  transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
   &:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 2px 3px rgba(0,0,0,0.22);
     background-color: ${({hlColor}) => hlColor ? hlColor : 'white'};
   }
   &:focus {
@@ -185,34 +145,34 @@ class Market extends Component {
 
     return (
       <>
-        <GridOverflow fluid>
-          <Header>Рынок</Header>
-          <Filters />
-          <Pagination />
-          <Row>
-            { items && items.map(item =>(
-              <ColMod sm={12} key={item.nameStr + item._id}>
+        <PaddingWrapper>
+          <Grid fluid>
+            <Header>Рынок</Header>
+            <Filters />
+            <Pagination />
+            <Row>
+              { items && items.map(item =>(
+                <Col xs={12} sm={6} lg={4} key={item.nameStr + item._id}>
                 <Wrapper>
-                  <ClickWrapper onClick={() => this.showCard(item)}>
-                    <SmallCard item={item} />  
-                  </ClickWrapper>
-                  <Buttons>
-                    <Button
-                      onClick={() => this.buyCard(item._id)} 
-                      disabled={this.canBuy(item.price)}
-                      bgColor={colors.green_main}
-                      hlColor={colors.green_hl}
-                      dsColor={colors.green_ds}
-                    >
-                      Нанять ({this.canBuy(item.price) ? "недостаточно" : item.price} дк)
-                    </Button>
-                  </Buttons>
+                  <Dzerdan item={item} />
                 </Wrapper>
-              </ColMod>
-            ))}
-          </Row>
-          <Pagination />
-        </GridOverflow>
+                <Buttons>
+                  <Button
+                    onClick={() => this.buyCard(item._id)} 
+                    disabled={this.canBuy(item.price)}
+                    bgColor={colors.green_main}
+                    hlColor={colors.green_hl}
+                    dsColor={colors.green_ds}
+                  >
+                    Нанять ({item.price} дк) 
+                  </Button>
+                </Buttons>
+              </Col>
+              ))}
+            </Row>
+            <Pagination />
+          </Grid>
+        </PaddingWrapper>
         <CardWrapper active={dzerdanVisible}>
           {
             dzerdan ?

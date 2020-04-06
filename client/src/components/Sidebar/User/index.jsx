@@ -9,38 +9,14 @@ import Functions from "../../../utils/Functions";
 import {connect} from "react-redux";
 import {updateUser} from "../../../actions/user-actions";
 import colors from "../../Reusable/colors";
+import { MenuList, ListItem } from '../../Reusable/styled.js';
+
+const Wrapper = styled.div`
+  width: 100%;
+`;
 
 const Menu = styled.div`
-  
-`;
-
-const MenuList = styled.ul`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const ListItem = styled.li`
-  list-style: none;
-  width: 100%;
-  font-size: 14px;
-
-  a {
-    padding: 5px;
-    padding-left: 20px;
-    color: white;
-    transition: 0.2s;
-    width: 100%;
-    display: block;
-    text-align: left;
-    &:hover {
-      text-decoration: none;
-      background: ${({сolor}) => сolor ? сolor : 'auto'};
-    }
-  }
+  margin-bottom: 10px;
 `;
 
 const UserName = styled.div`
@@ -73,6 +49,10 @@ const UserIcon = styled(FontAwesomeIcon)`
   width: 120px!important;
   height: 120px!important;
   overflow: hidden!important;
+  @media screen and (max-width: 768px) {
+    width: 80px!important;
+    height: 80px!important;
+  }
 `;
 
 const UserImage = styled.img`
@@ -83,6 +63,10 @@ const UserImage = styled.img`
   width: 120px;
   height: 120px;
   overflow: hidden;
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 const UserStats = styled.div`
@@ -109,15 +93,12 @@ class User extends Component {
 
     this.state = {
       user: null,
-      MenuOpen: false,
       menuItems: []
     }
 
     this.getUser = this.getUser.bind(this);
     this.setUser = this.setUser.bind(this);
     this.checkAuth = this.checkAuth.bind(this);
-    this.toggleMenu = this.toggleMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
     this.composeMenu = this.composeMenu.bind(this);
   }
 
@@ -200,23 +181,9 @@ class User extends Component {
     
   }
 
-  toggleMenu () {
-    const { MenuOpen } = this.state;
-    this.setState({
-      MenuOpen: !MenuOpen
-    })
-  }
-
-  closeMenu () {
-    this.setState({
-      MenuOpen: false
-    })
-  }
-
   render () {
     const {
       user,
-      MenuOpen,
       menuItems
     } = this.state;
 
@@ -224,12 +191,8 @@ class User extends Component {
       imagePath,
     } = Functions;
 
-    const {
-      toggleMenu,
-    } = this;
-
     return (
-      <> 
+      <Wrapper> 
         {
           user ? (
             <>
@@ -281,7 +244,7 @@ class User extends Component {
             </RightItemWrapper>
           )
         }      
-      </>
+      </Wrapper>
     )
   }
 }

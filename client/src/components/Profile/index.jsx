@@ -2,17 +2,12 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { PaddingWrapper, Header } from '../Reusable/styled.js';
 import userRequests from "../../requests/user-requests";
 import Functions from "../../utils/Functions";
 import noimg from "./noimage.png";
 import collectionRequests from '../../requests/collection-requests';
-
-const Header = styled.div`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 18px;
-  margin: 30px 0;
-`;
+import colors from "../Reusable/colors";
 
 const UserImg = styled.img`
   display: block;
@@ -20,7 +15,7 @@ const UserImg = styled.img`
   width: 200px;
   object-fit: cover;
   margin: auto; 
-  border: 2px solid #26a65b;
+  border: ${({color}) => color ? `2px solid ${color}` : 'none'};
   @media screen and (max-width: 600px) {
     height: 150px;
     width: 150px;
@@ -57,7 +52,7 @@ const Name = styled.div`
   font-size: 12px;
   padding: 5px;
   color: white;
-  background-color: #26a65b;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'auto'};
   width: 200px;
   display: block;
   margin: auto;
@@ -69,15 +64,17 @@ const Button = styled(Link)`
   font-size: 12px;
   padding: 5px;
   color: white;
-  background-color: #26a65b;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'auto'};
   width: 200px;
   display: block;
   margin: auto;
-  transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
   &:hover {
-    background-color: #87d37c; 
-    text-decoration: none;
+    background-color: ${({hlColor}) => hlColor ? hlColor : 'auto'}; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 2px 3px rgba(0,0,0,0.22);
     color: white;
+    text-decoration: none;
   }
 `;
 
@@ -145,7 +142,8 @@ export default class Profile extends Component {
     } = this.state;
 
     return (
-      <Grid> 
+      <PaddingWrapper>
+      <Grid fluid> 
         <Header>
           Профиль
         </Header>
@@ -156,15 +154,20 @@ export default class Profile extends Component {
                 <Col sm={4}>
                   {
                     user.image ? (
-                      <UserImg src={Functions.imagePath(user.image)} />
+                      <UserImg src={Functions.imagePath(user.image)} color={colors.green_main} />
                     ) : (
-                      <UserImg src={noimg} />
+                      <UserImg src={noimg} color={colors.green_main} />
                     )
                   }
-                  <Name>
+                  <Name bgColor={colors.green_main}>
                     {user.name}
                   </Name>
-                  <Button to={`/collection/${user._id}`}>
+                  <Button 
+                    to={`/collection/${user._id}`}
+                    bgColor={colors.green_main}
+                    hlColor={colors.green_hl}
+                    dsColor={colors.green_ds}
+                  >
                     Коллекция
                   </Button>
                 </Col>
@@ -191,6 +194,7 @@ export default class Profile extends Component {
           }
         </Row>
       </Grid>
+      </PaddingWrapper>
     )
   }
 }

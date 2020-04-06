@@ -1,107 +1,20 @@
 import React, { Component } from 'react'
-import styled from 'styled-components';
 import {connect} from "react-redux";
 import {changeFilters, changePage} from "../../../actions/collection-actions";
 import colors from "../../Reusable/colors";
-
-const Wrapper = styled.div`
-  position: fixed;
-  top: 0px;
-  left: 200px;
-  z-index: 9000;
-  @media screen and (max-width: 767px) {
-    top: auto;
-    bottom: 0; 
-  }
-`;
-
-const Container = styled.div`
-  display: ${({active}) => active ? 'flex' : 'none'};
-  justify-content: center;
-  flex-direction: column;
-  width: 250px;
-  background: white;
-  border: ${({brColor}) => brColor ? `2px solid ${brColor}` : 'white'};
-`;
-
-const Filter = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0 10px;
-`;
-
-const Title = styled.div`
-  font-size: 12px;
-`;
-
-const Buttons = styled.div`
-  margin-top: 10px;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  font-size: 12px;
-  height: 30px;
-  padding: 0 5px;
-`;
-
-const Select = styled.select`
-  width: 100%;
-  font-size: 12px;
-  height: 30px;
-  padding: 0 5px;
-`;
-
-const Button = styled.button`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 12px;
-  padding: 5px;
-  color: white;
-  width: 100%;
-  display: block;
-  border: none;
-  outline: none;
-  transition: 0.2s;
-  background-color: ${({bgColor}) => bgColor ? bgColor : 'white'};
-  &:hover {
-    background-color: ${({hlColor}) => hlColor ? hlColor : 'white'};
-  }
-  &:focus {
-    outline: none;
-  }
-  &:disabled {
-    background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
-    &:hover {
-      background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
-    }
-  }
-`;
-
-const SideButton = styled.div`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 12px;
-  padding: 5px 7px;
-  color: white;
-  transition: 0.2s;
-  cursor: pointer;
-  background-color: ${({bgColor}) => bgColor ? bgColor : 'white'};
-  &:hover {
-    background-color: ${({hlColor}) => hlColor ? hlColor : 'white'};
-  }
-  &:focus {
-    outline: none;
-  }
-  &:disabled {
-    background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
-    &:hover {
-      background-color: ${({dsColor}) => dsColor ? dsColor : 'white'};
-    }
-  }
-`;
+import {
+  Wrapper, 
+  Container, 
+  Filter,
+  Title,
+  Buttons,
+  Input,
+  Select,
+  Button,
+  SideButton,
+  MenuIcon
+} from "../../Reusable/filters";
+import { faFilter, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 class Filters extends Component {
   constructor(props) {
@@ -187,7 +100,7 @@ class Filters extends Component {
           hlColor={colors.green_hl}
           dsColor={colors.green_ds}
         >
-          {active ? 'Закрыть' : 'Фильтры'}
+          <MenuIcon icon={active ? faTimes : faFilter} />
         </SideButton>
         <Container active={active} brColor={colors.green_main}>
           <Filter>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
-import { Row, Col } from 'react-flexbox-grid';
-import { GridOverflow, Header } from '../Reusable/styled.js';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import { PaddingWrapper, Header } from '../Reusable/styled.js';
 import Dzerdan from '../Dzerdan'
 import List from './List'
 import collectionRequests from "../../requests/collection-requests";
@@ -14,6 +14,9 @@ const Buttons = styled.div`
   text-align: center;
   width: 340px;
   margin: 10px auto 50px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const Button = styled.button`
@@ -23,12 +26,14 @@ const Button = styled.button`
   padding: 10px;
   color: white;
   background-color: ${({bgColor}) => bgColor ? bgColor : 'auto'};
-  width: 50%;
+  width: 100%;
   border: none;
   outline: none;
-  transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
   &:hover {
     background-color: ${({hlColor}) => hlColor ? hlColor : 'auto'}; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 2px 3px rgba(0,0,0,0.22);
   }
   &:focus {
     outline: none;
@@ -37,6 +42,7 @@ const Button = styled.button`
     background-color: ${({dsColor}) => dsColor ? dsColor : 'auto'}; 
     &:hover {
       background-color: ${({dsColor}) => dsColor ? dsColor : 'auto'}; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     }
   }
 `;
@@ -160,8 +166,8 @@ export default class Generator extends Component {
       recent, 
     } = this.state;
     return (
-      <>
-        <GridOverflow fluid> 
+      <PaddingWrapper>
+        <Grid fluid>
           <Row>
             <Col sm={12}>
               <Header>Генератор</Header>
@@ -202,8 +208,8 @@ export default class Generator extends Component {
               </StyledLink>
             </Col> */}
           </Row>
-        </GridOverflow>
-      </>
+        </Grid>
+      </PaddingWrapper>
     )
   }
 }

@@ -6,7 +6,9 @@ import {
 import equal from 'fast-deep-equal';
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { PaddingWrapper } from '../Reusable/styled.js';
 import userRequests from "../../requests/user-requests";
+import colors from "../Reusable/colors";
 
 const Button = styled.button`
   text-align: center;
@@ -14,21 +16,24 @@ const Button = styled.button`
   font-size: 16px;
   padding: 10px;
   color: white;
-  background-color: #26a65b;
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'auto'};
   width: 100%;
   border: none;
   outline: none;
-  transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
   &:hover {
-    background-color: #87d37c; 
+    background-color: ${({hlColor}) => hlColor ? hlColor : 'auto'}; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 2px 3px rgba(0,0,0,0.22);
   }
   &:focus {
     outline: none;
   }
   &:disabled {
-    background-color: #a2ded0; 
+    background-color: ${({dsColor}) => dsColor ? dsColor : 'auto'}; 
     &:hover {
-      background-color: #a2ded0;
+      background-color: ${({dsColor}) => dsColor ? dsColor : 'auto'}; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     }
   }
 `;
@@ -63,7 +68,7 @@ const SmallButton = styled(Link)`
   color: black;
   display: block;
   &:hover {
-    color: #87d37c; 
+    color:  ${({hlColor}) => hlColor ? hlColor : 'auto'}; 
     text-decoration: none;
   }
 `;
@@ -214,7 +219,8 @@ export default class Auth extends Component {
         }}
       /> 
     ) : (
-      <Grid> 
+      <PaddingWrapper>
+      <Grid fluid> 
         <Row>
           <Col sm={12}>
             <AuthMenu onSubmit={this.handleSubmit}>
@@ -243,14 +249,24 @@ export default class Auth extends Component {
               {
                 register ? (
                   <>
-                    <Button onClick={() => this.handleRegister()}>
+                    <Button 
+                      onClick={() => this.handleRegister()}
+                      bgColor={colors.green_main}
+                      hlColor={colors.green_hl}
+                      dsColor={colors.green_ds}
+                    >
                       Зарегистрироваться
                     </Button> 
-                    <SmallButton to='/auth/login'>Уже есть аккаунт</SmallButton>
+                    <SmallButton to='/auth/login' hlColor={colors.green_hl}>Уже есть аккаунт</SmallButton>
                   </>
                 ) : (
                   <>
-                    <Button onClick={() => this.handleLogin()}>
+                    <Button 
+                      onClick={() => this.handleLogin()}
+                      bgColor={colors.green_main}
+                      hlColor={colors.green_hl}
+                      dsColor={colors.green_ds}
+                    >
                       Войти
                     </Button> 
                     <SmallButton to='/auth/register'>Создать аккаунт</SmallButton>
@@ -262,6 +278,7 @@ export default class Auth extends Component {
           </Col>
         </Row>
       </Grid>
+      </PaddingWrapper>
     )
   }
 }

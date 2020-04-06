@@ -7,6 +7,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import User from "./User";
 import {connect} from "react-redux";
 import colors from "../Reusable/colors";
+import { MenuList, ListItem } from '../Reusable/styled.js';
 
 const Wrapper = styled.div`
   width: 200px;
@@ -14,8 +15,19 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   height: 100%;
+  position: fixed;
+  z-index: ${({visible}) => !visible ? '9998' : '10000'};
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
+  &:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 2px 3px rgba(0,0,0,0.22);
+  }
+  @media screen and (max-width: 768px) {
+    display: ${({visible}) => visible ? 'flex' : 'none'};
+    width: 100%;
+  }
 `;
 
 const Logo = styled.div`
@@ -26,56 +38,31 @@ const Logo = styled.div`
   text-align: center;
 `;
 
-const MenuList = styled.ul`
-  margin: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-  padding: 0;
-  width: 100%;
-  margin-top: 20px;
-`;
-
-const ListItem = styled.li`
-  list-style: none;
-  width: 100%;
-  font-size: 14px;
-
-  a {
-    padding: 5px;
-    padding-left: 20px;
-    color: white;
-    transition: 0.2s;
-    width: 100%;
-    display: block;
-    text-align: left;
-    &:hover {
-      text-decoration: none;
-      background: ${({сolor}) => сolor ? сolor : 'auto'};
-    }
+const MobileMenuButton = styled.div`
+  position: fixed;
+  cursor: pointer;
+  top: 0px;
+  left: 0px;
+  z-index: ${({visible}) => !visible ? '9998' : '10000'};
+  background-color: ${({bgColor}) => bgColor ? bgColor : 'auto'};
+  height: 50px;
+  width: 50px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  box-shadow: ${({visible}) => !visible ? '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)' : 'none'};
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
+  &:hover {
+    box-shadow: ${({visible}) => !visible ? '0 2px 4px rgba(0,0,0,0.25), 0 2px 3px rgba(0,0,0,0.22)' : 'none'};
   }
-`;
-
-const MobileWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  @media screen and (max-width: 768px) {
+    display: flex;
+  }
 `;
 
 const MobileMenuIcon = styled(FontAwesomeIcon)`
   color: white;
-  transition: 0.2s;
-  font-size: 23px;
-  position: absolute;
-  cursor: pointer;
-  top: 15px;
-  right: 20px;
-  display: none;
-  z-index: 9999;
-  @media screen and (max-width: 767px) {
-    display: block;
-  }
+  font-size: 20px;
 `;
 
 class Header extends Component {
@@ -84,73 +71,74 @@ class Header extends Component {
 
     this.state = {
       version: '3.0',
-      mobileMenuVisible: false,
+      menuVisible: false,
     }
 
-    this.toggleMobileMenu = this.toggleMobileMenu.bind(this);
-    this.closeMobileMenu = this.closeMobileMenu.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   componentDidMount () {
-    this.unlisten = this.props.history.listen(() => this.closeMobileMenu());
+    this.unlisten = this.props.history.listen(() => this.closeMenu());
   }
 
   componentWillUnmount() {
     this.unlisten();
   }
 
-  toggleMobileMenu () {
-    const { mobileMenuVisible } = this.state;
+  closeMenu () {
     if (window.innerWidth < 768) {
       this.setState({
-        mobileMenuVisible: !mobileMenuVisible
+        menuVisible: false
       })
     }
   }
 
-  closeMobileMenu () {
-    if (window.innerWidth < 768) {
-      this.setState({
-        mobileMenuVisible: false
-      })
-    }
+  toggleMenu () {
+    const { menuVisible } = this.state;
+    this.setState({
+      menuVisible: !menuVisible
+    })
   }
 
   render () {
     const {
       version,
-      mobileMenuVisible,
+      menuVisible,
     } = this.state;
 
     const {
-      toggleMobileMenu,
+      toggleMenu,
     } = this;
 
     return (
-      <Wrapper bgColor={colors.green_main}> 
-        <Logo>{`DG v${version}`}</Logo>
-        <MobileWrapper visible={mobileMenuVisible}>
+      <>
+        <Wrapper bgColor={colors.green_main} visible={menuVisible}> 
+          <Logo>{`DG v${version}`}</Logo>
           <User />
           <MenuList>
             <ListItem сolor={colors.green_hl}>
-              <Link to="/">
+              <Link to="/" onClick={() => toggleMenu()}>
                 Генератор
               </Link>
             </ListItem>
             <ListItem сolor={colors.green_hl}>
-              <Link to="/collection/all">
+              <Link to="/collection/all" onClick={() => toggleMenu()}>
                 Коллекция
               </Link>
             </ListItem>
             <ListItem сolor={colors.green_hl}>
-              <Link to="/market/">
+              <Link to="/market/" onClick={() => toggleMenu()}>
                 Рынок
               </Link>
             </ListItem>
           </MenuList>       
-        </MobileWrapper>
-        <MobileMenuIcon icon={faBars} onClick={() => toggleMobileMenu()} />
-      </Wrapper>
+        </Wrapper>
+        <MobileMenuButton bgColor={colors.green_main} onClick={() => toggleMenu()} visible={menuVisible}>
+          <MobileMenuIcon icon={faBars} />
+        </MobileMenuButton>
+        
+      </>
     )
   }
 }

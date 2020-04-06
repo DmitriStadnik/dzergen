@@ -12,7 +12,7 @@ const generateWordArray = (data) => {
   let result = [];
 
   data.forEach(e => {
-    [...Array(6 - e[1])].map(() => {
+    [...Array(10 - e[1])].map(() => {
       result.push({
         word: e[0],
         value: e[1]

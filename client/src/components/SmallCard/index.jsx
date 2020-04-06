@@ -9,7 +9,7 @@ const Card = styled.div`
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
   border: 2px solid ${({color}) => color ? color : '#2e3131'};
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
   position: relative;
@@ -23,6 +23,9 @@ const Column = styled.div`
   align-items: flex-start;
   width: 100%;
   flex: ${({flex}) => flex};
+  @media screen and (max-width: 600px) {
+    display: ${({mobileHide}) => mobileHide ? 'none' : 'flex'};
+  }
 `;
 
 const Image = styled.img`
@@ -45,8 +48,12 @@ const Name = styled.div`
   font-size: 14px;
   width: 250px;
   margin-bottom: 5px;
+  @media screen and (max-width: 991px) {
+    width: 200px;
+  }
   @media screen and (max-width: 500px) {
     margin-bottom: 7px;
+    width: 170px;
   }
 `;
 
@@ -79,6 +86,12 @@ const Rarity = styled.div`
   padding: 5px;
   text-transform: uppercase;
   text-align: center;
+  @media screen and (max-width: 991px) {
+    width: 200px;
+  }
+  @media screen and (max-width: 500px) {
+    width: 170px;
+  }
 `;
 
 export default ({item}) => (
@@ -109,7 +122,7 @@ export default ({item}) => (
         {`${item.alignment > 0 ? 'Порядочный' : item.alignment < 0 ? 'Хитровыебанный' : ''} ${Functions.parseRarity(item.rarity)} ${item.kawaii ? 'ня-' : ''}дзердан`}
       </Rarity>
     </Column>
-    <Column flex={1}>
+    <Column flex={1} mobileHide>
       <DataItem>
         Дата создания: { Functions.parseDate(item.dateCreated) }
       </DataItem>

@@ -13,9 +13,15 @@ const Wrapper = styled.div`
   background-color: ${({bgColor}) => bgColor ? bgColor : ''};
   margin: auto;
   position: relative;
-  z-index: 9000;
+  z-index: 8999;
+  :hover {
+    .showTip {
+      opacity: 1;
+    }
+  }
   @media screen and (max-width: 600px) {
-    width: 300px;
+    width: 280px;
+    height: 380px;
   }
 `;
 
@@ -120,6 +126,19 @@ const Data = styled.div`
   bottom: 0;
   left: 0;
   padding: 10px;
+`;
+
+const Tip = styled.div`
+  width: 100%;
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  text-align: center;
+  background: RGBA(255, 255, 255, 0.8);
+  opacity: 0;
+  transition: 0.2s;
 `;
 
 
@@ -232,6 +251,9 @@ export default class Dzerdan extends Component {
         <Rarity>
           {`${rarityMod} ${parseRarity(rarity)} ${kawaii ? 'ня-' : ''}дзердан`}
         </Rarity>
+        <Tip className='showTip'>
+          Нажмите чтоб показать информацию о дзердане
+        </Tip>
       </Wrapper>
     )
   }
