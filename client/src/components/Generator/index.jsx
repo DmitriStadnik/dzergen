@@ -95,7 +95,6 @@ class Generator extends Component {
 
   getDzerdan() {
     let that = this;
-
     const {
       user: {
         data: {
@@ -168,7 +167,7 @@ class Generator extends Component {
               }
               <Buttons>
                 <Button
-                  onClick={() => this.checkAuth()}
+                  onClick={() => this.getDzerdan()}
                   bgColor={colors.green_main}
                   hlColor={colors.green_hl}
                   dsColor={colors.green_ds}
