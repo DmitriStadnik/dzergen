@@ -228,7 +228,7 @@ class User extends Component {
                 <MenuList>
                   { menuItems && menuItems.map(item => (
                     
-                    <ListItem key={item.name} сolor={colors.green_hl}>
+                    <ListItem key={item.name} сolor={colors.green_hl} visible>
                       {item.onClick ? (
                         <Link to={item.route} onClick={() => item.onClick()}>
                           {item.name}

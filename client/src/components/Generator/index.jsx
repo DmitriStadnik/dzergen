@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
+import {connect} from "react-redux";
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { PaddingWrapper, Header } from '../Reusable/styled.js';
 import Dzerdan from '../Dzerdan'
@@ -74,9 +75,9 @@ const StyledLink = styled(Link)`
   }
 `;
 
-export default class Generator extends Component {
-  constructor() {
-    super();
+class Generator extends Component {
+  constructor(props) {
+    super(props);
   
     this.state = {
       dzerdan: null,
@@ -84,19 +85,27 @@ export default class Generator extends Component {
       recent: null,
     }
 
-    this.checkAuth = this.checkAuth.bind(this);
     this.getDzerdan = this.getDzerdan.bind(this);
   }
 
-  componentDidMount() {
-    this.checkAuth();
+  componentDidMount() { 
+    this.getDzerdan();
     this.getRecent();
   }
 
-  getDzerdan(userId) {
+  getDzerdan() {
     let that = this;
+
+    const {
+      user: {
+        data: {
+          _id
+        }
+      }
+    } = this.props;
+
     axios.get('/api/generator/generate', {
-      params: { userId }
+      params: { userId: _id }
     })
       .then(response => {
         that.setState({
@@ -130,25 +139,6 @@ export default class Generator extends Component {
     let userId = this.props.match.params.id;
 
     this.props.onFetchCollection(page, itemsPerPage, filters, false, userId === 'all' ? null : userId);
-  }
-
-  checkAuth () {
-    const { getDzerdan } = this;
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      getDzerdan(null);
-      return;
-    }
-    userRequests.checkAuth(`JWT ${token}`)
-      .then(response => {
-        if (response.data.auth) {
-          getDzerdan(response.data.userId);
-        } else {
-          getDzerdan(null);
-          localStorage.removeItem('authToken');
-        }
-      })
-      .catch(error => console.log(error));
   }
 
   saveDzerdan() {
@@ -213,3 +203,9 @@ export default class Generator extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Generator);

@@ -50,6 +50,7 @@ const timerAction = (timer) => {
 }
 
 const checkTimers = () => {
+  console.log('checking timers');
   const hour = 3600000;
   const minute = 60000;
 

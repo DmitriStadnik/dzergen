@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const users = require("../src/controllers/Users");
+const timer = require("../src/controllers/Timer");
 const User = require("../src/models/User").User;
 const router = express.Router();
 
@@ -76,6 +77,7 @@ router.get('/auth/check', (req, res, next) => {
     if (info !== undefined) {
       res.json(info.message);
     } else {
+      timer.checkTimers();
       res.json({
         auth: true,
         userId: user._id
