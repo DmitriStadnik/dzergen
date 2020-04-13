@@ -8,7 +8,7 @@ export const GridOverflow = styled(Grid)`
 export const Header = styled.div`
   text-align: center;
   text-transform: uppercase;
-  font-size: 18px;
+  font-size: 20px;
   margin: 0;
   padding-top: 20px;
   padding-bottom: 50px;

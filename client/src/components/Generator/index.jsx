@@ -5,10 +5,6 @@ import {connect} from "react-redux";
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { PaddingWrapper, Header } from '../Reusable/styled.js';
 import Dzerdan from '../Dzerdan'
-import List from './List'
-import collectionRequests from "../../requests/collection-requests";
-import {Link} from "react-router-dom";
-import userRequests from "../../requests/user-requests";
 import colors from "../Reusable/colors";
 
 const Buttons = styled.div`
@@ -48,33 +44,6 @@ const Button = styled.button`
   }
 `;
 
-const StyledLink = styled(Link)`
-  text-align: center;
-  margin: auto auto 20px;
-  display: block;
-  width: 200px;
-  text-transform: uppercase;
-  font-size: 16px;
-  padding: 10px;
-  color: white;
-  background-color: #26a65b;
-  transition: 0.2s;
-  &:hover {
-    background-color: #87d37c; 
-    color: white;
-    text-decoration: none;
-  }
-  &:focus {
-    outline: none;
-  }
-  &:disabled {
-    background-color: #a2ded0; 
-    &:hover {
-      background-color: #a2ded0;
-    }
-  }
-`;
-
 class Generator extends Component {
   constructor(props) {
     super(props);
@@ -82,7 +51,6 @@ class Generator extends Component {
     this.state = {
       dzerdan: null,
       savePossible: true,
-      recent: null,
     }
 
     this.getDzerdan = this.getDzerdan.bind(this);
@@ -90,21 +58,24 @@ class Generator extends Component {
 
   componentDidMount() { 
     this.getDzerdan();
-    this.getRecent();
   }
 
   getDzerdan() {
     let that = this;
     const {
       user: {
-        data: {
-          _id
-        }
+        data
       }
     } = this.props;
 
+    let id = null;
+
+    if (data !== null) {
+      id = data._id;
+    }
+
     axios.get('/api/generator/generate', {
-      params: { userId: _id }
+      params: { userId: id }
     })
       .then(response => {
         that.setState({
@@ -113,31 +84,6 @@ class Generator extends Component {
         });
       })
       .catch(error => console.log(error))
-  }
-
-  getRecent() {
-    let that = this;
-    collectionRequests.getItems({page: 0, count: 4, showAll: true})
-      .then(response => {
-        that.setState({
-          recent: response.data.data,
-        });
-      })
-      .catch(error => console.log(error))
-  }
-
-  getCollection() {
-    const {
-      collection: {
-        page,
-        itemsPerPage,
-        filters
-      },
-    } = this.props;
-
-    let userId = this.props.match.params.id;
-
-    this.props.onFetchCollection(page, itemsPerPage, filters, false, userId === 'all' ? null : userId);
   }
 
   saveDzerdan() {
@@ -152,7 +98,6 @@ class Generator extends Component {
     const {
       dzerdan, 
       savePossible, 
-      recent, 
     } = this.state;
     return (
       <PaddingWrapper>
@@ -161,9 +106,7 @@ class Generator extends Component {
             <Col sm={12}>
               <Header>Генератор</Header>
               {
-                dzerdan ? 
-                  <Dzerdan item={dzerdan} newItem />
-                : null
+                dzerdan && (<Dzerdan item={dzerdan} newItem />) 
               }
               <Buttons>
                 <Button
@@ -185,17 +128,6 @@ class Generator extends Component {
                 </Button>
               </Buttons>
             </Col>
-            {/* <Col md={6} sm={12}>
-              <Header>Последние дзерданы</Header>
-              {
-                recent ? 
-                  <List items={recent} />
-                : null
-              }
-              <StyledLink to="/collection">
-                Коллекция
-              </StyledLink>
-            </Col> */}
           </Row>
         </Grid>
       </PaddingWrapper>

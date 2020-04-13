@@ -182,6 +182,11 @@ class User extends Component {
             route: `/collection/${user._id}`,
             onClick: null
           },
+          // {
+          //   name: 'Задания',
+          //   route: `/missions/${user._id}`,
+          //   onClick: null
+          // },
           {
             name: 'Выйти',
             route: this.props.location.pathname,
