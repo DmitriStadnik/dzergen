@@ -13,8 +13,32 @@ const SectionHeader = styled.div`
 `;
 
 const Section = styled(Row)`
-  display: ${({visible}) => visible ? 'flex' : 'none'};
+  display: ${({active}) => active ? 'flex' : 'none'};
   margin-bottom: 50px;
+`;
+
+const Card = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding: 10px;
+`;
+
+const Title = styled.div`
+  text-transform: uppercase;
+  margin-bottom: 10px;
+`;
+
+const Info = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Money = styled.div`
 `;
 
 class Missions extends Component {
@@ -22,7 +46,11 @@ class Missions extends Component {
     super(props);
 
     this.state = {
-      missions: null
+      missions: null,
+      sectionsActive: [
+        true,
+        true
+      ]
     }
   }
 
@@ -48,6 +76,10 @@ class Missions extends Component {
   // 1. Редкость заданий
   // 2. Название, количество дк в час
   render () {
+    const {
+      sectionsActive
+    } = this.state;
+
     return (
       <>
         <PaddingWrapper>
@@ -56,14 +88,22 @@ class Missions extends Component {
             <Row>
               <SectionHeader>Активные</SectionHeader>
             </Row>   
-            <Section visible={true}> 
-              <Col sm={12}></Col>
+            <Section active={sectionsActive[0]}> 
+              <Col sm={12}>
+                <Card>
+                  <Title>Название задания</Title>
+                  <Info>
+                    <Money>+10 дк</Money>
+                    <Money>2 дзердана</Money>
+                  </Info>
+                </Card>
+              </Col>
               <Col sm={12}>Задание</Col>
             </Section>
             <Row>
               <SectionHeader>Новые</SectionHeader>
             </Row>   
-            <Section visible={true}> 
+            <Section active={sectionsActive[1]}>
               <Col sm={12}>Задание</Col>
               <Col sm={12}>Задание</Col>
             </Section>
