@@ -249,7 +249,7 @@ class User extends Component {
               </Menu> 
               <UserStats>
                 <UserStat>
-                  дк: { user.currency.coin }
+                  ок: { user.currency.coin }
                 </UserStat>
                 <UserStat>
                   жыжа: { user.currency.z }

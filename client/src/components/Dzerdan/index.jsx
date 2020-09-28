@@ -244,15 +244,15 @@ export default class Dzerdan extends Component {
               Дата создания: { Functions.parseDate(dateCreated) }
             </DataItem>
             <DataItem>
-              Цена: {price} дк
+              Цена: {price} ок
             </DataItem>
           </Data>
         </Secondary>
         <Rarity>
-          {`${rarityMod} ${parseRarity(rarity)} ${kawaii ? 'ня-' : ''}дзердан`}
+          {`${rarityMod} ${parseRarity(rarity)} ${kawaii ? 'ня-' : ''}окропит`}
         </Rarity>
         <Tip className='showTip'>
-          Нажмите чтоб показать информацию о дзердане
+          Нажмите чтоб показать информацию об окропите
         </Tip>
       </Wrapper>
     )

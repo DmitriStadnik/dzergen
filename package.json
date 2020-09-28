@@ -1,5 +1,5 @@
 {
-  "name": "dzergen",
+  "name": "okrogen",
   "version": "0.2.5",
   "private": true,
   "scripts": {
@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.5.4",
-    "mongoose": "^5.9.2",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.7",
     "morgan": "~1.9.1",
     "node-env-file": "*",
     "nodemon": "^1.19.4",

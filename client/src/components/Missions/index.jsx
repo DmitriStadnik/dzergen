@@ -93,8 +93,8 @@ class Missions extends Component {
                 <Card>
                   <Title>Название задания</Title>
                   <Info>
-                    <Money>+10 дк</Money>
-                    <Money>2 дзердана</Money>
+                    <Money>+10 ок</Money>
+                    <Money>2 окропита</Money>
                   </Info>
                 </Card>
               </Col>

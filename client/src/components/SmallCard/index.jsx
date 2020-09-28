@@ -119,7 +119,7 @@ export default ({item}) => (
         {item.nameStr}{item.kawaii && '-тян'}
       </Name>
       <Rarity>
-        {`${item.alignment > 0 ? 'Порядочный' : item.alignment < 0 ? 'Хитровыебанный' : ''} ${Functions.parseRarity(item.rarity)} ${item.kawaii ? 'ня-' : ''}дзердан`}
+        {`${item.alignment > 0 ? 'Порядочный' : item.alignment < 0 ? 'Хитровыебанный' : ''} ${Functions.parseRarity(item.rarity)} ${item.kawaii ? 'ня-' : ''}окропит`}
       </Rarity>
     </Column>
     <Column flex={1} mobileHide>
@@ -133,7 +133,7 @@ export default ({item}) => (
         Владелец: {item.createdBy && item.owner.length > 0 ? item.owner[0].name : 'Генератор'}
       </DataItem>
       <DataItem>
-        Цена: {item.price} дк
+        Цена: {item.price} ок
       </DataItem>
     </Column>
   </Card>

@@ -178,7 +178,7 @@ class Market extends Component {
                     hlColor={colors.green_hl}
                     dsColor={colors.green_ds}
                   >
-                    Нанять ({item.price} дк) 
+                    Нанять ({item.price} ок)
                   </Button>
                 </Buttons>
               </Col>

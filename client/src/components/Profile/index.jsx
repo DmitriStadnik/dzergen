@@ -174,11 +174,11 @@ export default class Profile extends Component {
                 <Col sm={8}>
                   <List>
                     <ListItem>
-                      <ListItemLeft>Дзерданы:</ListItemLeft>
+                      <ListItemLeft>Окропиті:</ListItemLeft>
                       <ListItemRight>{dzerdanCount}</ListItemRight>
                     </ListItem>
                     <ListItem>
-                      <ListItemLeft>Дзеркоины:</ListItemLeft>
+                      <ListItemLeft>Окрокоины:</ListItemLeft>
                       <ListItemRight>{user.currency.coin}</ListItemRight>
                     </ListItem>
                     <ListItem>
