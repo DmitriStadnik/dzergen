@@ -126,7 +126,7 @@ class Header extends Component {
     return (
       <>
         <Wrapper bgColor={colors.green_main} visible={menuVisible}> 
-          <Logo>{`DG v${version}`}</Logo>
+          <Logo>{`OG v${version}`}</Logo>
           <User />
           <MenuList>
             <ListItem сolor={colors.green_hl} visible>
