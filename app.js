@@ -39,19 +39,19 @@ app.use('/images', express.static(path.join(__dirname, "/public/img/dzerdan")));
 
 // routes
 app.use('/api/generator', require('./routes/generator'));
-app.use('/api/collection', require('./routes/collection'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/market', require('./routes/market'));
+// app.use('/api/collection', require('./routes/collection'));
+// app.use('/api/users', require('./routes/users'));
+// app.use('/api/market', require('./routes/market'));
 
 
 // db connect
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, function (err) {
-  if (err) throw err;
-  console.log('Successfully connected');
-});
+// mongoose.connect(uri, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// }, function (err) {
+//   if (err) throw err;
+//   console.log('Successfully connected');
+// });
 
 
 // every route not mentioned before goes to the single-page app

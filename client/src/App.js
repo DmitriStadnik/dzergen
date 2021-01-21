@@ -14,11 +14,11 @@ export default () => (
     <Sidebar />
     <Switch>
       <Route exact path="/" component={Generator} />
-      <Route path="/collection/:id" component={Collection} />
-      <Route path="/market/" component={Market} />
-      <Route path="/user/:id" component={Profile} />
-      <Route path="/missions/:id" component={Missions} />
-      <Route path="/auth/:type" component={Auth} />
+      // <Route path="/collection/:id" component={Collection} />
+      // <Route path="/market/" component={Market} />
+      // <Route path="/user/:id" component={Profile} />
+      // <Route path="/missions/:id" component={Missions} />
+      // <Route path="/auth/:type" component={Auth} />
     </Switch>
     <ScrollToTop />
   </>

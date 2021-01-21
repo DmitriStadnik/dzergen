@@ -117,15 +117,15 @@ class Generator extends Component {
                 >
                   Генерировать
                 </Button>
-                <Button
-                  onClick={() => this.saveDzerdan()}
-                  disabled={!savePossible}
-                  bgColor={colors.green_main}
-                  hlColor={colors.green_hl}
-                  dsColor={colors.green_ds}
-                >
-                  {savePossible ? 'Сохранить' : 'Сохранено' }
-                </Button>
+                {/*<Button*/}
+                {/*  onClick={() => this.saveDzerdan()}*/}
+                {/*  disabled={!savePossible}*/}
+                {/*  bgColor={colors.green_main}*/}
+                {/*  hlColor={colors.green_hl}*/}
+                {/*  dsColor={colors.green_ds}*/}
+                {/*>*/}
+                {/*  {savePossible ? 'Сохранить' : 'Сохранено' }*/}
+                {/*</Button>*/}
               </Buttons>
             </Col>
           </Row>

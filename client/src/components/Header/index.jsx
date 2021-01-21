@@ -149,20 +149,20 @@ class Header extends Component {
                 Генератор
               </Link>
             </ListItem>
-            <ListItem>
-              <Link to="/collection/all">
-                Коллекция
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link to="/market/">
-                Рынок
-              </Link>
-            </ListItem>
+            {/*<ListItem>*/}
+            {/*  <Link to="/collection/all">*/}
+            {/*    Коллекция*/}
+            {/*  </Link>*/}
+            {/*</ListItem>*/}
+            {/*<ListItem>*/}
+            {/*  <Link to="/market/">*/}
+            {/*    Рынок*/}
+            {/*  </Link>*/}
+            {/*</ListItem>*/}
           </LeftList>
-          <RightList>
-            <User />
-          </RightList>         
+          {/*<RightList>*/}
+          {/*  <User />*/}
+          {/*</RightList>         */}
         </MobileWrapper>
         <MobileMenuIcon icon={faBars} onClick={() => toggleMobileMenu()} />
       </Wrapper>

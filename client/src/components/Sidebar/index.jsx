@@ -127,23 +127,23 @@ class Header extends Component {
       <>
         <Wrapper bgColor={colors.green_main} visible={menuVisible}> 
           <Logo>{`OG v${version}`}</Logo>
-          <User />
+          {/*<User />*/}
           <MenuList>
             <ListItem сolor={colors.green_hl} visible>
               <Link to="/" onClick={() => toggleMenu()}>
                 Генератор
               </Link>
             </ListItem>
-            <ListItem сolor={colors.green_hl} visible>
-              <Link to="/collection/all" onClick={() => toggleMenu()}>
-                Коллекция
-              </Link>
-            </ListItem>
-            <ListItem сolor={colors.green_hl} visible={isLoggedIn()}>
-              <Link to="/market/" onClick={() => toggleMenu()}>
-                Рынок
-              </Link>
-            </ListItem>
+            {/*<ListItem сolor={colors.green_hl} visible>*/}
+            {/*  <Link to="/collection/all" onClick={() => toggleMenu()}>*/}
+            {/*    Коллекция*/}
+            {/*  </Link>*/}
+            {/*</ListItem>*/}
+            {/*<ListItem сolor={colors.green_hl} visible={isLoggedIn()}>*/}
+            {/*  <Link to="/market/" onClick={() => toggleMenu()}>*/}
+            {/*    Рынок*/}
+            {/*  </Link>*/}
+            {/*</ListItem>*/}
           </MenuList>       
         </Wrapper>
         <MobileMenuButton bgColor={colors.green_main} onClick={() => toggleMenu()} visible={menuVisible}>
