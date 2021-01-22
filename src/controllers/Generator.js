@@ -62,7 +62,7 @@ const generateImage = () => {
   const fs = require('fs');
   const images = fs.readdirSync('././public/img/dzerdan/') || [];
   // let img = utils.shuffleArray(images)
-  return images[Math.floor(Math.random() * img.length)];
+  return images[Math.floor(Math.random() * images.length)];
 };
 
 const generateTraits = (amount) => {
