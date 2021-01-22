@@ -61,8 +61,8 @@ const generateName = () => {
 const generateImage = () => {
   const fs = require('fs');
   const images = fs.readdirSync('././public/img/dzerdan/') || [];
-  let img = utils.shuffleArray(images)
-  return img[Math.floor(Math.random() * img.length)];
+  // let img = utils.shuffleArray(images)
+  return images[Math.floor(Math.random() * img.length)];
 };
 
 const generateTraits = (amount) => {
