@@ -155,8 +155,11 @@ const defaultHex = {
 
 const Vikings = () => {
   const [hexList, setHexList] = useState([defaultHex]);
+  const [day, setDay] = useState(1);
+  const [isMorning, setIsMorning] = useState(true);
   const [kilometersLeft, setKilometersLeft] = useState(0);
   const [kilometersMax, setKilometersMax] = useState(0);
+  const [weather, setWeather] = useState(0);
 
   const handleAddHex = () => {
     setHexList([...hexList, defaultHex])
@@ -197,9 +200,11 @@ const Vikings = () => {
   }
 
   const calculateCurrentHex = () => {
-    const delta = kilometersMax - kilometersLeft;
+    if (kilometersLeft === 0) {
+      return hexList.length - 1;
+    }
 
-    return Math.floor(delta / 100) + 1
+    return Math.floor((kilometersMax - kilometersLeft) / 100);
   }
 
   const calculateSpeedByHex = (index) => {
@@ -208,6 +213,52 @@ const Vikings = () => {
     const terrain = terrainTypes[hex.terrain];
 
     return movementType.kilos / terrain.mod;
+  }
+
+  const calculateCurrentSpeed = () => {
+    return calculateSpeedByHex(calculateCurrentHex()) / getWeatherMod();
+  }
+
+  const resetAll = () => {
+    setHexList([defaultHex]);
+    setDay(1);
+    setIsMorning(true);
+    setKilometersLeft(0);
+    setKilometersMax(0);
+  }
+
+  const progressStage = () => {
+    updateKilometers()
+    setRandomWeather()
+    updateDay()
+  }
+
+  const updateDay = () => {
+    if (isMorning) {
+      setIsMorning(false);
+      return;
+    }
+
+    setDay(day + 1);
+    setIsMorning(true);
+  }
+
+  const updateKilometers = () => {
+    const speed = calculateCurrentSpeed();
+
+    setKilometersLeft(Math.max(kilometersLeft - (speed / 2), 0));
+  }
+
+  const setRandomWeather = () => {
+    setWeather(Math.floor(Math.random() * 100) + 1)
+  }
+
+  const getWeatherMod = () => {
+    if (weather <= 90) {
+      return 1;
+    }
+
+    return weather === 100 ? 5 : 2;
   }
 
   return (
@@ -255,13 +306,21 @@ const Vikings = () => {
               >
                 Рассчитать
               </Button>
+              <Button
+                bgColor={colors.green_main}
+                hlColor={colors.green_hl}
+                dsColor={colors.green_ds}
+                onClick={resetAll}
+              >
+                Сбросить
+              </Button>
             </Section>
             <Section>
               <ButtonHeader>
                 Скорость передвижения (км/сутки)
               </ButtonHeader>
               {hexList.map((item, index) => (
-                <FlexLine>
+                <FlexLine key={`${item.terrain}${Math.random()}`}>
                   <span>
                     Гекс <strong>{index + 1}</strong>
                   </span>
@@ -271,7 +330,19 @@ const Vikings = () => {
                 </FlexLine>
               ))}
               <TextLine>Осталось километров: <strong>{kilometersLeft} / {kilometersMax}</strong></TextLine>
-              <TextLine>Гекс: <strong>{calculateCurrentHex()} / {hexList.length}</strong></TextLine>
+              <TextLine>Гекс: <strong>{calculateCurrentHex() + 1} / {hexList.length}</strong></TextLine>
+              <TextLine>День: <strong>{day} ({isMorning ? 'Утро' : 'Вечер'})</strong></TextLine>
+              <TextLine>Погода: <strong>{weather} (Модификатор {getWeatherMod()})</strong></TextLine>
+              <TextLine>Текущая скорость: <strong>{calculateCurrentSpeed()} км/сутки</strong></TextLine>
+
+              <Button
+                bgColor={colors.green_main}
+                hlColor={colors.green_hl}
+                dsColor={colors.green_ds}
+                onClick={progressStage}
+              >
+                Следующий этап
+              </Button>
             </Section>
           </Col>
         </Row>
