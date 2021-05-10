@@ -233,6 +233,11 @@ const Vikings = () => {
     updateDay()
   }
 
+  const progressStageWithoutMovement = () => {
+    setRandomWeather()
+    updateDay()
+  }
+
   const updateDay = () => {
     if (isMorning) {
       setIsMorning(false);
@@ -342,6 +347,14 @@ const Vikings = () => {
                 onClick={progressStage}
               >
                 Следующий этап
+              </Button>
+              <Button
+                bgColor={colors.green_main}
+                hlColor={colors.green_hl}
+                dsColor={colors.green_ds}
+                onClick={progressStageWithoutMovement}
+              >
+                Следующий этап без перемещения
               </Button>
             </Section>
           </Col>
